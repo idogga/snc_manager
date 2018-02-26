@@ -12,7 +12,7 @@ namespace snc_bonus_operator.Droid.Renders
     {
         Xamarin.Forms.Color xfMainColor = (Xamarin.Forms.Color)snc_bonus_operator.App.Current.Resources["MainColor"];
         Xamarin.Forms.Color xfSelectColor = (Xamarin.Forms.Color)snc_bonus_operator.App.Current.Resources["SelectionColor"];
-        Xamarin.Forms.Color xfBackgroundColor = (Xamarin.Forms.Color)snc_bonus_operator.App.Current.Resources["BackgroundColor"];
+        Xamarin.Forms.Color xfBackgroundColor = (Xamarin.Forms.Color)snc_bonus_operator.App.Current.Resources["ObjectBackgroundColor"];
 
         private global::Android.Support.V7.Widget.SwitchCompat _thisSwitch;
 

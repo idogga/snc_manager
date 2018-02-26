@@ -5,7 +5,8 @@
              x:Class="snc_bonus_operator.Accounting.FilterPage"
              Title="Фильтрация">
     <ContentPage.Content>
-        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                        BackgroundColor="{DynamicResource ObjectBackgroundColor}">
             <StackLayout x:Name="mainLayout" Padding="5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ScrollView>
@@ -42,7 +43,7 @@
             <StackLayout x:Name="statusTransactionSelector" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                          AbsoluteLayout.LayoutFlags="All"
                              AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False">
-                <Frame BackgroundColor="{DynamicResource BackgroundColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Frame BackgroundColor="{DynamicResource BackgroundColors}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="Не требующие акцептования" Style="{DynamicResource UsualLabelStyle}"/>
@@ -68,7 +69,7 @@
             <StackLayout x:Name="sellerSelector" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                          AbsoluteLayout.LayoutFlags="All"
                              AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False">
-                <Frame BackgroundColor="{DynamicResource BackgroundColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Frame BackgroundColor="{DynamicResource BackgroundColors}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                     <StackLayout>
                         <ListView x:Name="listSellers"
                                 ItemsSource="{Binding Sellers}"
@@ -79,7 +80,7 @@
                                     <ViewCell>
                                         <ViewCell.View>
                                             <ContentView>
-                                                <Frame BackgroundColor="{DynamicResource BackgroundColor}" CornerRadius="10" Margin="0" Padding="5"
+                                                <Frame BackgroundColor="{DynamicResource BackgroundColors}" CornerRadius="10" Margin="0" Padding="5"
                                                    HorizontalOptions="FillAndExpand" HasShadow="False">
                                                     <StackLayout Orientation="Horizontal" Padding="0">
                                                         <StackLayout>

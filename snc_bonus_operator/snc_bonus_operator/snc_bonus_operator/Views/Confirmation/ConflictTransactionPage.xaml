@@ -4,7 +4,7 @@
              x:Class="snc_bonus_operator.Confirmation.ConflictTransactionPage"
              Title="Спорные транзакции">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BackgroundColor="{DynamicResource BackgroundColors}">
             <ListView x:Name="listTransaction"
                       ItemsSource="{Binding Transactions}"
                            SeparatorVisibility="Default" 

@@ -15,12 +15,8 @@ namespace snc_bonus_operator
     public delegate void InfoLoadDelegate();
     public partial class LoadPage : ContentPage
     {
-        public static event InfoLoadDelegate IssuersLoadEvent;
-        public static event InfoLoadDelegate SupportLoadEvent;
-        public static event InfoLoadDelegate CardLoadEvent;
-        public static event InfoLoadDelegate AzsLoadEvent;
 
-        bool isLimitationLoad = false, isIssueLoad = false, isAzsLoad = false;
+        bool isLimitationLoad = false;
         bool _isDatabaseLoad = false;
         bool needDisplayAlert = true;
 
@@ -34,14 +30,12 @@ namespace snc_bonus_operator
 
         async void PageLoad()
         {
-            var cancellationTokenSource = new CancellationTokenSource();
-            await Task.Factory.StartNew(async x =>
+            await Task.Factory.StartNew(async () =>
             {
 
                 await LoadMainIssuer();
                 await LoadLimitation();
-            },
-            TaskCreationOptions.AttachedToParent, cancellationTokenSource.Token);
+            });
             Device.StartTimer(new TimeSpan(0, 0, 0, 0, 10), LoadAnotherData);
             LoadRoot();
         }
@@ -95,8 +89,7 @@ namespace snc_bonus_operator
                 Issuer deserialized = new Issuer();
                 if (issuer != "")
                     deserialized = JsonConvert.DeserializeObject<Issuer>(issuer);
-
-                isIssueLoad = true;
+                
                 MobileStaticVariables.MainIssuer = deserialized;
                 MobileStaticVariables.MainIssuer.LoadDictionary();
 

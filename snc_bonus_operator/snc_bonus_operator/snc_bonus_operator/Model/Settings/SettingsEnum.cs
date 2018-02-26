@@ -86,6 +86,6 @@
         BackgroundHexString,
         LettersHexString,
         SublettersHexString,
-        
+        ObjectBackgroundHexString
     }
 }

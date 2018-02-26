@@ -8,7 +8,7 @@
              Title="Настройки">
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                        BackgroundColor="{DynamicResource SublettersColor}">
+                        BackgroundColor="{DynamicResource BackgroundColors}">
             <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ScrollView>
@@ -81,8 +81,7 @@
                    HorizontalOptions="CenterAndExpand" Padding="10"
                              AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" CornerRadius="8" 
                    HasShadow="True" OutlineColor="{DynamicResource MainColor}" BackgroundColor="{DynamicResource MainColor}">
-                <Frame x:Name="notificationFrameSmall" CornerRadius="8" HasShadow="True" OutlineColor="{DynamicResource MainColor}" 
-                       BackgroundColor="{DynamicResource BackgroundColor}">
+                <Frame x:Name="notificationFrameSmall" Style="{DynamicResource UsualFrameStyle}">
                     <StackLayout>
                         <Label Text="Уведомлять через : " Style="{DynamicResource UsualLabelStyle}"/>
                         <StackLayout Orientation="Horizontal" x:Name="emailLabel">

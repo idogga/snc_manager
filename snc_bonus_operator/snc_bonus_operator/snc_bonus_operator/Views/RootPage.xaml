@@ -6,7 +6,8 @@
     <MasterDetailPage.Master>
         <ContentPage Title="=">
             <ContentPage.Content>
-                <StackLayout x:Name="mainLayout" Style="{DynamicResource MenuBackgroudStyle}">
+                <StackLayout x:Name="mainLayout" Style="{DynamicResource MenuBackgroudStyle}"
+                             BackgroundColor="{DynamicResource ObjectBackgroundColor}">
                     <StackLayout Orientation="Vertical" Style="{DynamicResource RootStyle}">
                         <Label Text="СНК-Менеджер"
                            Style="{DynamicResource LogoLabelStyle}"

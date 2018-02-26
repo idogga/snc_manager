@@ -42,7 +42,6 @@ namespace snc_bonus_operator.Renders
                 if (_selected)
                 {
                     var extendedViewCell = sender as ExtendedViewCell;
-                    //_cellCore.SetBackgroundColor(extendedViewCell.SelectedBackgroundColor.ToAndroid());
                 }
                 else
                 {

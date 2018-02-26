@@ -22,7 +22,7 @@ namespace snc_bonus_operator
             try
             {
                 InitializeComponent();
-                this.BackgroundColor = (Color)App.Current.Resources["BackgroundColor"];
+                this.BackgroundColor = (Color)App.Current.Resources["ObjectBackgroundColor"];
                 this.OutlineColor = (Color)App.Current.Resources["MainColor"];
                 this.IsVisible = false;
             }

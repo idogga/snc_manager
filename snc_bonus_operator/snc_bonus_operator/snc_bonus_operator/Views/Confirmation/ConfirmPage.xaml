@@ -8,7 +8,7 @@
              Title="Акцептирование">
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                        BackgroundColor="{DynamicResource SublettersColor}">
+                        BackgroundColor="{DynamicResource BackgroundColors}">
             <StackLayout x:Name="mainLayout" Padding="5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="False">
                 <ListView x:Name="listTransaction"
@@ -31,7 +31,7 @@
                                         <StackLayout HorizontalOptions="FillAndExpand" Spacing="0" Margin="5" >
                                             <Label Text="{Binding Time}" Style="{DynamicResource SmallLabelStyle}" Margin="2"
                                                    HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"/>
-                                            <Frame BackgroundColor="{DynamicResource BackgroundColor}" CornerRadius="10" Margin="0" Padding="5"
+                                            <Frame BackgroundColor="{DynamicResource ObjectBackgroundHexString}" CornerRadius="10" Margin="0" Padding="5"
                                                    HorizontalOptions="FillAndExpand" HasShadow="False">
                                                 <Grid HorizontalOptions="FillAndExpand">
                                                     <Grid.ColumnDefinitions>

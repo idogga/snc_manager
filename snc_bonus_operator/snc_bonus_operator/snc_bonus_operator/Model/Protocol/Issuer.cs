@@ -74,7 +74,7 @@ namespace snc_bonus_operator.Protocol
         /// <summary>
         /// Вторичный цвет эмитента
         /// </summary>
-        public string BackgroundHexString { get; set; } = "#ffffff";
+        public string BackgroundHexString { get; set; } = "#c5c5c5";
 
         // <summary>
         /// Цвет букв эмитента
@@ -104,7 +104,12 @@ namespace snc_bonus_operator.Protocol
         // <summary>
         /// Дополнительный цвет
         /// </summary>
-        public string ExtendHexString { get; set; } = string.Empty;
+        public string ExtendHexString { get; set; } = "#a1a6aa";
+
+        // <summary>
+        /// Цвет подложки
+        /// </summary>
+        public string ObjectBackgroundHexString { get; set; } = "#ffffff";
 
         /// <summary>
         /// Ссылка на изображение эмитента
@@ -189,14 +194,16 @@ namespace snc_bonus_operator.Protocol
             MobileStaticVariables.MainIssuer.SaveSetting((int)SettingsEnum.HeaderHexString, MobileStaticVariables.MainIssuer.HeaderHexString);
             MobileStaticVariables.MainIssuer.SaveSetting((int)SettingsEnum.SelectHexString, MobileStaticVariables.MainIssuer.SelectHexString);
             MobileStaticVariables.MainIssuer.SaveSetting((int)SettingsEnum.ExtendHexString, MobileStaticVariables.MainIssuer.ExtendHexString);
+            MobileStaticVariables.MainIssuer.SaveSetting((int)SettingsEnum.ObjectBackgroundHexString, MobileStaticVariables.MainIssuer.ObjectBackgroundHexString);
 
             App.Current.Resources["LinkColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.LinkHexString);
             App.Current.Resources["MainColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.MainHexString);
-            App.Current.Resources["BackgroundColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.BackgroundHexString);
+            App.Current.Resources["BackgroundColors"] = Color.FromHex(MobileStaticVariables.MainIssuer.BackgroundHexString);
             App.Current.Resources["LetterColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.LettersHexString);
             App.Current.Resources["HeaderColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.HeaderHexString);
             App.Current.Resources["SelectionColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.SelectHexString);
             App.Current.Resources["SublettersColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.SublettersHexString);
+            App.Current.Resources["ObjectBackgroundColor"] = Color.FromHex(MobileStaticVariables.MainIssuer.ObjectBackgroundHexString);
         }
     }
 }
