@@ -4,6 +4,7 @@ using snc_bonus_operator.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,12 +14,13 @@ namespace snc_bonus_operator.Accounting
 {
     public partial class TransactionPage : ContentPage
     {
-        ObservableCollection<AllTransactionView> Transactions { get; set; } = new ObservableCollection<AllTransactionView>();
+        ObservableCollection<DateGroupTransaction> Transactions { get; set; } = new ObservableCollection<DateGroupTransaction>();
         SellerTransactionInfo transactions = new SellerTransactionInfo() { From = new DateTime(2002, 10, 23), To = DateTime.Now,
          TransactionStatuses=new List<SellerTransactionInfo.SELLER_STATUS_ENUM>(){ SellerTransactionInfo.SELLER_STATUS_ENUM.Accepted,
           SellerTransactionInfo.SELLER_STATUS_ENUM.Not_Accepted, SellerTransactionInfo.SELLER_STATUS_ENUM.Not_NeedAccept, SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration}
         };
 
+        double _upFrame = .0;
         UserCard card = new UserCard();
         bool isLoading;
         bool needToLoad = true;
@@ -42,28 +44,21 @@ namespace snc_bonus_operator.Accounting
             {
                 if (isLoading || Transactions.Count == 0)
                     return;
-                if ((e.Item == Transactions[Transactions.Count - 1]))
+                if (e.Item == Transactions.LastOrDefault().LastOrDefault())
                 {
                     if (needToLoad)
                     {
                         StartLoading();
-                        var cancellationTokenSource = new CancellationTokenSource();
-                        try
+                        await Task.Factory.StartNew(() =>
                         {
-                            await Task.Factory.StartNew(x =>
+                            var count = 0;
+                            foreach (var group in Transactions)
                             {
-                                LoadTransactions(Transactions.Count);
-                            },
-                            TaskCreationOptions.AttachedToParent, cancellationTokenSource.Token);
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.WriteError(ex);
-                        }
-                        finally
-                        {
-                            EndLoading();
-                        }
+                                count += group.Count;
+                            }
+                            LoadTransactions(count);
+                        });
+                        EndLoading();
                     }
                     else
                     {
@@ -82,18 +77,15 @@ namespace snc_bonus_operator.Accounting
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (needToReload)
+
+            if (MobileStaticVariables.UserAppSettings.IsInetAvaliable == Settings.InternetStatus.Online)
             {
-                StartLoading();
-                Transactions.Clear();
-                listTransaction.IsVisible = true;
-                statusTransaction.IsVisible = false;
-                if (mayFirstLoad)
-                    LoadPage();
+                LoadMainScreen();
             }
             else
             {
-                needToReload = true;
+                noConnectionLayout.IsVisible = true;
+                Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
             }
         }
 
@@ -113,6 +105,8 @@ namespace snc_bonus_operator.Accounting
 
         async void LoadPage()
         {
+            StartLoading();
+            Transactions.Clear();
             await Task.Factory.StartNew(() =>
             {
                 LoadTransactions(0);
@@ -141,7 +135,7 @@ namespace snc_bonus_operator.Accounting
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                                HideList();
+                            HideList();
                         });
                     }
                 }
@@ -156,32 +150,29 @@ namespace snc_bonus_operator.Accounting
                         }
                     });
                 }
-
-                foreach (var item in transactions.Transactions)
-                {
-                    try
-                    {
-                        var transactionView = new AllTransactionView(item);
-                        transactionView.Transaction = item;
-                        Transactions.Add(transactionView);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteError(ex);
-                    }
-                }
-                needToLoad = transactions.Transactions.Count == _amount;
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    try
+                    foreach (var item in transactions.Transactions)
                     {
+                        var transactionView = new AllTransactionView(item);
+                        var group = Transactions.FirstOrDefault(x => (x.ComleteDate.Year == item.CompleteDatetime.Year) && (x.ComleteDate.DayOfYear == item.CompleteDatetime.DayOfYear));
+                        if (group != null)
+                        {
+                            group.Add(transactionView);
+                        }
+                        else
+                        {
+                            group = new DateGroupTransaction(item.CompleteDatetime, _upFrame);
+                            group.Add(transactionView);
+                            Transactions.Add(group);
+                        }
+                        needToLoad = transactions.Transactions.Count == _amount;
                         if (IsVisible)
                         {
+                            listTransaction.ItemsSource = null;
                             listTransaction.ItemsSource = Transactions;
                         }
                     }
-                    catch
-                    { }
                 });
             }
             catch (Exception ex)
@@ -189,7 +180,12 @@ namespace snc_bonus_operator.Accounting
                 Logger.WriteError(ex);
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    HideList();
+                    if (IsVisible)
+                    {
+                        HideList();
+                        noConnectionLayout.IsVisible = true;
+                        Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
+                    }
                 });
             }
             finally
@@ -220,8 +216,8 @@ namespace snc_bonus_operator.Accounting
         void HideList()
         {
             listTransaction.IsVisible = false;
-            statusTransaction.Text = "Покупок еще не было";
-            statusTransaction.IsVisible = true;
+            emptyFrame.IsVisible = true;
+            statusTransaction.IsVisible = false;
         }
 
         private async void ToolbarFilterButton_Clicked(object sender, EventArgs e)
@@ -233,24 +229,47 @@ namespace snc_bonus_operator.Accounting
         {
             if (e.SelectedItem == null)
                 return;
-            var selected = (AllTransactionView)e.SelectedItem;
-            
+            var selectTransaction = (AllTransactionView)e.SelectedItem;
             var basket = new ShopBasket()
             {
-                BonusCountIn = selected.Transaction.BonusIn,
-                BonusCountOut = selected.Transaction.BonusOut,
-                Discount = selected.Transaction.Discount,
-                FinalPrice = selected.Transaction.PersonCost,
-                TimeComplete = selected.Transaction.CompleteDatetime,
-                TotalPrice = selected.Transaction.ShopBaseCost,
-                UserProgrammName = selected.Transaction.UserProgrammName,
-                GraphicalNumber=selected.Transaction.GraphicalNumber,
-
+                BonusCountIn = selectTransaction.Transaction.BonusIn,
+                BonusCountOut = selectTransaction.Transaction.BonusOut,
+                Discount = selectTransaction.Transaction.Discount,
+                FinalPrice = selectTransaction.Transaction.PersonCost,
+                TimeComplete = selectTransaction.Transaction.CompleteDatetime,
+                TotalPrice = selectTransaction.Transaction.ShopBaseCost,
+                UserProgrammName = selectTransaction.Transaction.UserProgrammName,
+                GraphicalNumber= selectTransaction.Transaction.GraphicalNumber,
             };
             needToReload = false;
             await Navigation.PushModalAsync(new BillPage(basket, false));
 
             listTransaction.SelectedItem = null;
+        }
+
+        private bool WaitInternetConnection()
+        {
+            var result = true;
+            if (MobileStaticVariables.UserAppSettings.IsInetAvaliable == Settings.InternetStatus.Online)
+            {
+                result = false;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    noConnectionLayout.IsVisible = false;
+                    LoadMainScreen();
+                });
+            }
+            return result;
+        }
+
+        private void LoadMainScreen()
+        {
+            Transactions.Clear();
+            emptyFrame.IsVisible = false;
+            listTransaction.IsVisible = true;
+            statusTransaction.IsVisible = false;
+            _upFrame = Device.GetNamedSize(NamedSize.Large, typeof(Label)) * 2;
+            LoadPage();
         }
     }
 }

@@ -9,12 +9,12 @@
     <ContentPage.Content>
         <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                         BackgroundColor="{DynamicResource BackgroundColors}">
-            <StackLayout x:Name="mainLayout" Padding="5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+            <StackLayout x:Name="mainLayout" Padding="0" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="False">
                 <ListView x:Name="listTransaction"
                       ItemsSource="{Binding Transactions}"
                            SeparatorVisibility="None" IsGroupingEnabled="true" ItemSelected="transactionSelected"
-                          Refreshing="listTransaction_Refreshing" 
+                          Refreshing="listTransaction_Refreshing" Margin="0"
                       HasUnevenRows="True">
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>

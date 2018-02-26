@@ -270,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Ubuntu-Regular.ttf" />
+    <AndroidAsset Include="Assets\Ubuntu-Bold.ttf" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -89,6 +89,12 @@
                 <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
             </Style>
 
+            <Style x:Key="BoldUsualLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Bold.ttf#Ubuntu-Bold"/>
+            </Style>
+
             <Style x:Key="SubLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{DynamicResource SublettersColor}"/>
                 <Setter Property="FontAttributes" Value="Italic"/>

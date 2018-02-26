@@ -1,5 +1,6 @@
 ﻿using snc_bonus_operator.Protocol;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace snc_bonus_operator
@@ -7,56 +8,88 @@ namespace snc_bonus_operator
     public class AllTransactionView
     {
         public SellerTransaction Transaction { get; set; } = new SellerTransaction();
-        public string CardNumber { get; set; } = "";
-        public string TopLabel { get; set; } = "";
-        public string BottomLabel { get; set; } = "";
-        public string CompleteDate { get; set; } = "";
+        public string BaseCost { get; set; } = "";
+        public string Discount { get; set; } = "";
+        public string BonusOut { get; set; } = "";
+        public string Cost { get; set; } = "";
+        public string Time { get; set; } = "";
+        public string BonusIn { get; set; } = "";
         public Color BackColor { get; set; } = Color.Transparent;
-        public FormattedString BottomFormattedString { get; set; } = new FormattedString();
         public int ID { get; set; } = 0;
-        public FormattedString Accepted { get; set; } = new FormattedString();
 
         public AllTransactionView(SellerTransaction transaction, string opinion = "")
         {
+            Transaction = transaction;
             ID = transaction.TransactionKey;
-            TopLabel = transaction.ShopName;
-            var formatted = new FormattedString();
-            formatted.Spans.Add(new Span { Text = "Картa №", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-            formatted.Spans.Add(new Span { Text = transaction.GraphicalNumber, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = ", покупка на сумму ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-            formatted.Spans.Add(new Span { Text = transaction.PersonCost.ToString("0.00"), FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = " " + MobileStaticVariables.MainIssuer.Currency + ", начислено ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-            formatted.Spans.Add(new Span { Text = transaction.BonusIn.ToString("0.00"), FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = " БОНУСОВ.", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-            BottomFormattedString = formatted;
-            CompleteDate = string.Format("{0:HH:mm dd.MM.yyyy}", transaction.CompleteDatetime);
-            CardNumber = string.Format("Оператор : {0}", transaction.SellerName);
-            BottomFormattedString = formatted;
-            formatted = new FormattedString();
+            BaseCost = transaction.ShopBaseCost.ToString("0.00");
+            Discount = transaction.Discount.ToString("0.00");
+            BonusOut = transaction.BonusOut.ToString("0.00");
+            BonusIn = transaction.BonusIn.ToString("0.00");
+            Cost = transaction.PersonCost.ToString("0.00");
+            Time = string.Format("{0:HH:mm}", transaction.CompleteDatetime);
             switch (transaction.StatusTransaction)
             {
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Accepted:
-                    BackColor = Color.FromHex("#F0FFF0");
-                    formatted.Spans.Add(new Span { Text = "Транзакция ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-                    formatted.Spans.Add(new Span { Text = "ОДОБРЕНА ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-                    formatted.Spans.Add(new Span { Text = opinion, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+                    BackColor = Color.FromHex("#cbfdcb");
                     break;
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Not_Accepted:
-                    BackColor = Color.FromHex("#FFF5EE");
-                    formatted.Spans.Add(new Span { Text = "Транзакция ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-                    formatted.Spans.Add(new Span { Text = "ОТКЛОНЕНА ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-                    formatted.Spans.Add(new Span { Text = opinion, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+                    BackColor = Color.FromHex("#ffd5b7");
                     break;
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration:
-                    BackColor = Color.FromHex("#FFFFF0");
-                    formatted.Spans.Add(new Span { Text = "(Транзакция находится на расмотрении)", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+                    BackColor = Color.FromHex("#ffffc0");
                     break;
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Not_NeedAccept:
                 default:
-                    BackColor = Color.FromHex("#FFFFFF");
+                    BackColor = (Color)App.Current.Resources["ObjectBackgroundColor"];
                     break;
             }
-            Accepted = formatted;
         }
     }
+        public class DateGroupTransaction : List<AllTransactionView>
+        {
+            public string Heading { get; set; } = "";
+            public Thickness Frame { get; set; } = new Thickness(5, 40, 10, 5);
+            public DateTime ComleteDate { get; set; } = DateTime.MinValue;
+            public List<AllTransactionView> ListCell { get; set; } = new List<AllTransactionView>();
+
+            public DateGroupTransaction(DateTime completeDateTime, double UpFrame)
+            {
+                ComleteDate = completeDateTime;
+                Heading = string.Format("{0:dd.MM}, {1}", completeDateTime, TranslateDayOfWeek(completeDateTime.DayOfWeek));
+                Frame = new Thickness(5, UpFrame, 10, 5);
+            }
+
+            private string TranslateDayOfWeek(DayOfWeek dayOfWeek)
+            {
+                var result = "";
+                switch (dayOfWeek)
+                {
+                    case DayOfWeek.Monday:
+                        result = "Понедельник";
+                        break;
+                    case DayOfWeek.Friday:
+                        result = "Пятница";
+                        break;
+                    case DayOfWeek.Saturday:
+                        result = "Суббота";
+                        break;
+                    case DayOfWeek.Sunday:
+                        result = "Воскресенье";
+                        break;
+                    case DayOfWeek.Thursday:
+                        result = "Четверг";
+                        break;
+                    case DayOfWeek.Tuesday:
+                        result = "Вторник";
+                        break;
+                    case DayOfWeek.Wednesday:
+                        result = "Среда";
+                        break;
+                    default:
+                        result = "";
+                        break;
+                }
+                return result;
+            }
+        }
 }
