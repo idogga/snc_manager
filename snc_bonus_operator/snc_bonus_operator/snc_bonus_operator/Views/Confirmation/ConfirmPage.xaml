@@ -45,7 +45,8 @@
                                                         <RowDefinition Height="*"/>
                                                     </Grid.RowDefinitions>
                                                     <Label Text="Оператор" Style="{DynamicResource SmallLabelStyle}" Grid.Column="0" Grid.Row="0"/>
-                                                    <Label Text="{Binding TopLabel}" Style="{DynamicResource UsualLabelStyle}" Grid.Column="0" Grid.Row="1"/>
+                                                    <Label Text="{Binding TopLabel}" Style="{DynamicResource UsualLabelStyle}" 
+                                                          FontSize="Small" Grid.Column="0" Grid.Row="1"/>
                                                     <Label Text="Рубли" Style="{DynamicResource SmallLabelStyle}" Grid.Column="1" Grid.Row="0"/>
                                                     <Label Text="{Binding Cost}" Style="{DynamicResource UsualLabelStyle}" Grid.Column="1" Grid.Row="1"/>
                                                     <Label Text="Бонусы" Style="{DynamicResource SmallLabelStyle}" Grid.Column="2" Grid.Row="0"/>
