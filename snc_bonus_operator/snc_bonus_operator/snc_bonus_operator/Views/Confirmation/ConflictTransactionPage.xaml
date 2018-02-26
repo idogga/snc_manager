@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="snc_bonus_operator.Confirmation.ConflictTransactionPage"
+             Title="Спорные транзакции">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="listTransaction"
+                      ItemsSource="{Binding Transactions}"
+                           SeparatorVisibility="Default" 
+                          SeparatorColor="{DynamicResource MainColor}" CachingStrategy="RecycleElement"
+                      HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Spacing="10" BackgroundColor="{Binding BackColor}">
+                                    <Label Text="{Binding CompleteDate}" Style="{DynamicResource SmallLabelStyle}" HorizontalOptions="EndAndExpand"/>
+                                    <Label Text="{Binding TopLabel}" Style="{DynamicResource HeavyLabelStyle}" HorizontalOptions="CenterAndExpand"
+                                               HorizontalTextAlignment="Center"/>
+                                    <Label FormattedText="{Binding BottomFormattedString}" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="{Binding CardNumber}" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="StartAndExpand"/>
+                                    <Label FormattedText="{Binding Accepted}" HorizontalOptions="StartAndExpand"/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Вернуться" Clicked="continueButtton_CLicked" Style="{DynamicResource FunctionalButtonStyle}"
+                    Margin="10"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

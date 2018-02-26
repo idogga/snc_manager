@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="snc_bonus_operator.Cash.CashbackPage"
+             Title="Оформление покупки">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView>
+                    <StackLayout Orientation="Vertical" Padding="8">
+                        
+                        <StackLayout x:Name="acceptLayout" Padding="0">
+                            <Label x:Name="summLabel"/>
+                            <Label x:Name="tariffLabel"/>
+                            <Label x:Name="bonusCountOutLabel"/>
+                            <Label x:Name="bonusCountInLabel"/>
+                            <Label x:Name="discountLabel"/>
+                            <Label x:Name="finalCashLabel"/>
+                            <StackLayout VerticalOptions="EndAndExpand">
+                                <Button x:Name="acceptButton" Text="Подтвердить" Clicked="acceptButton_Clicked" HorizontalOptions="FillAndExpand"  Style="{DynamicResource DigitButtonStyle}"/>
+                                <Button x:Name="declineButton" Text="Отклонить" Clicked="declineButton_Clicked" HorizontalOptions="FillAndExpand"  Style="{DynamicResource DigitButtonStyle}"/>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout x:Name="priceLayout" Padding="0" VerticalOptions="CenterAndExpand">
+                            <Label Text="Введите сумму покупки : " Style="{DynamicResource UsualLabelStyle}"/>
+                            <Entry x:Name="summEntry" Text="" Placeholder="Сумма" TextChanged="summEntry_TextChanged"
+                                    Style="{DynamicResource DigitButtonStyle}" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
+                            <StackLayout VerticalOptions="EndAndExpand">
+                                <Button x:Name="qrReadButton"  Text="Считать QR-код" Clicked="qrReadButton_Clicked" HorizontalOptions="FillAndExpand" 
+                                    Style="{DynamicResource DigitButtonStyle}" IsEnabled="False"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+                <Label x:Name="operatorLabel" Style="{DynamicResource SubLabelStyle}" VerticalOptions="EndAndExpand" VerticalTextAlignment="End"/>
+            </StackLayout>
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

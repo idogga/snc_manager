@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="snc_bonus_operator.LoadPage"
+             Title="СНК-Менеджер">
+    <ContentPage.Content>
+        <StackLayout x:Name="mainLayout" Padding="5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <StackLayout Padding="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <ffimageloading:CachedImage x:Name="logoImage" Source="splash_logo.bmp" 
+                                                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <ActivityIndicator x:Name="indicatorActivity" 
+                           IsRunning="True" 
+                           Color="Red" />
+                <Label x:Name="descriptionLabel"
+                        Style="{DynamicResource UsualLabelStyle}"
+                           HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

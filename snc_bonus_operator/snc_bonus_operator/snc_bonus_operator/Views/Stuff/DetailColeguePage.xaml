@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="snc_bonus_operator.Stuff.DetailColeguePage"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"      
+             Title="Подробная информация">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Изменить" Clicked="editManager"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView>
+                    <StackLayout>
+                        <Label x:Name="nameLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                        <!--<Label x:Name="phoneLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>-->
+                        <Label x:Name="emailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="sendEmail" NumberOfTapsRequired="1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label x:Name="shopLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                        <Label x:Name="detailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                        <Label x:Name="adminLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                        <Label x:Name="positionLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </ScrollView>
+                <Button x:Name="blockButton" Text="Заблокировать" Style="{DynamicResource DigitButtonStyle}" Clicked="blockButton_Clicked"/>
+            </StackLayout>
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

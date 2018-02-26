@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="snc_bonus_operator.Login.LoginPage"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"
+             Title="Авторизация">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView >
+                    <StackLayout Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <Label Text="Ваш логин :" Style="{DynamicResource UsualLabelStyle}"/>
+                        <Entry x:Name="loginEntry"  Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="test@mail.ru" Keyboard="Email"
+                                FontSize="Large"
+                               TextChanged="loginEntry_TextChanged" Completed="loginEntry_Completed"/>
+                        <Label x:Name="alreadyLogged" Text="Выбрать логин" HorizontalOptions="EndAndExpand" IsVisible="False">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="alreadyLogged_tapped" NumberOfTapsRequired="1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Пароль :" 
+                                Style="{DynamicResource UsualLabelStyle}"/>
+                        <Entry x:Name="passEntry"  Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="Пароль" TextChanged="passEntry_TextChanged"
+                               Completed="passEntry_Completed" FontSize="Large" IsPassword="True" Keyboard="Numeric"/>
+                        <Label Text="Не помню пароль" Style="{DynamicResource SmallLabelStyle}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ForgetPass_Tapped" NumberOfTapsRequired="1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Button Text="Войти" Style="{DynamicResource UsuallButtonStyle}" Clicked="continueButtonCLicked"/>
+                    </StackLayout>
+                </ScrollView>
+
+            </StackLayout>
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

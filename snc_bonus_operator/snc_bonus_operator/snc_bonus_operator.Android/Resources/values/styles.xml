@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+<style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+
+  <item name="android:colorPressedHighlight">@color/main_snc</item>
+  <item name="android:colorLongPressedHighlight">@color/main_snc</item>
+  <item name="android:colorFocusedHighlight">@color/main_snc</item>
+  <item name="android:colorActivatedHighlight">@color/main_snc</item>
+  <item name="android:activatedBackgroundIndicator">@color/main_snc</item>
+  
+</style>
+
+  <style name="MyTheme" parent="MyTheme.Base">
+    <item name="android:textAllCaps">false</item>
+    <item name="android:colorPressedHighlight">@color/main_snc</item>
+    <item name="android:colorLongPressedHighlight">@color/main_snc</item>
+    <item name="android:colorFocusedHighlight">@color/main_snc</item>
+    <item name="android:colorActivatedHighlight">@color/main_snc</item>
+    <item name="android:activatedBackgroundIndicator">@color/main_snc</item>
+  </style>
+  
+  <style name="MyTheme.Splash" parent ="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+  </style>
+  
+  <style name="EditValue" parent="Theme.AppCompat.Light">
+  </style>
+  
+  <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+  </style>
+  
+  <style name="MenuOffsets" parent="@style/MyTheme">
+    <item name="android:layout_marginStart">10dp</item>
+    <item name="android:layout_marginBottom">10dp</item>
+    <item name="android:layout_marginLeft">20dp</item>
+    <item name="android:layout_marginRight">20dp</item>
+  </style>
+</resources>

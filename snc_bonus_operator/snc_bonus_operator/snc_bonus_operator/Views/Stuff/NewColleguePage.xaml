@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"      
+             x:Class="snc_bonus_operator.Stuff.NewColleguePage"
+             Title="Добавление менеджера">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView>
+                    <StackLayout Orientation="Vertical" Padding="8">
+                        <Label Text="Введите имя :" Style="{DynamicResource UsualLabelStyle}"/>
+                        <Entry x:Name="nameEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="Иван Иванов" 
+                               Completed="nameEntry_Completed"/>
+                        <Label Text="Введите емэйл (логин) :" Style="{DynamicResource UsualLabelStyle}"/>
+                        <Entry x:Name="loginEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="example@snc.ru" 
+                               Keyboard="Email" Completed="loginEntry_Completed"/>
+                        <Label Text="Введите заметку к менеджеру :" Style="{DynamicResource UsualLabelStyle}"/>
+                        <Entry x:Name="positionEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="(любит пончики)" 
+                               Completed="positionEntry_Completed"/>
+
+                        <StackLayout x:Name="selectShopLayout">
+                            <Label Text="Выберите магазин :" Style="{DynamicResource UsualLabelStyle}"/>
+                            <Label x:Name="selectShopButton" Text="Магазин не выбран" Style="{DynamicResource LinkLabelStyle}" HorizontalOptions="EndAndExpand">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="selectShopTapped" NumberOfTapsRequired="1"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                        <Button x:Name="continueButton" Text="Создать колллегу" Style="{DynamicResource UsuallButtonStyle}" Clicked="continueButton_Clicked"
+                                Margin="10"/>
+                    </StackLayout>
+                </ScrollView>
+                
+            </StackLayout>
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

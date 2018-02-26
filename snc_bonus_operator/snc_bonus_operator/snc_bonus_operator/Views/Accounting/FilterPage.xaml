@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"
+             x:Class="snc_bonus_operator.Accounting.FilterPage"
+             Title="Фильтрация">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="mainLayout" Padding="5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView>
+                    <StackLayout Spacing="0" Padding="0">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="С : " HorizontalOptions="StartAndExpand" Style="{DynamicResource UsualLabelStyle}"
+                                   VerticalOptions="CenterAndExpand"/>
+                            <DatePicker x:Name="dateFromPicker" DateSelected="dateFromPicker_DateSelected"
+                                    HorizontalOptions="EndAndExpand">
+                                <DatePicker.Format>D</DatePicker.Format>
+                            </DatePicker>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="По : " HorizontalOptions="StartAndExpand" Style="{DynamicResource UsualLabelStyle}"
+                                   VerticalOptions="CenterAndExpand"/>
+                            <DatePicker x:Name="dateToPicker" DateSelected="dateToPicker_DateSelected"
+                                        HorizontalOptions="EndAndExpand">
+                                <DatePicker.Format>D</DatePicker.Format>
+                            </DatePicker>
+                        </StackLayout>
+                        <Button x:Name="personButton" Text="Выбрать сотрудников" Clicked="personButton_Clicked" 
+                                Style="{DynamicResource DigitButtonStyle}"
+                                HorizontalOptions="FillAndExpand"/>
+                        <Button Text="Выбрать типы покупок" Clicked="selectorOpen" Style="{DynamicResource DigitButtonStyle}"
+                                HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </ScrollView>
+
+                <Button x:Name="exitButton" Text="Применить" Clicked="exitButton_Clicked" 
+                        Style="{DynamicResource FunctionalButtonStyle}" 
+                        HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+
+            <StackLayout x:Name="statusTransactionSelector" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False">
+                <Frame BackgroundColor="{DynamicResource BackgroundColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Не требующие акцептования" Style="{DynamicResource UsualLabelStyle}"/>
+                            <views:Checkbox x:Name="notNeedAcceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Акцептованные" Style="{DynamicResource UsualLabelStyle}"/>
+                            <views:Checkbox x:Name="acceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Не акцептованные" Style="{DynamicResource UsualLabelStyle}"/>
+                            <views:Checkbox x:Name="notAcceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="На рассмотрении" Style="{DynamicResource UsualLabelStyle}"/>
+                            <views:Checkbox x:Name="mobileCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <Button Text="Применить" Clicked="acceptstatustransaction" Style="{DynamicResource FunctionalButtonStyle}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout x:Name="sellerSelector" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False">
+                <Frame BackgroundColor="{DynamicResource BackgroundColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <StackLayout>
+                        <ListView x:Name="listSellers"
+                                ItemsSource="{Binding Sellers}"
+                                SeparatorVisibility="Default" 
+                                  ItemSelected="SellerSelected" BackgroundColor="{DynamicResource SublettersColor}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <ContentView>
+                                                <Frame BackgroundColor="{DynamicResource BackgroundColor}" CornerRadius="10" Margin="0" Padding="5"
+                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
+                                                    <StackLayout Orientation="Horizontal" Padding="0">
+                                                        <StackLayout>
+                                                            <Label Text="{Binding OperNameLabel}" Style="{DynamicResource UsualLabelStyle}"/>
+                                                            <Label Text="{Binding OperDescLabel}" Style="{DynamicResource SmallLabelStyle}"/>
+                                                        </StackLayout>
+                                                        <views:Checkbox Color="{DynamicResource MainColor}" IsChecked="{Binding IsChecked}" IsEnabled="False"
+                                                            ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                                                    </StackLayout>
+                                                    </Frame>
+                                            </ContentView>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Text="Применить" Clicked="acceptSellers" Style="{DynamicResource FunctionalButtonStyle}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

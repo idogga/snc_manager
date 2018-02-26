@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="snc_bonus_operator.App">
+	<Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="LinkColor">Blue</Color>
+            <Color x:Key="MainColor">Red</Color>
+            <Color x:Key="BackgroundColor">White</Color>
+            <Color x:Key="LetterColor">Black</Color>
+            <Color x:Key="HeaderColor">Yellow</Color>
+            <Color x:Key="fr">Red</Color>
+            <Color x:Key="SupportColor">Blue</Color>
+            <Color x:Key="SelectionColor">Red</Color>
+            <Color x:Key="SublettersColor">Gray</Color>
+
+            <Style x:Key="LabelLinkStyle" x:Name="LabelLinkStyleName" TargetType="Label">
+                <Setter Property="Text" Value="Link" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{DynamicResource LinkColor}" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="SmallLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontAttributes" Value="Italic"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="LinkLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="HeavyLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource MainColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="BackgroundLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="FunctionalButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource SelectionColor}"/>
+                <Setter Property="BorderRadius" Value="8"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="UsuallButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="BorderColor" Value="{DynamicResource SelectionColor}"/>
+                <Setter Property="BorderRadius" Value="8"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="SelectButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource SelectionColor}"/>
+                <Setter Property="BorderColor" Value="{DynamicResource SelectionColor}"/>
+                <Setter Property="BorderRadius" Value="8"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{DynamicResource MainColor}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="BarTextColor" Value="{DynamicResource BackgroundColor}"/>
+            </Style>
+
+            <Style x:Key="UsualLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="SubLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource SublettersColor}"/>
+                <Setter Property="FontAttributes" Value="Italic"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="LogoLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource HeaderColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="DigitButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="BorderColor" Value="{DynamicResource MainColor}"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="BorderRadius" Value="8"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+
+            <Style x:Key="UsualFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="OutlineColor" Value="{DynamicResource MainColor}"/>
+                <Setter Property = "CornerRadius" Value = "8"/>
+            </Style>
+
+            <Style x:Key="MenuBackgroudStyle" TargetType="StackLayout">
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+            </Style>
+
+            <Style x:Key="RootStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{DynamicResource MainColor}"/>
+            </Style>
+
+            <Style x:Key="UsualEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="PlaceholderColor" Value="{DynamicResource SelectionColor}"/>
+                <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

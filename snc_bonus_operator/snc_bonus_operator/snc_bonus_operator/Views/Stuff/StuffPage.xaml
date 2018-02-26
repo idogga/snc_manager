@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"        
+             xmlns:customviews="clr-namespace:snc_bonus_operator.DepServices;assembly=snc_bonus_operator"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="snc_bonus_operator.Stuff.StuffPage"
+             Title="Администрирование">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ListView
+                            x:Name="listView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                            SeparatorColor="Red" SeparatorVisibility="Default"
+                            ItemsSource="{Binding StuffList}" RowHeight="-1" HasUnevenRows="True" 
+                            ItemSelected="listView_ItemSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}" Style="{DynamicResource HeavyLabelStyle}"/>
+                                        <Label Text="{Binding Posision}" HorizontalTextAlignment="Center" Style="{DynamicResource UsualLabelStyle}"/>
+                                        <Label Text="{Binding Shop}" HorizontalTextAlignment="End" Style="{DynamicResource UsualLabelStyle}"/>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

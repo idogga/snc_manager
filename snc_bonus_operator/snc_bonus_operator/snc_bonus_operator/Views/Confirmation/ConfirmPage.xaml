@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"
+             xmlns:customControls="clr-namespace:snc_bonus_operator.DepServices;assembly=snc_bonus_operator"
+             x:Class="snc_bonus_operator.Confirmation.ConfirmPage"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Title="Акцептирование">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                        BackgroundColor="{DynamicResource SublettersColor}">
+            <StackLayout x:Name="mainLayout" Padding="5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="False">
+                <ListView x:Name="listTransaction"
+                      ItemsSource="{Binding Transactions}"
+                           SeparatorVisibility="None" IsGroupingEnabled="true" ItemSelected="transactionSelected"
+                          Refreshing="listTransaction_Refreshing" 
+                      HasUnevenRows="True">
+                    <ListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Heading}" Style="{DynamicResource SmallLabelStyle}" Margin="{Binding Frame}" FontAttributes="None"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.GroupHeaderTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <ContentView>
+                                        <StackLayout HorizontalOptions="FillAndExpand" Spacing="0" Margin="5" >
+                                            <Label Text="{Binding Time}" Style="{DynamicResource SmallLabelStyle}" Margin="2"
+                                                   HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"/>
+                                            <Frame BackgroundColor="{DynamicResource BackgroundColor}" CornerRadius="10" Margin="0" Padding="5"
+                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
+                                                <Grid HorizontalOptions="FillAndExpand">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="AUTO"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="AUTO"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Label Text="Оператор" Style="{DynamicResource SmallLabelStyle}" Grid.Column="0" Grid.Row="0"/>
+                                                    <Label Text="{Binding TopLabel}" Style="{DynamicResource UsualLabelStyle}" Grid.Column="0" Grid.Row="1"/>
+                                                    <Label Text="Рубли" Style="{DynamicResource SmallLabelStyle}" Grid.Column="1" Grid.Row="0"/>
+                                                    <Label Text="{Binding Cost}" Style="{DynamicResource UsualLabelStyle}" Grid.Column="1" Grid.Row="1"/>
+                                                    <Label Text="Бонусы" Style="{DynamicResource SmallLabelStyle}" Grid.Column="2" Grid.Row="0"/>
+                                                    <Label Text="{Binding BonusLabel}" Style="{DynamicResource UsualLabelStyle}" Grid.Column="2" Grid.Row="1" TextColor="{DynamicResource MainColor}"/>
+                                                    <views:Checkbox Color="{DynamicResource MainColor}" IsChecked="{Binding IsChecked}" IsEnabled="False"
+                                                            ScaleCheckbox="2"
+                                                            Grid.Column="3" Grid.Row="1"/>
+                                                </Grid>
+                                            </Frame>
+                                        </StackLayout>
+                                    </ContentView>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="{DynamicResource SublettersColor}"
+                   CornerRadius="10" IsVisible="False" >
+                    <StackLayout Padding="12" >
+                        <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Label Text = "Покупок еще не было" Style="{DynamicResource SmallLabelStyle}" 
+                               HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Label x:Name="statusTransaction" IsVisible="False" Style="{DynamicResource SmallLabelStyle}" 
+                               HorizontalOptions="CenterAndExpand"/>
+                <Grid x:Name="sendList" IsVisible="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="acceptButton" Text="Одобрить" Style="{DynamicResource UsuallButtonStyle}" Clicked="acceptButton_Clicked" 
+                            HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0"/>
+                    <Button x:Name="declineButton" Text="Отклонить" Style="{DynamicResource UsuallButtonStyle}" Clicked="declineButton_Clicked" 
+                            HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="0"/>
+                </Grid>
+            </StackLayout>
+
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+            <views:NoConnectionView x:Name="noConnectionLayout"  IsVisible="False" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

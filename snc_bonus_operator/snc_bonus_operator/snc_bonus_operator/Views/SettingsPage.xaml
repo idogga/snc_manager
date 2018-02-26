@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:snc_bonus_operator"           
+             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"
+             xmlns:customControls="clr-namespace:snc_bonus_operator.DepServices;assembly=snc_bonus_operator"
+             x:Class="snc_bonus_operator.SettingsPage"
+             Title="Настройки">
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                        BackgroundColor="{DynamicResource SublettersColor}">
+            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView>
+                    <StackLayout Orientation="Vertical" Padding="8">
+                        <StackLayout x:Name="sectionHeaderLayout">
+                            <Label x:Name="sectionHeaderLabel" Text="Пользовательские настройки" Style="{DynamicResource UsualLabelStyle}"
+                        HorizontalOptions="Center"/>
+                            <Frame Style="{DynamicResource UsualFrameStyle}">
+                                <StackLayout x:Name="useFingerprintStack" Orientation="Horizontal" Margin="10">
+                                    <Label x:Name="useFingerprintLabel" Text="Использовать считыватель пальца : " 
+                                       Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="StartAndExpand" 
+                                       VerticalOptions="StartAndExpand"/>
+                                    <Switch x:Name="useFingerprintSwitch" HorizontalOptions="End" IsToggled="True" 
+                                        VerticalOptions="StartAndExpand" Toggled="useFingerprintSwitch_Toggled">
+                                        <Switch.Effects>
+                                            <local:SimpleSwitchEffect/>
+                                        </Switch.Effects>
+                                    </Switch>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                        <Label x:Name="sectionHeaderPhoneLabel" Text="Общие настройки" FontSize="Medium" 
+               HorizontalOptions="Center" Style="{DynamicResource UsualLabelStyle}"/>
+                        <StackLayout Orientation="Vertical">
+                            <Frame Style="{DynamicResource UsualFrameStyle}">
+                                <StackLayout >
+                                    <StackLayout x:Name="languageStack" Margin="10">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" NumberOfTapsRequired="1"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label x:Name="languageLabel" Text="Язык : " 
+                                       Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="StartAndExpand" 
+                                       VerticalOptions="StartAndExpand"/>
+                                        <Label x:Name="statusLanguageLabel" HorizontalOptions="End"  VerticalOptions="StartAndExpand" 
+                                       Style="{DynamicResource LinkLabelStyle}"/>
+                                    </StackLayout>
+
+                                    <StackLayout BackgroundColor="LightGray" HeightRequest="2" HorizontalOptions="FillAndExpand"/>
+
+                                    <StackLayout x:Name="useVibrationLayout" Orientation="Horizontal" Margin="10">
+                                        <Label x:Name="useVibrationLabel" Text="Использовать вибрацию :" 
+                                       Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="StartAndExpand" 
+                                       VerticalOptions="StartAndExpand"/>
+                                        <Switch x:Name="useVibrationSwitch" HorizontalOptions="End" IsToggled="True" 
+                                        VerticalOptions="StartAndExpand" Toggled="useVibrationSwitch_Toggled">
+                                            <Switch.Effects>
+                                                <local:SimpleSwitchEffect/>
+                                            </Switch.Effects>
+                                        </Switch>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+
+            <Frame x:Name="notificationFrameLarge" AbsoluteLayout.LayoutFlags="PositionProportional" IsVisible="False" 
+                   HorizontalOptions="CenterAndExpand" Padding="10"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" CornerRadius="8" 
+                   HasShadow="True" OutlineColor="{DynamicResource MainColor}" BackgroundColor="{DynamicResource MainColor}">
+                <Frame x:Name="notificationFrameSmall" CornerRadius="8" HasShadow="True" OutlineColor="{DynamicResource MainColor}" 
+                       BackgroundColor="{DynamicResource BackgroundColor}">
+                    <StackLayout>
+                        <Label Text="Уведомлять через : " Style="{DynamicResource UsualLabelStyle}"/>
+                        <StackLayout Orientation="Horizontal" x:Name="emailLabel">
+                            <views:Checkbox x:Name="checkEmail" Color="{DynamicResource MainColor}" ScaleCheckbox="2" />
+                            <Label Text="Email" Style="{DynamicResource UsualLabelStyle}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" x:Name="notificationFrame">
+                            <views:Checkbox x:Name="checkNotification" Color="{DynamicResource MainColor}" ScaleCheckbox="2" />
+                            <Label Text="Push-уведомления" Style="{DynamicResource UsualLabelStyle}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" x:Name="smsFrame" >
+                            <views:Checkbox x:Name="checkSms" Color="{DynamicResource MainColor}" ScaleCheckbox="2"/>
+                            <Label Text="СМС" Style="{DynamicResource UsualLabelStyle}" />
+                        </StackLayout>
+
+                        <Button x:Name="continueButton" Text="Подтвердить" Clicked="continueButton_Clicked"
+                            HorizontalOptions="EndAndExpand" Style="{DynamicResource DigitButtonStyle}"/>
+                    </StackLayout>
+                </Frame>
+            </Frame>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
