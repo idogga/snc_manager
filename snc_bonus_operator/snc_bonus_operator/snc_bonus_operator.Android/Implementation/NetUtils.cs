@@ -24,7 +24,7 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(snc_bonus_operator.Droid.Implementation.NetUtils))]
 namespace snc_bonus_operator.Droid.Implementation
 {
-    public class NetUtils : snc_bonus_operator.Interfaces.INetUtils
+    public class NetUtils : Interfaces.INetUtils
     {
         static SenderConnector sc = new SenderConnector();
 
@@ -50,8 +50,7 @@ namespace snc_bonus_operator.Droid.Implementation
         {
             return sc.LastError;
         }
-
-       public InternetStatus IsServerPing(string Adress)
+        public InternetStatus IsServerPing(string Adress)
         {
             var result = InternetStatus.Online;
             if (!isPing(Adress))
@@ -144,7 +143,7 @@ namespace snc_bonus_operator.Droid.Implementation
                     string name = Guid.NewGuid().ToString();
                     if (TimeOut != null)
                         name += ";TimeOut =" + TimeOut;
-                    send.SendPost(ds, name, type);
+                    send.SendPost(new MemoryStream(Encoding.UTF8.GetBytes(ds)), name, type);
                     if (send.LastError != "")
                         error = send.LastError;
                 }
@@ -159,7 +158,7 @@ namespace snc_bonus_operator.Droid.Implementation
             /// <param name="path">Путь к файлу</param>
             public void SendData(string path, CertificateType type)
             {
-                send.SendPost(path, Guid.NewGuid().ToString(), type);
+                send.SendPost(new MemoryStream(Encoding.UTF8.GetBytes(path)), Guid.NewGuid().ToString(), type);
                 if (send.LastError != "")
                     error = send.LastError;
             }
@@ -173,6 +172,7 @@ namespace snc_bonus_operator.Droid.Implementation
             public bool Open(int port, string Adress, CertificateType type, int ResiveTimeOut = -1)
             {
                 return send.Open(port, Adress, Ssl, type, ResiveTimeOut);
+                //return send.Open(port, Adress, false, type, ResiveTimeOut);
             }
             /// <summary>
             /// Получить ответ на запрос
@@ -194,12 +194,15 @@ namespace snc_bonus_operator.Droid.Implementation
                                 MemoryStream file = val as MemoryStream;
                                 file.Position = 0;
                                 str = new StreamReader(file).ReadToEnd();
+                                Logger.WriteLine("str2 : " + str);
                             }
-                            else
-                                if (val is string)
+                            else if (val is string)
                             {
                                 if (!val.ToString().Contains("Guid"))
+                                {
                                     msg += val.ToString();
+                                    Logger.WriteLine("str1 : " + str);
+                                }
                             }
                         }
                     }
@@ -261,11 +264,9 @@ namespace snc_bonus_operator.Droid.Implementation
             public String http_url;
             public String http_protocol_versionstring;
             public Hashtable httpHeaders = new Hashtable();
-            public Stream inputStream;
             public List<object> outlist = new List<object> { };
             public TcpClient tcp = null;
             public Socket sender = null;
-            public MemoryStream headerstream;
             public Stream sendStream = null;
 
             public bool Open(int port, string Adress, bool ssl, CertificateType type, int ResiveTimeOut = -1)
@@ -277,7 +278,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 sender.ReceiveBufferSize = 128000;
                 sender.SendBufferSize = 128000;
                 System.Net.IPAddress ipAddr = null;
-                //IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
+                IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
                 if (!IPAddress.TryParse(Adress, out ipAddr))
                 {
                     foreach (IPAddress ip in Dns.GetHostAddresses(Adress))
@@ -286,7 +287,7 @@ namespace snc_bonus_operator.Droid.Implementation
                     }
                 }
                 IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
-                sender.ReceiveTimeout = 15000;
+                sender.ReceiveTimeout = 600000;
                 if (ResiveTimeOut != -1)
                     sender.ReceiveTimeout = ResiveTimeOut;
                 IAsyncResult result = sender.BeginConnect(ipEndPoint, null, null);
@@ -304,6 +305,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 {
                     return true;
                 }
+
             }
 
             public void Close()
@@ -341,50 +343,41 @@ namespace snc_bonus_operator.Droid.Implementation
                 return collection1;
             }
 
-            public void SendPost(string str, string cookie, CertificateType type)
+            public void SendPost(MemoryStream Data, string cookie, CertificateType type)
             {
                 LastError = "";
                 try
                 {
-                    MemoryStream Data = new MemoryStream(Encoding.UTF8.GetBytes(str));
                     // Буфер для входящих данных     
                     string Headers = "POST HTTP/1.0 \r\n" + "Content-type: text/xml \r\n" + "Cookie: Guid=" + cookie + "; \r\n" +
                     "Content-length: " + Data.Length + " \r\n" + "Content-transfer-encoding: text \r\n" + "Connection: open \r\n\r\n";
                     //message = Headers + message;
                     Data.Position = 0;
                     sendStream = GetStream(type);
-                    byte[] msg = Encoding.UTF8.GetBytes(Headers);
-                    sendStream.WriteAsync(msg, 0, msg.Length);
-                    sendStream.WriteAsync(Data.ToArray(), 0, Convert.ToInt32(Data.Length));
-                    // Отправляем данные через сокет
-                    //int bytesSent = sender.Send(ReadFully(sendStream));
+                    var dataArray = Data.ToArray();
+                    var stream = new MemoryStream();
+                    var headers = Encoding.ASCII.GetBytes(Headers);
+                    stream.Write(headers, 0, headers.Length);
+                    var data = Data.ToArray();
+                    stream.Write(data, 0, data.Length);
+                    sendStream.Write(stream.ToArray(), 0, (int)stream.Length);
                 }
                 catch (Exception ex)
                 {
                     LastError = ex.Message;
                 }
             }
-
             private X509CertificateCollection GetCertificate(CertificateType type)
             {
                 X509CertificateCollection outCertificate = new X509CertificateCollection();
                 X509Certificate2 x509 = null;
                 AsymmetricCipherKeyPair privateKey = null;
-
-                try
-                {
-                    x509 = new X509Certificate2(Encoding.ASCII.GetBytes(MobileStaticVariables.ConectSettings.Certificates[(int)type].Certificate));
-                    var stringReader = new StringReader(MobileStaticVariables.ConectSettings.Certificates[(int)type].PrivateKey);
-                    PemReader reader = new PemReader(stringReader);
-                    var key = reader.ReadObject() as AsymmetricCipherKeyPair;
-                    if (key != null)
-                        privateKey = key;
-                }
-                catch (Exception ex)
-                {
-                    Logger.WriteError(ex);
-                }
-
+                x509 = new X509Certificate2(Encoding.ASCII.GetBytes(MobileStaticVariables.ConectSettings.Certificates[(int)type].Certificate));
+                var stringReader = new StringReader(MobileStaticVariables.ConectSettings.Certificates[(int)type].PrivateKey);
+                PemReader reader = new PemReader(stringReader);
+                var key = reader.ReadObject() as AsymmetricCipherKeyPair;
+                if (key != null)
+                    privateKey = key;
 
                 if (x509 != null)
                 {
@@ -400,13 +393,11 @@ namespace snc_bonus_operator.Droid.Implementation
                             rsa.Modulus, rsa.PublicExponent, rsa.PrivateExponent, rsa.Prime1, rsa.Prime2, rsa.Exponent1, rsa.Exponent2, rsa.Coefficient);
 
                         x509.PrivateKey = DotNetUtilities.ToRSA(rsaparams);
-
+                        outCertificate.Add(x509);
                     }
-                    outCertificate.Add(x509);
                 }
                 return outCertificate;
             }
-
             private Stream GetStream(CertificateType type)
             {
                 Stream outstream = null;
@@ -426,11 +417,74 @@ namespace snc_bonus_operator.Droid.Implementation
             }
 
             private static X509Certificate CertificateSelectionCallback(object sender, string targetHost,
-                    X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
+        X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
             {
                 return localCertificates[0];
             }
 
+            private void ReadHeaders(Stream netStream)
+            {
+                bool end = true;
+                int wh = 0;
+                while (end)
+                {
+                    if (httpHeaders.Count == 0)
+                    {
+                        try
+                        {
+                            parseRequest(netStream);
+                            readHeaders(netStream);
+                            //HeaderLeng = Convert.ToInt32(headerstream.Position);
+                            //OneHeader = HeaderLeng;
+                        }
+                        catch
+                        {
+                            wh++;
+                            if (wh > 100)
+                                throw new System.InvalidOperationException("Не найден Content-Length в заголовках");
+                        }
+                    }
+                    else
+                    {
+                        wh++;
+                        if (wh > 100)
+                            throw new System.InvalidOperationException("Не найден Content-Length в заголовках");
+                    }
+                    if (httpHeaders.Contains("Content-Length".ToUpper()))
+                        break;
+                }
+            }
+
+            private void ReadData(MemoryStream outData, Stream inData, int contentLeng)
+            {
+                byte[] buffer = new byte[contentLeng];
+                int position = 0;
+                if (inData.CanRead)
+                {
+                    int next_char;
+                    int fail = 0;
+                    while (position < contentLeng)
+                    {
+                        if (fail > 100)
+                        {
+                            try
+                            {
+                                inData.Write(new byte[0], 0, 0);
+                            }
+                            catch
+                            {
+                                return;
+                            }
+                        }
+                        next_char = inData.ReadByte();
+                        if (next_char == -1) { Thread.Sleep(1); fail++; continue; };
+                        buffer[position] = Convert.ToByte(next_char);
+                        position++;
+                    }
+                }
+                outData.Write(buffer, 0, contentLeng);
+                outData.Position = 0;
+            }
             public object ReceivePost()
             {
                 string resive = "";
@@ -438,14 +492,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 MemoryStream stream = new MemoryStream();
                 string contType = "";
                 httpHeaders = new Hashtable();
-                int HeaderLeng = -1;
-                int OneHeader = 0;
-                bool end = true;
-                inputStream = new MemoryStream();
-                headerstream = new MemoryStream();
-                int wh = 0;
                 byte[] bytes = new byte[sender.ReceiveBufferSize];
-
                 try
                 {
                     Stream nstr;
@@ -453,128 +500,11 @@ namespace snc_bonus_operator.Droid.Implementation
                         nstr = sendStream;
                     else
                         nstr = tcp.GetStream();
-                    while (end)
-                    {
-                        int sres = nstr.Read(bytes, 0, bytes.Length);
-                        if (sres != 0)
-                        {
-                            inputStream.Write(bytes, 0, sres);
-                            headerstream.Write(bytes, 0, sres);
-                            headerstream.Position = 0;
-                        }
-                        if (httpHeaders.Count == 0)
-                        {
-                            try
-                            {
-
-                                headerstream.Position = 0;
-                                ParseRequest(headerstream);
-                                ReadHeaders(headerstream);
-                                HeaderLeng = Convert.ToInt32(headerstream.Position);
-                                OneHeader = HeaderLeng;
-                            }
-                            catch
-                            {
-                                wh++;
-                                if (wh > 100)
-                                    throw new System.InvalidOperationException("Не найден Content-Length в заголовках");
-                            }
-                        }
-                        else
-                        {
-                            wh++;
-                            if (wh > 100)
-                                throw new System.InvalidOperationException("Не найден Content-Length в заголовках");
-                        }
-                        if (httpHeaders.Contains("Content-Length".ToUpper()))
-                            if (Convert.ToInt32(httpHeaders["Content-Length".ToUpper()]) == inputStream.Length - HeaderLeng)
-                            {
-                                break;
-                            }
-                    }
+                    ReadHeaders(nstr);
                     contType = httpHeaders["CONTENT-TYPE"].ToString().Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries)[0].ToLower();
-                    inputStream.Position = 0;
-                    inputStream.Position += HeaderLeng;
-                    byte[] buf = new byte[12000];
-                    int to_read = Convert.ToInt32(inputStream.Length - HeaderLeng);
-                    switch (contType)
-                    {
-                        case "text/xml":
-                            {
-
-                                while (to_read > 0)
-                                {
-                                    //Console.WriteLine("starting Read, to_read={0}", to_read);
-
-                                    int numread = this.inputStream.Read(buf, 0, Math.Min(12000, to_read));
-                                    //Console.WriteLine("read finished, numread={0}", numread);
-                                    if (numread == 0)
-                                    {
-                                        if (to_read == 0)
-                                        {
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    to_read -= numread;
-                                    stream.Write(buf, 0, numread);
-                                }
-                            }
-                            break;
-                        case "application/zip":
-                            while (to_read > 0)
-                            {
-                                //Console.WriteLine("starting Read, to_read={0}", to_read);
-
-                                int numread = this.inputStream.Read(buf, 0, Math.Min(12000, to_read));
-                                //Console.WriteLine("read finished, numread={0}", numread);
-                                if (numread == 0)
-                                {
-                                    if (to_read == 0)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                to_read -= numread;
-                                stream.Write(buf, 0, numread);
-                            }
-                            break;
-                        case "text/html":
-                            while (to_read > 0)
-                            {
-                                //Console.WriteLine("starting Read, to_read={0}", to_read);
-
-                                int numread = this.inputStream.Read(buf, 0, Math.Min(12000, to_read));
-                                //Console.WriteLine("read finished, numread={0}", numread);
-                                if (numread == 0)
-                                {
-                                    if (to_read == 0)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                to_read -= numread;
-                                stream.Write(buf, 0, numread);
-                            }
-                            resive += GetStringStream(stream);//GetString(((MemoryStream)inputStream).ToArray(), HeaderLeng, oldsres - HeaderLeng);
-                            nstr.Flush();
-                            end = false;
-                            break;
-                        default:
-                            end = false;
-                            break;
-                    }
+                    ReadData(stream, nstr, Convert.ToInt32(httpHeaders["Content-Length".ToUpper()]));
+                    var reader = new StreamReader(stream);
+                    resive = reader.ReadToEnd();
                 }
                 catch (Exception ex)
                 {
@@ -593,13 +523,11 @@ namespace snc_bonus_operator.Droid.Implementation
                     outlist.Add(httpHeaders["COOKIE"]);
                     return outlist;
                 }
-
-
             }
 
-            public void ParseRequest(MemoryStream stream)
+            public void parseRequest(Stream stream)
             {
-                String request = StreamReadLine(stream);
+                String request = streamReadLine(stream);
                 string[] tokens = request.Split(' ');
                 http_method = tokens[0].ToUpper().Trim();
                 http_url = tokens[1].Trim();
@@ -608,11 +536,11 @@ namespace snc_bonus_operator.Droid.Implementation
                 //Console.WriteLine("starting: " + request);
             }
 
-            public void ReadHeaders(MemoryStream stream)
+            public void readHeaders(Stream stream)
             {
                 //Console.WriteLine("readHeaders()");
                 String line;
-                while ((line = StreamReadLine(stream)) != null)
+                while ((line = streamReadLine(stream)) != null)
                 {
                     if (line.Equals(""))
                     {
@@ -638,25 +566,39 @@ namespace snc_bonus_operator.Droid.Implementation
                 }
             }
 
-            private string StreamReadLine(Stream inputStream)
+            private string streamReadLine(Stream inputStream)
             {
                 string data = "";
-                if (inputStream.Length != 0)
+                int next_char;
+                int oldChar;
+                int fail = 0;
+                while (inputStream.CanRead)
                 {
-                    int next_char;
-                    while (true)
+                    if (fail > 100)
                     {
-                        next_char = inputStream.ReadByte();
-                        if (next_char == '\n') { break; }
-                        if (next_char == '\r') { continue; }
-                        if (next_char == -1) { Thread.Sleep(1); continue; };
-                        data += Convert.ToChar(next_char);
+                        try
+                        {
+                            inputStream.Write(new byte[0], 0, 0);
+                        }
+                        catch
+                        {
+                            return "FAIL";
+                        }
                     }
+                    next_char = inputStream.ReadByte();
+                    if (next_char == '\n') { break; }
+                    if (next_char == '\r') { continue; }
+                    if (next_char == -1) { Thread.Sleep(1); fail++; continue; };
+                    oldChar = next_char;
+                    data += Convert.ToChar(next_char);
                 }
                 return data;
             }
 
-
+            //static string GetString(byte[] bytes,int leng)
+            //{
+            //    return System.Text.Encoding.UTF8.GetString(bytes,0,leng);
+            //}
             private string GetStringStream(Stream inputStream)
             {
                 inputStream.Position = 0;

@@ -26,6 +26,7 @@ namespace snc_bonus_operator.Accounting
         bool needToLoad = true;
         const int _amount = 20;
         List<int> listOfPosKeys = new List<int>();
+        bool isBillOpen = false;
 
         public TransactionPage()
         {
@@ -74,15 +75,17 @@ namespace snc_bonus_operator.Accounting
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            if (MobileStaticVariables.UserAppSettings.IsInetAvaliable == Settings.InternetStatus.Online)
+            if (!isBillOpen)
             {
-                LoadMainScreen();
-            }
-            else
-            {
-                noConnectionLayout.IsVisible = true;
-                Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
+                if (MobileStaticVariables.UserAppSettings.IsInetAvaliable == Settings.InternetStatus.Online)
+                {
+                    LoadMainScreen();
+                }
+                else
+                {
+                    noConnectionLayout.IsVisible = true;
+                    Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
+                }
             }
         }
 
@@ -228,19 +231,8 @@ namespace snc_bonus_operator.Accounting
             if (e.SelectedItem == null)
                 return;
             var selectTransaction = (AllTransactionView)e.SelectedItem;
-            var basket = new ShopBasket()
-            {
-                BonusCountIn = selectTransaction.Transaction.BonusIn,
-                BonusCountOut = selectTransaction.Transaction.BonusOut,
-                Discount = selectTransaction.Transaction.Discount,
-                FinalPrice = selectTransaction.Transaction.PersonCost,
-                TimeComplete = selectTransaction.Transaction.CompleteDatetime,
-                TotalPrice = selectTransaction.Transaction.ShopBaseCost,
-                UserProgrammName = selectTransaction.Transaction.UserProgrammName,
-                GraphicalNumber= selectTransaction.Transaction.GraphicalNumber,
-            };
-            await Navigation.PushModalAsync(new BillPage(basket, false));
-
+            isBillOpen = true;
+            await Navigation.PushModalAsync(new BillPage(selectTransaction.Transaction));
             listTransaction.SelectedItem = null;
         }
 

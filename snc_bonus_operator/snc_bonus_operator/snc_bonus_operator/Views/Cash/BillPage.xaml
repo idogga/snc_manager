@@ -10,14 +10,15 @@
                     <Label Text="Чек" Style="{DynamicResource LinkLabelStyle}" 
                            HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
                     <StackLayout x:Name="passKeyboardGrid">
-                        <Label x:Name="grapicalNumber"/>
-                        <Label x:Name="dateLabel"/>
-                        <Label x:Name="summLabel"/>
-                        <Label x:Name="tariffLabel"/>
-                        <Label x:Name="bonusCountOutLabel"/>
-                        <Label x:Name="bonusCountInLabel"/>
-                        <Label x:Name="discountLabel"/>
-                        <Label x:Name="finalCashLabel"/>
+                        <Label x:Name="grapicalNumber" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="dateLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="summLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="tariffLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="bonusCountOutLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="bonusCountInLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="discountLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="finalCashLabel" Style="{DynamicResource UsualLabelStyle}" />
+                        <Label x:Name="acceptedLabel" IsVisible="False" Style="{DynamicResource UsualLabelStyle}" />
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
