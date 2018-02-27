@@ -26,8 +26,6 @@ namespace snc_bonus_operator.Accounting
         bool needToLoad = true;
         const int _amount = 20;
         List<int> listOfPosKeys = new List<int>();
-        bool mayFirstLoad = false;
-        bool needToReload = true;
 
         public TransactionPage()
         {
@@ -70,7 +68,6 @@ namespace snc_bonus_operator.Accounting
             };
             FilterPage.EndEvent += LoadFilter;
             {
-                mayFirstLoad = true;
             }
         }
 
@@ -101,6 +98,7 @@ namespace snc_bonus_operator.Accounting
             transactions.Amount = _amount;
             transactions.Offset = 0;
             transactions.TransactionStatuses = info.TransactionStatuses;
+            transactions.SellerList = info.SellerList;
         }
 
         async void LoadPage()
@@ -241,7 +239,6 @@ namespace snc_bonus_operator.Accounting
                 UserProgrammName = selectTransaction.Transaction.UserProgrammName,
                 GraphicalNumber= selectTransaction.Transaction.GraphicalNumber,
             };
-            needToReload = false;
             await Navigation.PushModalAsync(new BillPage(basket, false));
 
             listTransaction.SelectedItem = null;

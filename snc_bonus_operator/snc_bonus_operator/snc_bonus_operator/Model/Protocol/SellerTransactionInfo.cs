@@ -108,5 +108,11 @@ namespace snc_bonus_operator.Protocol
 
         [JsonProperty("UPN")]
         public string UserProgrammName { get; set; } = string.Empty;
+
+        [JsonProperty("ASN")]
+        public string AcceptedSellerName { get; set; } = "";
+
+        [JsonProperty("AD")]
+        public string AcceptedDate { get; set; } = "";
     }
 }

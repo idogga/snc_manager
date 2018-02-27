@@ -29,9 +29,9 @@
                         </StackLayout>
                         <Button x:Name="personButton" Text="Выбрать сотрудников" Clicked="personButton_Clicked" 
                                 Style="{DynamicResource DigitButtonStyle}"
-                                HorizontalOptions="FillAndExpand"/>
-                        <Button Text="Выбрать типы покупок" Clicked="selectorOpen" Style="{DynamicResource DigitButtonStyle}"
-                                HorizontalOptions="FillAndExpand"/>
+                                HorizontalOptions="FillAndExpand" Margin="10"/>
+                        <Button x:Name="typeSelectorButton" Text="Выбрать типы покупок" Clicked="selectorOpen" Style="{DynamicResource DigitButtonStyle}"
+                                HorizontalOptions="FillAndExpand" Margin="10"/>
                     </StackLayout>
                 </ScrollView>
 
@@ -69,35 +69,12 @@
             <StackLayout x:Name="sellerSelector" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                          AbsoluteLayout.LayoutFlags="All"
                              AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False">
-                <Frame BackgroundColor="{DynamicResource BackgroundColors}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Frame BackgroundColor="{DynamicResource ObjectBackgroundColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                     <StackLayout>
-                        <ListView x:Name="listSellers"
-                                ItemsSource="{Binding Sellers}"
-                                SeparatorVisibility="Default" 
-                                  ItemSelected="SellerSelected" BackgroundColor="{DynamicResource SublettersColor}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <ViewCell.View>
-                                            <ContentView>
-                                                <Frame BackgroundColor="{DynamicResource BackgroundColors}" CornerRadius="10" Margin="0" Padding="5"
-                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
-                                                    <StackLayout Orientation="Horizontal" Padding="0">
-                                                        <StackLayout>
-                                                            <Label Text="{Binding OperNameLabel}" Style="{DynamicResource UsualLabelStyle}"/>
-                                                            <Label Text="{Binding OperDescLabel}" Style="{DynamicResource SmallLabelStyle}"/>
-                                                        </StackLayout>
-                                                        <views:Checkbox Color="{DynamicResource MainColor}" IsChecked="{Binding IsChecked}" IsEnabled="False"
-                                                            ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
-                                                    </StackLayout>
-                                                    </Frame>
-                                            </ContentView>
-                                        </ViewCell.View>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <Button Text="Применить" Clicked="acceptSellers" Style="{DynamicResource FunctionalButtonStyle}"/>
+                        <ScrollView>
+                            <StackLayout x:Name="listSellers" BackgroundColor="{DynamicResource BackgroundColors}"/>
+                        </ScrollView>
+                        <Button Text="Применить" Clicked="acceptSellers" Style="{DynamicResource FunctionalButtonStyle}" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

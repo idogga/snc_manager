@@ -50,7 +50,7 @@
             </Style>
 
             <Style x:Key="FunctionalButtonStyle" TargetType="Button">
-                <Setter Property="TextColor" Value="{DynamicResource BackgroundColors}"/>
+                <Setter Property="TextColor" Value="{DynamicResource ObjectBackgroundColor}"/>
                 <Setter Property="FontSize" Value="Medium"/>
                 <Setter Property="BackgroundColor" Value="{DynamicResource SelectionColor}"/>
                 <Setter Property="BorderRadius" Value="8"/>
@@ -111,7 +111,7 @@
             <Style x:Key="DigitButtonStyle" TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
                 <Setter Property="FontSize" Value="Medium"/>
-                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColors}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource ObjectBackgroundColor}"/>
                 <Setter Property="BorderColor" Value="{DynamicResource MainColor}"/>
                 <Setter Property="BorderWidth" Value="2"/>
                 <Setter Property="BorderRadius" Value="8"/>

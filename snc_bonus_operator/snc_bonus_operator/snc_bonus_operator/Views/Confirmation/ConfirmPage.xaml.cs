@@ -120,7 +120,7 @@ namespace snc_bonus_operator.Confirmation
                 var transactionsInfo = "";
                 try
                 {
-                    var acceptSelling = new AcceptSelling() { Accept = true, TransactionKey = MeassageList.ToList() };
+                    var acceptSelling = new AcceptSelling() { Accept = true, TransactionKey = MeassageList.ToList(), AcceptSellerName = MobileStaticVariables.UserInfo.UserNickName };
                     transactionsInfo = MobileStaticVariables.WebUtils.SendVerifyTransaction("Accept", Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(acceptSelling))));
                     var conflictTransactions = JsonConvert.DeserializeObject<ConflictTransactions>(transactionsInfo);
                     if (conflictTransactions.ResultState == RequestResult.Results.Success)

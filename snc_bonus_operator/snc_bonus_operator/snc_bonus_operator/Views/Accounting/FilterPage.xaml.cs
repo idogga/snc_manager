@@ -10,7 +10,7 @@ namespace snc_bonus_operator.Accounting
     {
         public static event FilterDelegate EndEvent;
         SellerTransactionInfo filter;
-        ObservableCollection<SellerInfo> Sellers { get; set; } = new ObservableCollection<SellerInfo>();
+        //ObservableCollection<SellerInfo> Sellers { get; set; } = new ObservableCollection<SellerInfo>();
 
         #region Конструктор
         public FilterPage(SellerTransactionInfo _filter)
@@ -20,8 +20,38 @@ namespace snc_bonus_operator.Accounting
             dateFromPicker.Date = filter.From;
             dateToPicker.Date = filter.To;
             personButton.IsVisible = MobileStaticVariables.UserInfo.UserType == UserTypes.Admin;
+            foreach (var item in MobileStaticVariables.UserInfo.Stuff)
+            {
+                var frame = new Frame() { Style = (Style)App.Current.Resources["UsualFrameStyle"] };
+                var stackHorizontal = new StackLayout() { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.FillAndExpand };
+                var stackVertical = new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand };
+                var oper_nam = new Label() { Text = item.Name, Style = (Style)App.Current.Resources["UsualLabelStyle"],  StyleId = item.MobileManagerKey.ToString() };
+                stackVertical.Children.Add(oper_nam);
+                var oper_pos = new Label() { Text = item.Position, Style = (Style)App.Current.Resources["SubLabelStyle"] };
+                stackVertical.Children.Add(oper_pos);
+                stackHorizontal.Children.Add(stackVertical);
+                var checkbox = new Checkbox() { HorizontalOptions = LayoutOptions.EndAndExpand, IsEnabled = false, Color = (Color)App.Current.Resources["MainColor"], ScaleCheckbox = 2.0 };
+                checkbox.IsChecked = filter.SellerList.Contains(int.Parse(oper_nam.StyleId));
+                stackHorizontal.Children.Add(checkbox);
+                frame.Content = stackHorizontal;
+                var tap = new TapGestureRecognizer();
+                tap.Tapped += (s, e) =>
+                {
+                    if(filter.SellerList.Contains(int.Parse(oper_nam.StyleId)))
+                    {
+                        checkbox.IsChecked = false;
+                        filter.SellerList.Remove(int.Parse(oper_nam.StyleId));
+                    }
+                    else
+                    {
+                        checkbox.IsChecked = true;
+                        filter.SellerList.Add(int.Parse(oper_nam.StyleId));
+                    }
+                };
+                frame.GestureRecognizers.Add(tap);
+                listSellers.Children.Add(frame);
+            }
         }
-
         #endregion
 
         #region События
@@ -42,12 +72,8 @@ namespace snc_bonus_operator.Accounting
 
         private void personButton_Clicked(object sender, EventArgs e)
         {
+            sellerSelector.BackgroundColor = new Color(0, 0, 0, 0.5);
             sellerSelector.IsVisible = true;
-            foreach(var item in MobileStaticVariables.UserInfo.Stuff)
-            {
-                Sellers.Add(new SellerInfo(item.MobileManagerKey, item.Name, item.Position, filter.SellerList.Contains(item.MobileManagerKey)));
-            }
-            listSellers.ItemsSource = Sellers;
         }
 
         private async void exitButton_Clicked(object sender, EventArgs e)
@@ -87,6 +113,7 @@ namespace snc_bonus_operator.Accounting
             {
                 filter.TransactionStatuses.Add(SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration);
             }
+            typeSelectorButton.Text = GetTypeSelectorButtonText();
         }
 
         private void selectorOpen(object sender, EventArgs e)
@@ -103,39 +130,18 @@ namespace snc_bonus_operator.Accounting
             sellerSelector.IsVisible = false;
         }
 
-        private void SellerSelected(object sender, SelectedItemChangedEventArgs e)
+        private string GetTypeSelectorButtonText()
         {
-            if (e.SelectedItem == null)
-                return;
-            var selectTransaction = (SellerInfo)e.SelectedItem;
-            if (selectTransaction.IsChecked)
+            var result = "Выбрать типы покупок";
+            if(filter.TransactionStatuses.Count == 0)
             {
-                filter.SellerList.Remove(selectTransaction.ID);
-                selectTransaction.IsChecked = false;
+                result = "Не выбран ни один тип покупок";
             }
-            else
+            else if (filter.TransactionStatuses.Count < 4)
             {
-                filter.SellerList.Add(selectTransaction.ID);
-                selectTransaction.IsChecked = true;
+                result = string.Format("Выбрано типов покупок : {0}", filter.TransactionStatuses.Count);
             }
-            listSellers.ItemsSource = Sellers;
-            listSellers.SelectedItem = null;
-        }
-
-        class SellerInfo
-        {
-            public string OperNameLabel { get; set; } = "";
-            public string OperDescLabel { get; set; } = "";
-            public bool IsChecked { get; set; } = true;
-            public int ID { get; set; } = 0;
-
-            public SellerInfo(int id, string name, string description, bool containsInList)
-            {
-                ID = id;
-                OperNameLabel = name;
-                OperDescLabel = description;
-                IsChecked = containsInList;
-            }
+            return result;
         }
     }
 }
