@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <Frame CornerRadius="10" BackgroundColor="{DynamicResource BackgroundColor}" HasShadow="False"
+                <Frame CornerRadius="10" BackgroundColor="{DynamicResource BackgroundColor}" HasShadow="False" HorizontalOptions="FillAndExpand"
                        Margin="10">
                     <StackLayout VerticalOptions="StartAndExpand">
                         <Image Source="splash_logo.bmp" HorizontalOptions="CenterAndExpand"/>

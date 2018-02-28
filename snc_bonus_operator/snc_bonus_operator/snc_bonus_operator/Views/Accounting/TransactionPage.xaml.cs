@@ -87,11 +87,10 @@ namespace snc_bonus_operator.Accounting
                     Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
                 }
             }
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
+            else
+            {
+                isBillOpen = false;
+            }
         }
 
         void LoadFilter(SellerTransactionInfo info)

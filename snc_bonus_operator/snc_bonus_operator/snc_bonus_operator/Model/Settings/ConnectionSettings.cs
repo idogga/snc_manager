@@ -100,7 +100,7 @@ J7b8AyuGUGZivZ4zFOpg5oLj83brdmJt2CN+kFAcfALBmCXNKUenqI0KbWHgyq3FZQXcA0nmxX7J
 XTas
 -----END CERTIFICATE-----",
                 IP = "mobile.sncard.ru",
-                Port = 2580
+                Port = 2585
             };
 
             Certificates[(int)CertificateType.BASE_ISSUER] = new CertificateKey()
@@ -148,7 +148,7 @@ J7b8AyuGUGZivZ4zFOpg5oLj83brdmJt2CN+kFAcfALBmCXNKUenqI0KbWHgyq3FZQXcA0nmxX7J
 XTas
 -----END CERTIFICATE-----",
                 IP = "mobile.sncard.ru",
-                Port = 2580
+                Port = 2585
             };
         }
 
