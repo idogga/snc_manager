@@ -5,16 +5,18 @@
              Title="О приложении">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Orientation="Vertical" Padding="15" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <StackLayout VerticalOptions="StartAndExpand">
-                    <Image Source="splash_logo.bmp" HorizontalOptions="CenterAndExpand"/>
-                    <Label x:Name="version" Style="{DynamicResource UsualLabelStyle}"
+            <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Frame CornerRadius="10" BackgroundColor="{DynamicResource BackgroundColor}" HasShadow="False"
+                       Margin="10">
+                    <StackLayout VerticalOptions="StartAndExpand">
+                        <Image Source="splash_logo.bmp" HorizontalOptions="CenterAndExpand"/>
+                        <Label x:Name="version" Style="{DynamicResource UsualLabelStyle}"
                                   HorizontalTextAlignment="Center"/>
 
-                    <Button x:Name="wrightToDeveloper" Style="{DynamicResource DigitButtonStyle}" Text="Написать разработчикам" 
+                        <Button x:Name="wrightToDeveloper" Style="{DynamicResource DigitButtonStyle}" Text="Написать разработчикам" 
                                     Clicked="wrightToDeveloper_Clicked"/>
-                </StackLayout>
-
+                    </StackLayout>
+                </Frame>
 
                 <Label x:Name="copyright" Style="{DynamicResource UsualLabelStyle}"
                    HorizontalTextAlignment="Start"

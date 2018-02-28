@@ -11,22 +11,27 @@
         <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-                <ScrollView>
+                <Frame BackgroundColor="{DynamicResource ObjectBackgroundHexString}" CornerRadius="10" Margin="10" Padding="5"
+                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
                     <StackLayout>
-                        <Label x:Name="nameLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
-                        <!--<Label x:Name="phoneLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>-->
-                        <Label x:Name="emailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="sendEmail" NumberOfTapsRequired="1"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label x:Name="shopLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
-                        <Label x:Name="detailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
-                        <Label x:Name="adminLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
-                        <Label x:Name="positionLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                        <ScrollView>
+                            <StackLayout>
+                                <Label x:Name="nameLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                                <!--<Label x:Name="phoneLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>-->
+                                <Label x:Name="emailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="sendEmail" NumberOfTapsRequired="1"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label x:Name="shopLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                                <Label x:Name="detailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                                <Label x:Name="adminLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                                <Label x:Name="positionLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                        </ScrollView>
+                        <Button x:Name="blockButton" Text="Заблокировать" Style="{DynamicResource DigitButtonStyle}" Clicked="blockButton_Clicked"/>
                     </StackLayout>
-                </ScrollView>
-                <Button x:Name="blockButton" Text="Заблокировать" Style="{DynamicResource DigitButtonStyle}" Clicked="blockButton_Clicked"/>
+                </Frame>
             </StackLayout>
             <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                          AbsoluteLayout.LayoutFlags="All"

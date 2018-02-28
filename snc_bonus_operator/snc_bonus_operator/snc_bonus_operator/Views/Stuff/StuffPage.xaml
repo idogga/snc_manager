@@ -12,23 +12,34 @@
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ListView
                             x:Name="listView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                            SeparatorColor="Red" SeparatorVisibility="Default"
                             ItemsSource="{Binding StuffList}" RowHeight="-1" HasUnevenRows="True" 
                             ItemSelected="listView_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout>
-                                        <Label Text="{Binding Name}" Style="{DynamicResource HeavyLabelStyle}"/>
-                                        <Label Text="{Binding Posision}" HorizontalTextAlignment="Center" Style="{DynamicResource UsualLabelStyle}"/>
-                                        <Label Text="{Binding Shop}" HorizontalTextAlignment="End" Style="{DynamicResource UsualLabelStyle}"/>
-                                    </StackLayout>
+                                    <Frame BackgroundColor="{DynamicResource ObjectBackgroundHexString}" CornerRadius="10" Margin="10" Padding="5"
+                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
+                                        <StackLayout>
+                                            <Label Text="{Binding Name}" Style="{DynamicResource BoldUsualLabelStyle}"/>
+                                            <Label Text="{Binding Posision}" Style="{DynamicResource UsualLabelStyle}" FontSize="Small"
+                                                   TextColor="{DynamicResource SublettersColor}"/>
+                                            <Label Text="{Binding Shop}" HorizontalTextAlignment="End" Style="{DynamicResource UsualLabelStyle}"/>
+                                        </StackLayout>
+                                    </Frame>
                                 </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="{DynamicResource SublettersColor}"
+                   CornerRadius="10" IsVisible="False" >
+                    <StackLayout Padding="12" >
+                        <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Label Text = "Список коллег пуст." Style="{DynamicResource SmallLabelStyle}" 
+                               HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
             </StackLayout>
             <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                          AbsoluteLayout.LayoutFlags="All"
@@ -37,6 +48,7 @@
                              AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
                 <views:Indicator x:Name="IndicatorLayout"/>
             </StackLayout>
+            <views:NoConnectionView x:Name="noConnectionLayout"  IsVisible="False" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

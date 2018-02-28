@@ -9,28 +9,31 @@
             <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ScrollView>
-                    <StackLayout Orientation="Vertical" Padding="8">
-                        <Label Text="Введите имя :" Style="{DynamicResource UsualLabelStyle}"/>
-                        <Entry x:Name="nameEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="Иван Иванов" 
+                    <Frame BackgroundColor="{DynamicResource ObjectBackgroundHexString}" CornerRadius="10" Margin="10" Padding="5"
+                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
+                        <StackLayout Orientation="Vertical" Padding="8">
+                            <Label Text="Введите имя :" Style="{DynamicResource UsualLabelStyle}"/>
+                            <Entry x:Name="nameEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="Иван Иванов" 
                                Completed="nameEntry_Completed"/>
-                        <Label Text="Введите емэйл (логин) :" Style="{DynamicResource UsualLabelStyle}"/>
-                        <Entry x:Name="loginEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="example@snc.ru" 
+                            <Label Text="Введите емэйл (логин) :" Style="{DynamicResource UsualLabelStyle}"/>
+                            <Entry x:Name="loginEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="example@snc.ru" 
                                Keyboard="Email" Completed="loginEntry_Completed"/>
-                        <Label Text="Введите заметку к менеджеру :" Style="{DynamicResource UsualLabelStyle}"/>
-                        <Entry x:Name="positionEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="(любит пончики)" 
+                            <Label Text="Введите заметку к менеджеру :" Style="{DynamicResource UsualLabelStyle}"/>
+                            <Entry x:Name="positionEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="(любит пончики)" 
                                Completed="positionEntry_Completed"/>
 
-                        <StackLayout x:Name="selectShopLayout">
-                            <Label Text="Выберите магазин :" Style="{DynamicResource UsualLabelStyle}"/>
-                            <Label x:Name="selectShopButton" Text="Магазин не выбран" Style="{DynamicResource LinkLabelStyle}" HorizontalOptions="EndAndExpand">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="selectShopTapped" NumberOfTapsRequired="1"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </StackLayout>
-                        <Button x:Name="continueButton" Text="Создать колллегу" Style="{DynamicResource UsuallButtonStyle}" Clicked="continueButton_Clicked"
+                            <StackLayout x:Name="selectShopLayout">
+                                <Label Text="Выберите магазин :" Style="{DynamicResource UsualLabelStyle}"/>
+                                <Label x:Name="selectShopButton" Text="Магазин не выбран" Style="{DynamicResource LinkLabelStyle}" HorizontalOptions="EndAndExpand">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="selectShopTapped" NumberOfTapsRequired="1"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </StackLayout>
+                            <Button x:Name="continueButton" Text="Создать колллегу" Style="{DynamicResource UsuallButtonStyle}" Clicked="continueButton_Clicked"
                                 Margin="10"/>
-                    </StackLayout>
+                        </StackLayout>
+                    </Frame>
                 </ScrollView>
                 
             </StackLayout>

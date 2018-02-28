@@ -3,7 +3,6 @@ using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -12,6 +11,7 @@ namespace snc_bonus_operator.Stuff
     public partial class StuffPage : ContentPage
     {
         ObservableCollection<CollegueModel> StuffList = new ObservableCollection<CollegueModel>();
+
         public StuffPage()
         {
             InitializeComponent();
@@ -29,15 +29,42 @@ namespace snc_bonus_operator.Stuff
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            StartLoading();
+            if (MobileStaticVariables.UserAppSettings.IsInetAvaliable == Settings.InternetStatus.Online)
+            {
+                LoadMainScreen();
+            }
+            else
+            {
+                noConnectionLayout.IsVisible = true;
+                Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
+            }
+        }
+        private void LoadMainScreen()
+        {
+            StuffList.Clear();
+            emptyFrame.IsVisible = false;
+            listView.IsVisible = true;
             LoadPage();
+        }
+
+        private bool WaitInternetConnection()
+        {
+            var result = true;
+            if (MobileStaticVariables.UserAppSettings.IsInetAvaliable == Settings.InternetStatus.Online)
+            {
+                result = false;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    noConnectionLayout.IsVisible = false;
+                    LoadMainScreen();
+                });
+            }
+            return result;
         }
 
         private async void LoadPage()
         {
             StartLoading();
-            var cancellationTokenSource = new CancellationTokenSource();
-            StuffList.Clear();
             await Task.Factory.StartNew(() =>
             {
                 LoadStuff();
@@ -63,24 +90,42 @@ namespace snc_bonus_operator.Stuff
                     StuffList.Clear();
                     MobileStaticVariables.UserInfo.Stuff = crew.ColegueList;
                     MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.Stuff, JsonConvert.SerializeObject(MobileStaticVariables.UserInfo.Stuff));
-                    foreach (var item in crew.ColegueList)
+                    if(crew.ColegueList.Count == 0)
                     {
-                        var view = new CollegueModel();
-                        view.Name = item.Name;
-                        view.Shop = item.ShopName;
-                        view.Posision = item.Position;
-                        view.Data = item;
-                        if(item.UserState == UserStates.Blocked)
+                        Device.BeginInvokeOnMainThread(() =>
                         {
-                            view.Name += " (заблокирован)";
-                        }
-                        StuffList.Add(view);
+                            listView.IsVisible = false;
+                            EndLoading();
+                            emptyFrame.IsVisible = true;
+                        });
                     }
-                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        listView.ItemsSource = StuffList;
-                        EndLoading();
-                    });
+                        foreach (var item in crew.ColegueList)
+                        {
+                            var view = new CollegueModel();
+                            view.Name = item.Name;
+                            view.Shop = item.ShopName;
+                            if(item.Position.Length==0)
+                            {
+                                view.Posision = "(нет применчаний)";
+                            }
+                            else
+                            {
+                                view.Posision = "(" + item.Position + ")";
+                            }
+                            view.Data = item;
+                            if (item.UserState == UserStates.Blocked)
+                            {
+                                view.Name += " (заблокирован)";
+                            }
+                            StuffList.Add(view);
+                        }
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            listView.ItemsSource = StuffList;
+                            EndLoading();
+                        });
+                    }
                 }
                 else
                 {
@@ -97,10 +142,11 @@ namespace snc_bonus_operator.Stuff
             catch (Exception ex)
             {
                 Logger.WriteError(ex);
-                Device.BeginInvokeOnMainThread(async () =>
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    await DisplayAlert("Внимание", "Не удается соедениться с сервером", "Повторить");
                     EndLoading();
+                    noConnectionLayout.IsVisible = true;
+                    Device.StartTimer(new TimeSpan(0, 0, 1), WaitInternetConnection);
                 });
             }
             finally

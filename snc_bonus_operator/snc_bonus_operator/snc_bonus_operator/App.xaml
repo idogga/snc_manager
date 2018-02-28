@@ -60,7 +60,7 @@
             <Style x:Key="UsuallButtonStyle" TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
                 <Setter Property="FontSize" Value="Medium"/>
-                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColors}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource ObjectBackgroundColor}"/>
                 <Setter Property="BorderColor" Value="{DynamicResource SelectionColor}"/>
                 <Setter Property="BorderRadius" Value="8"/>
                 <Setter Property="BorderWidth" Value="2"/>
@@ -134,7 +134,7 @@
             <Style x:Key="UsualEntryStyle" TargetType="Entry">
                 <Setter Property="TextColor" Value="{DynamicResource LetterColor}"/>
                 <Setter Property="FontSize" Value="Medium"/>
-                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColors}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource ObjectBackgroundColor}"/>
                 <Setter Property="PlaceholderColor" Value="{DynamicResource SelectionColor}"/>
                 <Setter Property="FontFamily" Value="Ubuntu-Regular.ttf#Ubuntu-Regular"/>
             </Style>

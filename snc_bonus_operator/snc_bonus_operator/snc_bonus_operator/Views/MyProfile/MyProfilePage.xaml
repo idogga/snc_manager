@@ -9,8 +9,7 @@
             <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ScrollView >
-                    <StackLayout>
-                        <Frame Style="{DynamicResource UsualFrameStyle}">
+                        <Frame Style="{DynamicResource UsualFrameStyle}" Margin="10">
                             <StackLayout Spacing="8">
                                 <Label x:Name="emailLabel" Text=""  Style="{DynamicResource UsualLabelStyle}"
 								        HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"/>
@@ -22,7 +21,6 @@
                                         HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"/>
                             </StackLayout>
                         </Frame>
-                    </StackLayout>
                 </ScrollView >
             </StackLayout>
 
