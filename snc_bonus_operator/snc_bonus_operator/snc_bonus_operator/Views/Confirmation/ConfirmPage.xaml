@@ -63,8 +63,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="{DynamicResource SublettersColor}"
-                   CornerRadius="10" IsVisible="False" >
+                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Style="{DynamicResource UsualFrameStyle}" IsVisible="False" >
                     <StackLayout Padding="12" >
                         <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Label Text = "Покупок еще не было" Style="{DynamicResource SmallLabelStyle}" 

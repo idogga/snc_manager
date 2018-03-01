@@ -114,8 +114,7 @@ namespace snc_bonus_operator.Confirmation
         private async void acceptButton_Clicked(object sender, EventArgs e)
         {
             StartLoading();
-            var cancellationTokenSource = new CancellationTokenSource();
-            await Task.Factory.StartNew(x =>
+            await Task.Factory.StartNew(() =>
             {
                 var transactionsInfo = "";
                 try
@@ -152,7 +151,7 @@ namespace snc_bonus_operator.Confirmation
                 }
                 catch
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
+                    Device.BeginInvokeOnMainThread(() =>
                     {
                         EndLoading();
                         Device.BeginInvokeOnMainThread(() =>
@@ -167,8 +166,7 @@ namespace snc_bonus_operator.Confirmation
                         });
                     });
                 }
-            },
-                TaskCreationOptions.AttachedToParent, cancellationTokenSource.Token);
+            });
         }
 
         private async void declineButton_Clicked(object sender, EventArgs e)
@@ -352,7 +350,8 @@ namespace snc_bonus_operator.Confirmation
                         }
                         else
                         {
-                            group = new DateGroup(item.CompleteDatetime, _upFrame);
+                            var isFirstGroup = Transactions.Count == 0;
+                            group = new DateGroup(item.CompleteDatetime, _upFrame, isFirstGroup);
                             group.Add(transactionCellView);
                             Transactions.Add(group);
                         }

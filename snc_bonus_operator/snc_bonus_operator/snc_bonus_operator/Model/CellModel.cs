@@ -45,11 +45,18 @@ namespace snc_bonus_operator
         public DateTime ComleteDate { get; set; } = DateTime.MinValue;
         public List<CellModel> ListCell { get; set; } = new List<CellModel>();
 
-        public DateGroup(DateTime completeDateTime, double UpFrame)
+        public DateGroup(DateTime completeDateTime, double UpFrame, bool isFirst)
         {
             ComleteDate = completeDateTime;
             Heading = string.Format("{0:dd.MM}, {1}", completeDateTime, TranslateDayOfWeek(completeDateTime.DayOfWeek));
-            Frame= new Thickness(5, UpFrame, 10, 5);
+            if (isFirst)
+            {
+                Frame = new Thickness(5, 10, 10, 5);
+            }
+            else
+            {
+                Frame = new Thickness(5, UpFrame, 10, 5);
+            }
         }
 
         private string TranslateDayOfWeek(DayOfWeek dayOfWeek)

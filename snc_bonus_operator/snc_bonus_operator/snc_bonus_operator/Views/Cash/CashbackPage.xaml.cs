@@ -34,12 +34,9 @@ namespace snc_bonus_operator.Cash
             LoadScheme();
         }
 
-        async void FillBarRequest()
+        void FillBarRequest()
         {
             Logger.WriteLine("Считано : " + MobileStaticVariables.QRClient.ValueEAN13);
-#if DEBUG
-            await DisplayAlert("Считано", MobileStaticVariables.QRClient.ValueEAN13, "Продолжить");
-#endif
             StartLoading();
         }
 

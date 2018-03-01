@@ -15,7 +15,8 @@ namespace snc_bonus_operator.Accounting
     public partial class TransactionPage : ContentPage
     {
         ObservableCollection<DateGroupTransaction> Transactions { get; set; } = new ObservableCollection<DateGroupTransaction>();
-        SellerTransactionInfo transactions = new SellerTransactionInfo() { From = new DateTime(2002, 10, 23), To = DateTime.Now,
+        SellerTransactionInfo transactions = new SellerTransactionInfo()
+        { From = new DateTime(2002, 10, 23), To = DateTime.Now,
          TransactionStatuses=new List<SellerTransactionInfo.SELLER_STATUS_ENUM>(){ SellerTransactionInfo.SELLER_STATUS_ENUM.Accepted,
           SellerTransactionInfo.SELLER_STATUS_ENUM.Not_Accepted, SellerTransactionInfo.SELLER_STATUS_ENUM.Not_NeedAccept, SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration}
         };
@@ -162,7 +163,8 @@ namespace snc_bonus_operator.Accounting
                         }
                         else
                         {
-                            group = new DateGroupTransaction(item.CompleteDatetime, _upFrame);
+                            var isFirstGroup = Transactions.Count == 0;
+                            group = new DateGroupTransaction(item.CompleteDatetime, _upFrame, isFirstGroup);
                             group.Add(transactionView);
                             Transactions.Add(group);
                         }

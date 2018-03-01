@@ -122,7 +122,6 @@ namespace snc_bonus_operator.Accounting
             statusTransactionSelector.IsVisible = true;
         }
 
-
         #endregion
 
         private void acceptSellers(object sender, EventArgs e)
