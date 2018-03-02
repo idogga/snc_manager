@@ -57,6 +57,7 @@ namespace snc_bonus_operator.Cash
                 catch { }
                 await Navigation.PushAsync(new QRCodeReader("Наведите чтобы считать",
                 "QR-код клиента", QRCodeReader.TypeQRReadAnswer.ClientQR));
+                mainLayout.IsEnabled = true;
             }
             else
             {
@@ -390,6 +391,11 @@ namespace snc_bonus_operator.Cash
                 acceptLayout.IsVisible = false;
                 summEntry.Text = "";
             });
+        }
+
+        private void summEntry_Completed(object sender, EventArgs e)
+        {
+            qrReadButton_Clicked(sender, e);
         }
     }
 }

@@ -61,8 +61,7 @@ namespace snc_bonus_operator.Login
 
         private async void ForgetPass_Tapped(object sender, EventArgs e)
         {
-            StartLoading();
-            var cancellationTokenSource = new CancellationTokenSource();
+
             if (loginEntry.Text.Length == 0)
             {
                 await DisplayAlert("Внимание", "Введите сначала свой емэйл", "Ввести");
@@ -70,7 +69,8 @@ namespace snc_bonus_operator.Login
             }
             else
             {
-                await Task.Factory.StartNew(x =>
+                StartLoading();
+                await Task.Factory.StartNew(() =>
                 {
                     string userInfo = "";
                     try
@@ -113,17 +113,10 @@ namespace snc_bonus_operator.Login
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            try
-                            {
-                                EndLoading();
-                            }
-                            catch { }
-
+                            EndLoading();
                         });
                     }
-                },
-                TaskCreationOptions.AttachedToParent,
-                cancellationTokenSource.Token);
+                });
             }
         }
 

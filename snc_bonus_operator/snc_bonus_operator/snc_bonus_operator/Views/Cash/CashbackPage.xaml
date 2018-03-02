@@ -13,12 +13,12 @@
                         <Frame x:Name="acceptLayout" BackgroundColor="{DynamicResource ObjectBackgroundHexString}" CornerRadius="10" Margin="10" Padding="5"
                                                    HorizontalOptions="FillAndExpand" HasShadow="False">
                             <StackLayout Padding="0">
-                                <Label x:Name="summLabel"/>
-                                <Label x:Name="tariffLabel"/>
-                                <Label x:Name="bonusCountOutLabel"/>
-                                <Label x:Name="bonusCountInLabel"/>
-                                <Label x:Name="discountLabel"/>
-                                <Label x:Name="finalCashLabel"/>
+                                <Label x:Name="summLabel" Style="{DynamicResource UsualFrameStyle}"/>
+                                <Label x:Name="tariffLabel" Style="{DynamicResource UsualFrameStyle}"/>
+                                <Label x:Name="bonusCountOutLabel" Style="{DynamicResource UsualFrameStyle}"/>
+                                <Label x:Name="bonusCountInLabel" Style="{DynamicResource UsualFrameStyle}"/>
+                                <Label x:Name="discountLabel" Style="{DynamicResource UsualFrameStyle}"/>
+                                <Label x:Name="finalCashLabel" Style="{DynamicResource UsualFrameStyle}"/>
                                 <StackLayout VerticalOptions="EndAndExpand">
                                     <Button x:Name="acceptButton" Text="Подтвердить" Clicked="acceptButton_Clicked" HorizontalOptions="FillAndExpand"  Style="{DynamicResource DigitButtonStyle}"/>
                                     <Button x:Name="declineButton" Text="Отклонить" Clicked="declineButton_Clicked" HorizontalOptions="FillAndExpand"  Style="{DynamicResource DigitButtonStyle}"/>
@@ -30,7 +30,8 @@
                             <StackLayout Padding="0" >
                                 <Label Text="Введите сумму покупки : " Style="{DynamicResource UsualLabelStyle}"/>
                                 <Entry x:Name="summEntry" Text="" Placeholder="Сумма" TextChanged="summEntry_TextChanged"
-                                    Style="{DynamicResource UsualEntryStyle}" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
+                                    Style="{DynamicResource UsualEntryStyle}" Keyboard="Numeric" HorizontalTextAlignment="Center"
+                                       Completed="summEntry_Completed"/>
                                 <StackLayout VerticalOptions="EndAndExpand">
                                     <Button x:Name="qrReadButton"  Text="Считать QR-код" Clicked="qrReadButton_Clicked" HorizontalOptions="FillAndExpand" 
                                     Style="{DynamicResource DigitButtonStyle}" IsEnabled="False"/>
