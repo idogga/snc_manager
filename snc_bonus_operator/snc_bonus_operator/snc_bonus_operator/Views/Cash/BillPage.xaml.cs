@@ -85,14 +85,29 @@ namespace snc_bonus_operator.Cash
             formatted.Spans.Add(new Span { Text = transaction.PersonCost.ToString("0.00"), FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
             formatted.Spans.Add(new Span { Text = " " + MobileStaticVariables.MainIssuer.Currency, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
             finalCashLabel.FormattedText = formatted;
-            if(transaction.AcceptedDate!="" || transaction.AcceptedSellerName!="")
-            {
-                acceptedLabel.IsVisible = true;
-                formatted = new FormattedString();
-                formatted.Spans.Add(new Span { Text = "Акцептовал : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-                formatted.Spans.Add(new Span { Text = transaction.AcceptedSellerName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-                formatted.Spans.Add(new Span { Text = " (" + transaction.AcceptedDate + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
-                acceptedLabel.FormattedText = formatted;
+            switch (transaction.StatusTransaction)
+                {
+                case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Accepted:
+                    acceptedLabel.IsVisible = true;
+                    formatted = new FormattedString();
+                    formatted.Spans.Add(new Span { Text = "Акцептовал : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
+                    formatted.Spans.Add(new Span { Text = transaction.AcceptedSellerName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+                    formatted.Spans.Add(new Span { Text = " (" + transaction.AcceptedDate + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+                    acceptedLabel.FormattedText = formatted;
+                    break;
+                case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Not_Accepted:
+                    acceptedLabel.IsVisible = true;
+                    formatted = new FormattedString();
+                    formatted.Spans.Add(new Span { Text = "Начисление бонусов отклонено", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
+                    acceptedLabel.FormattedText = formatted;
+                    break;
+                case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration:
+                default:
+                    acceptedLabel.IsVisible = true;
+                    formatted = new FormattedString();
+                    formatted.Spans.Add(new Span { Text = "Начисление бонусов находится на рассмотрении", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
+                    acceptedLabel.FormattedText = formatted;
+                    break;
             }
         }
 

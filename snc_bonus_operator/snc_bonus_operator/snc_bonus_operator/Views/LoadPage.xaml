@@ -6,14 +6,13 @@
              Title="СНК-Менеджер">
     <ContentPage.Content>
         <Frame HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Style="{DynamicResource UsualFrameStyle}">
-            <Grid x:Name="mainLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ffimageloading:CachedImage x:Name="logoImage" Source="splash_logo.bmp" Grid.Row="0"
-                                        HorizontalOptions="CenterAndExpand" Aspect="AspectFill"/>
-                <StackLayout Padding="12" HorizontalOptions="CenterAndExpand" Grid.Row="1">
+            <StackLayout x:Name="mainLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                
+                <ffimageloading:CachedImage x:Name="logoImage" Source="splash_logo.bmp"
+                                        HorizontalOptions="CenterAndExpand" Aspect="AspectFill"
+                                            VerticalOptions="CenterAndExpand"/>
+                <StackLayout Padding="12" HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand">
                     <ActivityIndicator x:Name="indicatorActivity" 
                            IsRunning="True" 
                            Color="{DynamicResource MainColor}" />
@@ -23,7 +22,7 @@
                            HorizontalTextAlignment="Center" />
 
                 </StackLayout>
-            </Grid>
+            </StackLayout>
         </Frame>
     </ContentPage.Content>
 </ContentPage>
