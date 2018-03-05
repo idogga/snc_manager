@@ -57,6 +57,7 @@ namespace snc_bonus_operator.Accounting
         #region События
         protected override void OnDisappearing()
         {
+            GetStatuses();
             EndEvent.Invoke(filter);
             base.OnDisappearing();
         }
@@ -93,9 +94,8 @@ namespace snc_bonus_operator.Accounting
             dateToPicker.MinimumDate = dateFromPicker.Date;
         }
 
-        private void acceptstatustransaction(object sender, EventArgs e)
+        private void GetStatuses()
         {
-            statusTransactionSelector.IsVisible = false;
             filter.TransactionStatuses.Clear();
             if (notNeedAcceptCheckbox.IsChecked)
             {
@@ -113,13 +113,6 @@ namespace snc_bonus_operator.Accounting
             {
                 filter.TransactionStatuses.Add(SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration);
             }
-            typeSelectorButton.Text = GetTypeSelectorButtonText();
-        }
-
-        private void selectorOpen(object sender, EventArgs e)
-        {
-            statusTransactionSelector.BackgroundColor = new Color(0, 0, 0, 0.5);
-            statusTransactionSelector.IsVisible = true;
         }
 
         #endregion
@@ -127,20 +120,6 @@ namespace snc_bonus_operator.Accounting
         private void acceptSellers(object sender, EventArgs e)
         {
             sellerSelector.IsVisible = false;
-        }
-
-        private string GetTypeSelectorButtonText()
-        {
-            var result = "Выбрать типы покупок";
-            if(filter.TransactionStatuses.Count == 0)
-            {
-                result = "Не выбран ни один тип покупок";
-            }
-            else if (filter.TransactionStatuses.Count < 4)
-            {
-                result = string.Format("Выбрано типов покупок : {0}", filter.TransactionStatuses.Count);
-            }
-            return result;
         }
     }
 }
