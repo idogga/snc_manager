@@ -33,7 +33,7 @@
 
                         <Label x:Name="sectionHeaderPhoneLabel" Text="Общие настройки" FontSize="Medium" 
                HorizontalOptions="Center" Style="{DynamicResource UsualLabelStyle}"/>
-                        <StackLayout Orientation="Vertical">
+                        <StackLayout x:Name="sectionHeaderPhoneLayout" Orientation="Vertical">
                             <Frame Style="{DynamicResource UsualFrameStyle}">
                                 <StackLayout >
                                     <StackLayout x:Name="languageStack" Margin="10">
@@ -78,7 +78,7 @@
             </StackLayout>
 
             <Frame x:Name="notificationFrameLarge" AbsoluteLayout.LayoutFlags="PositionProportional" IsVisible="False" 
-                   HorizontalOptions="CenterAndExpand" Padding="10"
+                   HorizontalOptions="CenterAndExpand" Padding="5"
                              AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" CornerRadius="8" 
                    HasShadow="True" OutlineColor="{DynamicResource MainColor}" BackgroundColor="{DynamicResource MainColor}">
                 <Frame x:Name="notificationFrameSmall" Style="{DynamicResource UsualFrameStyle}">

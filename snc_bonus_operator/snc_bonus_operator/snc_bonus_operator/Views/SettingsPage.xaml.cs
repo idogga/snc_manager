@@ -22,6 +22,49 @@ namespace snc_bonus_operator
                 "\nзагружена ли БД : " + MobileStaticVariables.UserAppSettings.IsDataBaseLoad);
             
             useVibrationSwitch.IsToggled = MobileStaticVariables.UserAppSettings.UseVibration;
+#if DEBUGARTYOM
+            var connectionButton = new Button() { HorizontalOptions = LayoutOptions.FillAndExpand };
+            connectionButton.Text = "Выберите подключение (" + MobileStaticVariables.ConectSettings.DebugPort + ")";
+            connectionButton.Clicked += async (s, e) =>
+             {
+                 var connectionWay = new string[] { "Свой", "Артём(2582)", "Андрей(2580)", "Женя(2581)", "Сервер(2585)"};
+                 var answer = await DisplayActionSheet("Выберите далеко подключаться", "Отмена", "", connectionWay);
+                 if(answer != null)
+                 {
+                     if(answer== connectionWay[0])
+                     {
+                         var label = new Label() { Text = "Введите порт (нажмите подтвердить что бы продожить):" };
+                         var entry = new Entry() { HorizontalOptions = LayoutOptions.FillAndExpand, Keyboard =Keyboard.Numeric, Placeholder="Порт" };
+                         entry.Completed += (o, er) =>
+                         {
+                             MobileStaticVariables.ConectSettings.DebugPort = int.Parse(entry.Text);
+                             connectionButton.Text = "Выберите подключение (" + MobileStaticVariables.ConectSettings.DebugPort + ")";
+                         };
+                         sectionHeaderPhoneLayout.Children.Add(label);
+                         sectionHeaderPhoneLayout.Children.Add(entry);
+                     }
+                     if (answer == connectionWay[1])
+                     {
+                         MobileStaticVariables.ConectSettings.DebugPort = 2582;
+                     }
+                     if (answer == connectionWay[2])
+                     {
+                         MobileStaticVariables.ConectSettings.DebugPort = 2580;
+
+                     }
+                     if (answer == connectionWay[3])
+                     {
+                         MobileStaticVariables.ConectSettings.DebugPort = 2581;
+                     }
+                     if (answer == connectionWay[4])
+                     {
+                         MobileStaticVariables.ConectSettings.DebugPort = MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.BASE].Port;
+                     }
+                     connectionButton.Text = "Выберите подключение (" + MobileStaticVariables.ConectSettings.DebugPort + ")";
+                 }
+             };
+            sectionHeaderPhoneLayout.Children.Add(connectionButton);
+#endif
         }
         #endregion
         #region События

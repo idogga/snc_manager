@@ -17,7 +17,6 @@
                         <ScrollView>
                             <StackLayout>
                                 <Label x:Name="nameLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>
-                                <!--<Label x:Name="phoneLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand"/>-->
                                 <Label x:Name="emailLabel" Style="{DynamicResource UsualLabelStyle}" HorizontalOptions="FillAndExpand">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="sendEmail" NumberOfTapsRequired="1"/>

@@ -19,7 +19,9 @@ namespace snc_bonus_operator
         bool isLimitationLoad = false;
         bool _isDatabaseLoad = false;
         bool needDisplayAlert = true;
-
+#if DEBUGARTYOM
+        int numberOfConnection = 0;
+#endif
         public LoadPage()
         {
             InitializeComponent();
@@ -77,7 +79,7 @@ namespace snc_bonus_operator
                         if (needDisplayAlert)
                         {
                             needDisplayAlert = false;
-                            await DisplayAlert("Внимание", "Не удалось загрузить данные о компании", "Повторить");
+                            await DisplayAlert("Внимание", "Не удалось загрузить данные о клубе", "Повторить");
                         }
                     });
                     Logger.WriteError(ex);
@@ -101,7 +103,30 @@ namespace snc_bonus_operator
             {
                 Logger.WriteError(ex);
                 if (!_isDatabaseLoad)
+                {
+#if DEBUGARTYOM
+                    numberOfConnection++;
+                    switch (numberOfConnection)
+                    {
+                        case 1:
+                            MobileStaticVariables.ConectSettings.DebugPort = 2581;
+                            break;
+                        case 2:
+                            MobileStaticVariables.ConectSettings.DebugPort = 2580;
+                            break;
+                        case 3:
+                            MobileStaticVariables.ConectSettings.DebugPort = 2582;
+                            break;
+                        case 4:
+                            MobileStaticVariables.ConectSettings.DebugPort = 2585;
+                            break;
+                        default:
+                            numberOfConnection = 0;
+                            break;
+                    }
+#endif
                     await LoadMainIssuer();
+                }
             }
         }
 

@@ -383,11 +383,10 @@ namespace snc_bonus_operator
 
         public string SendMobileRequest(string xml_ds, CertificateType type)
         {
-            // 2580 - базовый тестовый, 2581 - отладочный (Женин комп)
             string ip = MobileStaticVariables.ConectSettings.Certificates[(int)type].IP;
             int port = MobileStaticVariables.ConectSettings.Certificates[(int)type].Port;
 #if DEBUGARTYOM
-            port = 2582;
+            port = MobileStaticVariables.ConectSettings.DebugPort;
 #endif
             var res = "";
             try

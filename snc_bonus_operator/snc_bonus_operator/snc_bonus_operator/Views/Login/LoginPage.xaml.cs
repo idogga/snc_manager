@@ -188,8 +188,8 @@ namespace snc_bonus_operator.Login
             var cancellationTokenSource = new CancellationTokenSource();
             try
             {
-                await Task.Factory.StartNew(x => {
-                    LoadUserInfo();
+                await Task.Factory.StartNew(async x => {
+                    await LoadUserInfo();
                 },
                 TaskCreationOptions.AttachedToParent, cancellationTokenSource.Token);
             }
@@ -199,7 +199,7 @@ namespace snc_bonus_operator.Login
             }
         }
 
-        void LoadUserInfo()
+        async Task LoadUserInfo()
         {
             string confirmInfo = "";
             RegManager userInfo = new RegManager();
@@ -273,7 +273,7 @@ namespace snc_bonus_operator.Login
                         var result = await DisplayAlert("Внимание", "Неудалось загрузить необходимые данные", "Повторить регистрацию", "Отмена");
                         if (result)
                         {
-                            LoadUserInfo();
+                            LoadData();
                         }
                         else
                         {
