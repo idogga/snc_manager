@@ -386,7 +386,9 @@ namespace snc_bonus_operator
             // 2580 - базовый тестовый, 2581 - отладочный (Женин комп)
             string ip = MobileStaticVariables.ConectSettings.Certificates[(int)type].IP;
             int port = MobileStaticVariables.ConectSettings.Certificates[(int)type].Port;
-
+#if DEBUGARTYOM
+            port = 2582;
+#endif
             var res = "";
             try
             {
@@ -409,12 +411,8 @@ namespace snc_bonus_operator
             }
             catch
             {
-                string IP = "192.168.1.2";
-                int PORT = 2580;
-#if DEBUGARTYOM
-                PORT=2582;
-#endif
-                if (DependencyService.Get<INetUtils>().Open(PORT, IP, type, 15000))
+                ip = "192.168.1.2";
+                if (DependencyService.Get<INetUtils>().Open(port, ip, type, 15000))
                 {
                     DependencyService.Get<INetUtils>().SendData(xml_ds, type);
                     if (DependencyService.Get<INetUtils>().GetLastError() == "")
