@@ -12,7 +12,7 @@
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ListView
                             x:Name="listView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                            ItemsSource="{Binding StuffList}" RowHeight="-1" HasUnevenRows="True" 
+                            ItemsSource="{Binding StuffList}" RowHeight="-1" HasUnevenRows="True" SeparatorVisibility="None"
                             ItemSelected="listView_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -37,7 +37,7 @@
                     <StackLayout Padding="12" >
                         <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Label Text = "Список коллег пуст." Style="{DynamicResource SmallLabelStyle}" 
-                               HorizontalOptions="CenterAndExpand"/>
+                               HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

@@ -1,13 +1,8 @@
 ﻿using Plugin.Messaging;
 using snc_bonus_operator.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace snc_bonus_operator
 {
@@ -18,8 +13,8 @@ namespace snc_bonus_operator
             try
             {
                 InitializeComponent();
-                version.Text = string.Format("Версия приложени : {0}", DependencyService.Get<IDevice>().GetVersion());
-                string copy = string.Format("© 2018 {0}", "\"Группа компаний Сибнефтекарт\"");
+                version.Text = string.Format("Версия приложения : {0}", DependencyService.Get<IDevice>().GetVersion());
+                string copy = string.Format("© {0} {1}", DateTime.Now.Year, "\"Группа компаний Сибнефтекарт\"");
                 copyright.Text = copy;
             }
             catch (Exception ex)

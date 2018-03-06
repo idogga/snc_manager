@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace snc_bonus_operator.Settings
 {
@@ -124,6 +125,9 @@ namespace snc_bonus_operator.Settings
         /// </summary>
         public InternetStatus IsInetAvaliable { get; set; } = InternetStatus.Online;
 
+        
+         
+
         public void SaveSetting(int index, string v)
         {
             var db = new SettingsDB();
@@ -134,6 +138,28 @@ namespace snc_bonus_operator.Settings
         {
             var db = new SettingsDB();
             db.LoadSettings();
+        }
+
+        /// <summary>
+        /// Текущий шрифт
+        /// </summary>
+        public string CurrenFont(bool isBold)
+        {
+            switch(Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    return "";
+                case Device.Android:
+                default:
+                    if (isBold)
+                    {
+                        return "Ubuntu-Bold.ttf#Ubuntu-Bold";
+                    }
+                    else
+                    {
+                        return "Ubuntu-Regular.ttf#Ubuntu-Regular";
+                    }
+            }
         }
     }
 }

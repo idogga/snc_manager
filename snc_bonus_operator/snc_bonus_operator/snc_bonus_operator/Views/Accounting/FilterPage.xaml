@@ -11,8 +11,8 @@
                          AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ScrollView>
                     <StackLayout Spacing="0" Padding="0">
-                        <Label Text="Выберите период :" Style="{DynamicResource UsualLabelStyle}" FontSize="Small"/>
-                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand">
+                        <Label Text="Выберите период :" Style="{DynamicResource UsualLabelStyle}" FontSize="Small" Margin="10,0"/>
+                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand" Margin="10">
                             <StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="С : " HorizontalOptions="StartAndExpand" Style="{DynamicResource UsualLabelStyle}"
@@ -32,37 +32,45 @@
                                 </StackLayout>
                             </StackLayout>
                         </Frame>
-                        <Label Text="Выберите статус :" Style="{DynamicResource UsualLabelStyle}" Margin="10,20,10,10" FontSize="Small"/>
-                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand">
-                            <StackLayout>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="Не требующие акцептования" Style="{DynamicResource UsualLabelStyle}"/>
-                                    <views:Checkbox x:Name="notNeedAcceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="Акцептованные" Style="{DynamicResource UsualLabelStyle}"/>
-                                    <views:Checkbox x:Name="acceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="Не акцептованные" Style="{DynamicResource UsualLabelStyle}"/>
-                                    <views:Checkbox x:Name="notAcceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="На рассмотрении" Style="{DynamicResource UsualLabelStyle}"/>
-                                    <views:Checkbox x:Name="mobileCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
-                                </StackLayout>
-                            </StackLayout>
-                        </Frame>
 
                         <Button x:Name="personButton" Text="Выбрать сотрудников" Clicked="personButton_Clicked" 
                                 Style="{DynamicResource DigitButtonStyle}"
-                                HorizontalOptions="FillAndExpand" Margin="10"
+                                HorizontalOptions="FillAndExpand"  Margin="10"
                                 VerticalOptions="EndAndExpand"/>
+                        
+                        <Label Text="Выберите статус :" Style="{DynamicResource UsualLabelStyle}" Margin="10,20,10,0" FontSize="Small"/>
+                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand" Margin="5">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="Не требующие акцептования" Style="{DynamicResource UsualLabelStyle}" VerticalOptions="CenterAndExpand"/>
+                                <views:Checkbox x:Name="notNeedAcceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand" Margin="5"
+                               BackgroundColor="#cbfdcb">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="Акцептованные" Style="{DynamicResource UsualLabelStyle}" VerticalOptions="CenterAndExpand"/>
+                                <views:Checkbox x:Name="acceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand" Margin="5"
+                               BackgroundColor="#ffd5b7">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="Не акцептованные" Style="{DynamicResource UsualLabelStyle}" VerticalOptions="CenterAndExpand"/>
+                                <views:Checkbox x:Name="notAcceptCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                        <Frame Style="{DynamicResource UsualFrameStyle}" HorizontalOptions="FillAndExpand" Margin="5"
+                               BackgroundColor="#ffffc0">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label Text="На рассмотрении" Style="{DynamicResource UsualLabelStyle}" VerticalOptions="CenterAndExpand"/>
+                                    <views:Checkbox x:Name="mobileCheckbox" Color="{DynamicResource MainColor}" IsChecked="True" ScaleCheckbox="2" HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
+                        </Frame>
                     </StackLayout>
                 </ScrollView>
 
                 <Button x:Name="exitButton" Text="Применить" Clicked="exitButton_Clicked" 
-                        Style="{DynamicResource FunctionalButtonStyle}" 
+                        Style="{DynamicResource FunctionalButtonStyle}"  Margin="10"
                         HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
                 

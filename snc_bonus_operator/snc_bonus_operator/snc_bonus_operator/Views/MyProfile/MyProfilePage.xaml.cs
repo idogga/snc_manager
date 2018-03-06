@@ -239,8 +239,8 @@ namespace snc_bonus_operator
                 MobileStaticVariables.UserInfo.UserNickName = "Гость";
             }
             var formatted = new FormattedString();
-            formatted.Spans.Add(new Span { Text = "Имя пользователя : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = MobileStaticVariables.UserInfo.UserNickName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+            formatted.Spans.Add(new Span { Text = "Имя пользователя : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
+            formatted.Spans.Add(new Span { Text = MobileStaticVariables.UserInfo.UserNickName, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(false) });
             fio.FormattedText = formatted;
             if (MobileStaticVariables.UserInfo.Email == "")
             {
@@ -250,20 +250,20 @@ namespace snc_bonus_operator
             {
                 emailLabel.IsVisible = true;
                 formatted = new FormattedString();
-                formatted.Spans.Add(new Span { Text = "Электронная почта : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-                formatted.Spans.Add(new Span { Text = MobileStaticVariables.UserInfo.Email, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+                formatted.Spans.Add(new Span { Text = "Электронная почта : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
+                formatted.Spans.Add(new Span { Text = MobileStaticVariables.UserInfo.Email, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(false) });
                 emailLabel.FormattedText = formatted;
             }
 
             
             formatted = new FormattedString();
-            formatted.Spans.Add(new Span { Text = "Электронная почта : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = MobileStaticVariables.UserInfo.Email, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+            formatted.Spans.Add(new Span { Text = "Электронная почта : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
+            formatted.Spans.Add(new Span { Text = MobileStaticVariables.UserInfo.Email, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(false) });
             emailLabel.FormattedText = formatted;
             
             formatted = new FormattedString();
-            formatted.Spans.Add(new Span { Text = "Дата регистрации : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = string.Format("{0:dd.MM.yyyy}", MobileStaticVariables.UserInfo.RegisterDateTime), FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+            formatted.Spans.Add(new Span { Text = "Дата регистрации : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
+            formatted.Spans.Add(new Span { Text = string.Format("{0:dd.MM.yyyy}", MobileStaticVariables.UserInfo.RegisterDateTime), FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(false) });
             registrationDateLabel.FormattedText = formatted;
             string type = "";
             if(MobileStaticVariables.UserInfo.UserType== UserTypes.Admin)
@@ -275,8 +275,8 @@ namespace snc_bonus_operator
                 type = "Менеджер";
             }
             formatted = new FormattedString();
-            formatted.Spans.Add(new Span { Text = "Должность : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold });
-            formatted.Spans.Add(new Span { Text = type, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None });
+            formatted.Spans.Add(new Span { Text = "Должность : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
+            formatted.Spans.Add(new Span { Text = type, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(false) });
             typeLabel.FormattedText = formatted;
         }
 

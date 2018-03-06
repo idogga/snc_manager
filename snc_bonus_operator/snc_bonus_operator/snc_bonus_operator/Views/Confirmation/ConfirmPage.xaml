@@ -67,7 +67,7 @@
                     <StackLayout Padding="12" >
                         <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Label Text = "Покупок еще не было" Style="{DynamicResource SmallLabelStyle}" 
-                               HorizontalOptions="CenterAndExpand"/>
+                               HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
                     </StackLayout>
                 </Frame>
                 <Label x:Name="statusTransaction" IsVisible="False" Style="{DynamicResource SmallLabelStyle}" 
