@@ -78,9 +78,11 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="acceptButton" Text="Одобрить" Style="{DynamicResource UsuallButtonStyle}" Clicked="acceptButton_Clicked" 
-                            HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0"/>
+                            HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0"
+                            BackgroundColor="{DynamicResource AcceptColor}"/>
                     <Button x:Name="declineButton" Text="Отклонить" Style="{DynamicResource UsuallButtonStyle}" Clicked="declineButton_Clicked" 
-                            HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="0"/>
+                            HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="0"
+                            BackgroundColor="{DynamicResource DeclineColor}"/>
                 </Grid>
             </StackLayout>
 

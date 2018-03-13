@@ -30,10 +30,10 @@ namespace snc_bonus_operator
             switch (transaction.StatusTransaction)
             {
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Accepted:
-                    BackColor = Color.FromHex("#cbfdcb");
+                    BackColor = (Color)App.Current.Resources["AcceptColor"];
                     break;
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Not_Accepted:
-                    BackColor = Color.FromHex("#ffd5b7");
+                    BackColor = (Color)App.Current.Resources["DeclineColor"];
                     break;
                 case (int)SellerTransactionInfo.SELLER_STATUS_ENUM.Under_Consideration:
                     BackColor = Color.FromHex("#ffffc0");

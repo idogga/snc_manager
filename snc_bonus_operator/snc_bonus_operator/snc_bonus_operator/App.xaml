@@ -13,6 +13,8 @@
             <Color x:Key="SupportColor">Blue</Color>
             <Color x:Key="SelectionColor">Red</Color>
             <Color x:Key="SublettersColor">Gray</Color>
+            <Color x:Key="AcceptColor">#cbfdcb</Color>
+            <Color x:Key="DeclineColor">#ffd5b7</Color>
 
             <Style x:Key="LabelLinkStyle" x:Name="LabelLinkStyleName" TargetType="Label">
                 <Setter Property="Text" Value="Link" />
