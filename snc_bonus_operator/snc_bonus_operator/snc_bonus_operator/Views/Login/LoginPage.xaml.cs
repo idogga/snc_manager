@@ -64,7 +64,7 @@ namespace snc_bonus_operator.Login
 
             if (loginEntry.Text.Length == 0)
             {
-                await DisplayAlert("Внимание", "Введите сначала свой емэйл", "Ввести");
+                await DisplayAlert("Внимание", "Введите сначала свою почту", "Ввести");
                 loginEntry.Focus();
             }
             else

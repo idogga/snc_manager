@@ -15,7 +15,7 @@
                             <Label Text="Введите имя :" Style="{DynamicResource UsualLabelStyle}"/>
                             <Entry x:Name="nameEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="Иван Иванов" 
                                Completed="nameEntry_Completed"/>
-                            <Label Text="Введите емэйл (логин) :" Style="{DynamicResource UsualLabelStyle}"/>
+                            <Label Text="Введите свою почту (логин) :" Style="{DynamicResource UsualLabelStyle}"/>
                             <Entry x:Name="loginEntry" Text="" Style="{DynamicResource UsualEntryStyle}" Placeholder="example@snc.ru" 
                                Keyboard="Email" Completed="loginEntry_Completed"/>
                             <Label Text="Введите заметку к менеджеру :" Style="{DynamicResource UsualLabelStyle}"/>

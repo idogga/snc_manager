@@ -188,7 +188,7 @@ namespace snc_bonus_operator.Stuff
                 }
                 else
                 {
-                    await DisplayAlert("Внимание", "Введите емэйл, чтобы мы могли связаться с Вашим будущим колегой", "Хорошо");
+                    await DisplayAlert("Внимание", "Введите почту, чтобы мы могли связаться с Вашим будущим колегой", "Хорошо");
                     loginEntry.Focus();
                 }
             }

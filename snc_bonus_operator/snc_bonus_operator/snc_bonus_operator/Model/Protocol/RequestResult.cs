@@ -130,7 +130,7 @@ namespace snc_bonus_operator.Protocol
             ResultsTranslate.Add(Results.RegisterDataNotSent, "Не удалось отправить сообщения на указаный адрес");
 
             ResultsTranslate.Add(Results.RegisterWrongHash, "Не верный код");
-            ResultsTranslate.Add(Results.RegisterWrongEmail, "Пользователь с таким емэйлом не найден");
+            ResultsTranslate.Add(Results.RegisterWrongEmail, "Пользователь с такйо почтой не найден");
             ResultsTranslate.Add(Results.RegisterWrongCardNumber, "Пользоавтель с такой картой не был найден");
             ResultsTranslate.Add(Results.RegisterUserNotFound, "Не найден пользователь с такими реквизитами");
             ResultsTranslate.Add(Results.RegisterSuccess, "Регистрация прошла успешно");

@@ -15,17 +15,22 @@ namespace snc_bonus_operator.Cash
     {
         double totalPrice = 0;
         private ShopBasket shopBasket;
-
+        string priceValue = "";
         public CashbackPage()
         {
             InitializeComponent();
-            summEntry.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) * 2;
+            priceLabel.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) * 2;
             MobileStaticVariables.QRClient.ResetQRInfoAddedEvent();
             MobileStaticVariables.QRClient.QRInfoAddedEvent += FillOrderRequest;
             MobileStaticVariables.QRClient.BarInfoAddedEvent += FillBarRequest;
             MobileStaticVariables.QRClient.SetQrRead(false);
             MakeDefaultValues();
             operatorLabel.Text = "Оператор : " + MobileStaticVariables.UserInfo.UserNickName;
+            int radius = (int)((App.Current.MainPage.Width - 36) / 6);
+            foreach (var item in passKeyboardGrid.Children)
+            {
+                ((Button)item).BorderRadius = radius;
+            }
         }
 
         void FillOrderRequest()
@@ -98,86 +103,7 @@ namespace snc_bonus_operator.Cash
             MobileStaticVariables.QRClient.BarInfoAddedEvent -= FillBarRequest;
             MobileStaticVariables.QRClient.QRInfoAddedEvent -= FillOrderRequest;
         }
-
-        private void summEntry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                if (e.NewTextValue == "")
-                {
-                    qrReadButton.IsEnabled = false;
-                    //barReadButton.IsEnabled = false;
-                    return;
-                }
-                //if (e.NewTextValue.EndsWith(",") || e.NewTextValue.EndsWith("."))
-                    //return;
-                double volume = 0;
-                try
-                {
-                    volume = Convert.ToDouble(e.NewTextValue.Replace(",", "."), System.Globalization.CultureInfo.InvariantCulture);
-                }
-                catch
-                {
-                    volume = 0;
-                    ((Entry)sender).TextChanged -= summEntry_TextChanged;
-                    ((Entry)sender).Text = "0";
-                    totalPrice = 0;
-                    qrReadButton.IsEnabled = false;
-                    //barReadButton.IsEnabled = false;
-                    ((Entry)sender).TextChanged += summEntry_TextChanged;
-                    return;
-                }
-                if (volume < 0)
-                {
-                    ((Entry)sender).TextChanged -= summEntry_TextChanged;
-                    ((Entry)sender).Text = "0";
-                    totalPrice = 0;
-                    qrReadButton.IsEnabled = false;
-                    //barReadButton.IsEnabled = false;
-                    ((Entry)sender).TextChanged += summEntry_TextChanged;
-                    return;
-                }
-
-                if(volume>999999.99)
-                {
-                    ((Entry)sender).TextChanged -= summEntry_TextChanged;
-                    ((Entry)sender).Text = "999999.99";
-                    totalPrice = 999999.99;
-                    qrReadButton.IsEnabled = false;
-                    //barReadButton.IsEnabled = false;
-                    ((Entry)sender).TextChanged += summEntry_TextChanged;
-                    return;
-                }
-
-                var firstDotIndex = e.NewTextValue.IndexOfAny(new char[] { '.', ',' });
-                if(firstDotIndex!=-1)
-                {
-                    var w = e.NewTextValue.Substring(firstDotIndex+1);
-                    var a = w.Length;
-                    if (a > 2)
-                    {
-                        ((Entry)sender).TextChanged -= summEntry_TextChanged;
-                        ((Entry)sender).Text = e.OldTextValue;
-                        ((Entry)sender).TextChanged += summEntry_TextChanged;
-                    }
-                }
-                
-                //double value = double.Parse(((Entry)sender).Text);
-                totalPrice = volume;
-                qrReadButton.IsEnabled = true;
-                //barReadButton.IsEnabled = true;
-
-            }
-            catch
-            {
-                ((Entry)sender).TextChanged -= summEntry_TextChanged;
-                ((Entry)sender).Text = e.OldTextValue;
-                ((Entry)sender).TextChanged += summEntry_TextChanged;
-                qrReadButton.IsEnabled = false;
-                //barReadButton.IsEnabled = false;
-            }
-        }
-
+        
         void StartLoading()
         {
             backgroundDark.BackgroundColor = new Color(0, 0, 0, 0.5);
@@ -198,14 +124,11 @@ namespace snc_bonus_operator.Cash
         async void LoadScheme()
         {
             StartLoading();
-            var cancellationTokenSource = new CancellationTokenSource();
             try
             {
-                await Task.Factory.StartNew(x => {
+                await Task.Factory.StartNew(() => {
                     DecryptString();
-                },
-                TaskCreationOptions.AttachedToParent,
-                cancellationTokenSource.Token);
+                });
             }
             catch (Exception ex)
             {
@@ -234,11 +157,12 @@ namespace snc_bonus_operator.Cash
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         priceLayout.IsVisible = false;
+                        keyboardLayout.IsVisible = false;
                         acceptLayout.IsVisible = true;
                         var formatted = new FormattedString();
                         formatted.Spans.Add(new Span { Text = "Общая цена : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
                         formatted.Spans.Add(new Span { Text = shopBasket.TotalPrice.ToString("0.00"), FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["LetterColor"], FontAttributes = FontAttributes.None, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(false) });
-                        formatted.Spans.Add(new Span { Text = " "+MobileStaticVariables.MainIssuer.Currency, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
+                        formatted.Spans.Add(new Span { Text = " " + MobileStaticVariables.MainIssuer.Currency, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
                         summLabel.FormattedText = formatted;
                         formatted = new FormattedString();
                         formatted.Spans.Add(new Span { Text = "Программа : ", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), ForegroundColor = (Color)App.Current.Resources["MainColor"], FontAttributes = FontAttributes.Bold, FontFamily = MobileStaticVariables.UserAppSettings.CurrenFont(true) });
@@ -389,13 +313,112 @@ namespace snc_bonus_operator.Cash
             {
                 priceLayout.IsVisible = true;
                 acceptLayout.IsVisible = false;
-                summEntry.Text = "";
+                keyboardLayout.IsVisible = true;
+                priceValue = "0";
+                DisplayPrice(priceValue);
             });
         }
 
-        private void summEntry_Completed(object sender, EventArgs e)
+        private void OnBackspaceButtonClicked(object sender, EventArgs e)
         {
-            qrReadButton_Clicked(sender, e);
+            if (priceValue.Length > 0)
+            {
+                try
+                {
+                    if (MobileStaticVariables.UserAppSettings.UseVibration)
+                    {
+                        var v = CrossVibrate.Current;
+                        v.Vibration(TimeSpan.FromMilliseconds(50));
+                    }
+                }
+                catch { }
+                priceValue = priceValue.Substring(0, priceValue.Length - 1);
+                if(priceValue.Length > 0)
+                {
+                    backspaceButton.IsEnabled = true;
+                }
+                else
+                {
+                    priceValue = "0";
+                    backspaceButton.IsEnabled = false;
+                }
+                dotButton.IsEnabled = !priceValue.Contains(",");
+                if (IsValidNumber(priceValue))
+                    DisplayPrice(priceValue);
+            }
+        }
+
+        private void OnDigitButtonClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MobileStaticVariables.UserAppSettings.UseVibration)
+                {
+                    var v = CrossVibrate.Current;
+                    v.Vibration(TimeSpan.FromMilliseconds(50));
+                }
+            }
+            catch { }
+            var button = (Button)sender;
+            var newPriceValue = priceValue + button.StyleId;
+            backspaceButton.IsEnabled = true;
+            if (IsValidNumber(newPriceValue))
+                DisplayPrice(priceValue);
+        }
+
+        private void OnSpecialButtonClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MobileStaticVariables.UserAppSettings.UseVibration)
+                {
+                    var v = CrossVibrate.Current;
+                    v.Vibration(TimeSpan.FromMilliseconds(50));
+                }
+            }
+            catch { }
+            priceValue += ",";
+            dotButton.IsEnabled = false;
+            if(IsValidNumber(priceValue))
+                DisplayPrice(priceValue);
+        }
+
+        void DisplayPrice(string value)
+        {
+            priceLabel.Text = value;
+            qrReadButton.IsEnabled = priceLabel.Text != "0";
+        }
+
+        bool IsValidNumber(string value)
+        {
+            if (value.Contains(","))
+            {
+                var subvalue = value.Substring(value.IndexOf(","));
+                if (subvalue.Length > 3) return false;
+            }
+            if (double.TryParse(value, out totalPrice))
+            {
+                if (totalPrice > 999999.99)
+                {
+                    totalPrice = 999999.99;
+                }
+                priceValue = totalPrice.ToString();
+                if(value.EndsWith(",0"))
+                {
+                    priceValue += ",0";
+                }
+                else if (value.EndsWith(",00"))
+                {
+                    priceValue += ",00";
+                }
+                else if (value.EndsWith(",") )
+                {
+                    priceValue += ",";
+                }
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
