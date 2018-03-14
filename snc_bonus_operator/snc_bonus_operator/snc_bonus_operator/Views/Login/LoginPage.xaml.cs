@@ -163,6 +163,8 @@ namespace snc_bonus_operator.Login
                 return;
             }
             StartLoading();
+            MobileStaticVariables.UserAppSettings.ScreenWidth = App.Current.MainPage.Width;
+            MobileStaticVariables.UserAppSettings.SaveSetting((int)SettingsEnum.ScreenWidth, MobileStaticVariables.UserAppSettings.ScreenWidth.ToString());
             LoadData();
         }
 

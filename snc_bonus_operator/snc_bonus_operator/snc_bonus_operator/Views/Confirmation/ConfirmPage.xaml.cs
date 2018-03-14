@@ -20,11 +20,19 @@ namespace snc_bonus_operator.Confirmation
         bool isLoading;
         bool needToLoad = true;
         const int _amount = 20;
-
+        double dy = 0;
         #region Конструктор
         public ConfirmPage()
         {
             InitializeComponent();
+            var buttonsLenght = App.Current.MainPage.Width / 3;
+            dy = App.Current.MainPage.Height * 0.04;
+            buttonsGrid.ColumnDefinitions.Clear();
+            var c1 = new ColumnDefinition(); c1.Width = new GridLength(buttonsLenght, GridUnitType.Absolute);
+            var c2 = new ColumnDefinition(); c2.Width = new GridLength(buttonsLenght, GridUnitType.Absolute);
+            buttonsGrid.ColumnDefinitions.Add(c1);
+            buttonsGrid.ColumnDefinitions.Add(c1);
+
             listTransaction.ItemAppearing += async (sender, e) =>
             {
                 Logger.WriteLine("ItemAppearing");
@@ -96,13 +104,13 @@ namespace snc_bonus_operator.Confirmation
 
             if (MeassageList.Count == 0)
             {
-                sendList.IsVisible = false;
+                HideSendList();
                 Title = "Акцептирование";
                 this.ToolbarItems[0].Text = "Выбрать все";
             }
             else
             {
-                sendList.IsVisible = true;
+                ShowSendList();
                 this.ToolbarItems[0].Text = "Снять все";
                 Title = string.Format("Выбрано: {0}", MeassageList.Count);
             }
@@ -237,7 +245,7 @@ namespace snc_bonus_operator.Confirmation
                     }
                 }
                 MeassageList.Clear();
-                sendList.IsVisible = false;
+                HideSendList();
                 this.Title = "Акцептирование";
                 listTransaction.ItemsSource = null;
                 listTransaction.ItemsSource = Transactions;
@@ -256,7 +264,7 @@ namespace snc_bonus_operator.Confirmation
                         }
                     }
                 }
-                sendList.IsVisible = true;
+                ShowSendList();
                 Title = string.Format("Выбрано: {0}", MeassageList.Count);
                 listTransaction.ItemsSource = null;
                 listTransaction.ItemsSource = Transactions;
@@ -270,7 +278,7 @@ namespace snc_bonus_operator.Confirmation
             listTransaction.BeginRefresh();
             Transactions.Clear();
             MeassageList.Clear();
-            sendList.IsVisible = false;
+            HideSendList();
             this.Title = "Выберите транзакцию";
             LoadTransactions(0);
             listTransaction.EndRefresh();
@@ -291,7 +299,7 @@ namespace snc_bonus_operator.Confirmation
             StartLoading();
             Transactions.Clear();
             MeassageList.Clear();
-            sendList.IsVisible = false;
+            HideSendList();
             this.Title = "Акцептирование";
             this.ToolbarItems[0].Text = "Выбрать все";
             await Task.Factory.StartNew(() =>
@@ -408,9 +416,22 @@ namespace snc_bonus_operator.Confirmation
             listTransaction.IsVisible = false;
             emptyFrame.IsVisible = true;
             statusTransaction.IsVisible = false;
-            sendList.IsVisible = false;
+            HideSendList();
         }
 
+        private void ShowSendList()
+        {
+            sendList.IsVisible = true;
+            sendList.TranslateTo(0, -2*dy, 1500);
+            sendList.FadeTo(1, 1500);
+        }
+
+        private void HideSendList()
+        {
+            sendList.TranslateTo(0, 2*dy, 1500);
+            sendList.FadeTo(0, 1500);
+            //sendList.IsVisible = false;
+        }
 
         private bool WaitInternetConnection()
         {

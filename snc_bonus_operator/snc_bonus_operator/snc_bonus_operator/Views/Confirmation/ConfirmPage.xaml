@@ -63,7 +63,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Style="{DynamicResource UsualFrameStyle}" IsVisible="False" >
+                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Style="{DynamicResource UsualFrameStyle}" IsVisible="False">
                     <StackLayout Padding="12" >
                         <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                         <Label Text = "Покупок еще не было" Style="{DynamicResource SmallLabelStyle}" 
@@ -72,20 +72,24 @@
                 </Frame>
                 <Label x:Name="statusTransaction" IsVisible="False" Style="{DynamicResource SmallLabelStyle}" 
                                HorizontalOptions="CenterAndExpand"/>
-                <Grid x:Name="sendList" IsVisible="False">
+            </StackLayout>
+
+            <Frame x:Name="sendList" Style="{DynamicResource UsualFrameStyle}" IsVisible="False" Margin="10,0,10,10"
+                   AbsoluteLayout.LayoutFlags="PositionProportional" Padding="2" HorizontalOptions="FillAndExpand"
+                             AbsoluteLayout.LayoutBounds="0.5,1,-1,-1" >
+                <Grid x:Name="buttonsGrid" Padding="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="acceptButton" Text="Одобрить" Style="{DynamicResource UsuallButtonStyle}" Clicked="acceptButton_Clicked" 
-                            HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0"
+                            HorizontalOptions="StartAndExpand" Grid.Column="0" Grid.Row="0"
                             BackgroundColor="{DynamicResource AcceptColor}"/>
                     <Button x:Name="declineButton" Text="Отклонить" Style="{DynamicResource UsuallButtonStyle}" Clicked="declineButton_Clicked" 
-                            HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="0"
+                            HorizontalOptions="EndAndExpand" Grid.Column="1" Grid.Row="0"
                             BackgroundColor="{DynamicResource DeclineColor}"/>
                 </Grid>
-            </StackLayout>
-
+            </Frame>
             <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                          AbsoluteLayout.LayoutFlags="All"
                              AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
@@ -93,6 +97,7 @@
                              AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
                 <views:Indicator x:Name="IndicatorLayout"/>
             </StackLayout>
+
             <views:NoConnectionView x:Name="noConnectionLayout"  IsVisible="False" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
         </AbsoluteLayout>
     </ContentPage.Content>

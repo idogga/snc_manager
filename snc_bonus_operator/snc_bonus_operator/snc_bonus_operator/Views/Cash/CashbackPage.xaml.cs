@@ -26,7 +26,7 @@ namespace snc_bonus_operator.Cash
             MobileStaticVariables.QRClient.SetQrRead(false);
             MakeDefaultValues();
             operatorLabel.Text = "Оператор : " + MobileStaticVariables.UserInfo.UserNickName;
-            int radius = (int)((App.Current.MainPage.Width - 36) / 6);
+            int radius = (int)((MobileStaticVariables.UserAppSettings.ScreenWidth - 36) / 6); 
             foreach (var item in passKeyboardGrid.Children)
             {
                 ((Button)item).BorderRadius = radius;
