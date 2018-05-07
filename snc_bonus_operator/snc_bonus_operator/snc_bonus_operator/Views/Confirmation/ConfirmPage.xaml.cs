@@ -35,7 +35,6 @@ namespace snc_bonus_operator.Confirmation
 
             listTransaction.ItemAppearing += async (sender, e) =>
             {
-                Logger.WriteLine("ItemAppearing");
                 if (isLoading || Transactions.Count == 0)
                     return;
                 if (listTransaction.ItemsSource == null)
@@ -422,15 +421,14 @@ namespace snc_bonus_operator.Confirmation
         private void ShowSendList()
         {
             sendList.IsVisible = true;
-            sendList.TranslateTo(0, -2*dy, 1500);
-            sendList.FadeTo(1, 1500);
+            sendList.TranslateTo(0, -dy, 1000);
+            sendList.FadeTo(1, 1000);
         }
 
         private void HideSendList()
         {
-            sendList.TranslateTo(0, 2*dy, 1500);
-            sendList.FadeTo(0, 1500);
-            //sendList.IsVisible = false;
+            sendList.TranslateTo(0, dy, 1000);
+            sendList.FadeTo(0, 1000);
         }
 
         private bool WaitInternetConnection()

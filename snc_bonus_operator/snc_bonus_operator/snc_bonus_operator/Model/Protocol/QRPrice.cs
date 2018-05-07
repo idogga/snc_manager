@@ -22,6 +22,13 @@ namespace snc_bonus_operator.Protocol
         [JsonProperty("I")]
         public string Info { get; set; } = "";
 
+        /// <summary>
+        /// Информация для офлайна
+        /// </summary>
+        [JsonProperty("DT")]
+        public string Data { get; set; } = "";
+
+
         public void SetInfo(QRInfo info, string key)
         {
             var str = JsonConvert.SerializeObject(info);
@@ -83,5 +90,43 @@ namespace snc_bonus_operator.Protocol
         /// </summary>
         [JsonProperty("T")]
         public DateTime TimeGeneration { get; set; } = DateTime.Now;
+    }
+
+    public class QRData
+    {
+        [JsonProperty("CODA")]
+        public int Cod_A { get; set; }
+
+        [JsonProperty("CODO")]
+        public int Cod_O { get; set; }
+
+        [JsonProperty("CODOWN")]
+        public int Cod_Own { get; set; }
+
+        [JsonProperty("LOA")]
+        public string CollectionSet { get; set; }
+
+        [JsonProperty("MAK")]
+        public int MifareApplicationKey { get; set; }
+        /// <summary>
+        /// тип дисконта
+        /// </summary>
+        [JsonProperty("DT")]
+        public int DiscountType { get; set; }
+
+        [JsonProperty("DB")]
+        public double DiscontBonus { get; set; }
+
+        /// <summary>
+        /// Значение скидки
+        /// </summary>
+        [JsonProperty("DV")]
+        public int DiscontVolume { get; set; }
+
+        [JsonProperty("BSR")]
+        public int BonusSumRezhim { get; set; }
+
+        [JsonProperty("G")]
+        public string GraphicalNumber { get; set; } = string.Empty;
     }
 }

@@ -26,30 +26,39 @@ namespace snc_bonus_operator.Droid.Implementation
 {
     public class NetUtils : Interfaces.INetUtils
     {
-        static SenderConnector sc = new SenderConnector();
+        SenderConnector scPrivate = new SenderConnector();
+        SenderConnector scInternal = new SenderConnector();
+        SenderConnector scPrivateInternal = new SenderConnector();
 
-        public void SendData(string str, CertificateType type, string TimeOut = null)
+        public void SendData(object connector, string str, CertificateType type, string TimeOut = null)
         {
-            sc.SendData(str, type, TimeOut);
+            ((SenderConnector)connector).SendData(str, TimeOut);
+        }
+        public object Open(int port, string Adress, CertificateType type, int ResiveTimeOut = -1)
+        {
+            SenderConnector sc = new SenderConnector();
+            if (sc.send.Open(port, Adress, type, ResiveTimeOut))
+            {
+                return sc;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public void Close(object connector)
+        {
+            ((SenderConnector)connector).Close();
+        }
+        public string Receive(object connector)
+        {
+            return ((SenderConnector)connector).Receive();
+        }
+        public string GetLastError(object connector)
+        {
+            return ((SenderConnector)connector).LastError;
         }
 
-        public bool Open(int port, string Adress, CertificateType type, int ResiveTimeOut = -1)
-        {
-            return sc.Open(port, Adress, type, ResiveTimeOut);
-        }
-
-        public void Close()
-        {
-            sc.Close();
-        }
-        public string Receive()
-        {
-            return sc.Receive();
-        }
-        public string GetLastError()
-        {
-            return sc.LastError;
-        }
         public InternetStatus IsServerPing(string Adress)
         {
             var result = InternetStatus.Online;
@@ -87,7 +96,7 @@ namespace snc_bonus_operator.Droid.Implementation
         /// </summary>
         public class SenderConnector : IDisposable
         {
-            private MainSender send = new MainSender();
+            public MainSender send = new MainSender();
             private string error = "";
             private string msg;
             /// <summary>
@@ -135,7 +144,7 @@ namespace snc_bonus_operator.Droid.Implementation
             /// </summary>
             /// <param name="ds">Датасет RequestDS</param>
             /// <param name="TimeOut">Время выполнения запроса</param>
-            public void SendData(string ds, CertificateType type, string TimeOut = null)
+            public void SendData(string ds, string TimeOut = null)
             {
                 try
                 {
@@ -143,7 +152,7 @@ namespace snc_bonus_operator.Droid.Implementation
                     string name = Guid.NewGuid().ToString();
                     if (TimeOut != null)
                         name += ";TimeOut =" + TimeOut;
-                    send.SendPost(new MemoryStream(Encoding.UTF8.GetBytes(ds)), name, type);
+                    send.SendPost(new MemoryStream(Encoding.UTF8.GetBytes(ds)), name);
                     if (send.LastError != "")
                         error = send.LastError;
                 }
@@ -156,9 +165,9 @@ namespace snc_bonus_operator.Droid.Implementation
             /// Отправить запрос
             /// </summary>
             /// <param name="path">Путь к файлу</param>
-            public void SendData(string path, CertificateType type)
+            public void SendData(string path)
             {
-                send.SendPost(new MemoryStream(Encoding.UTF8.GetBytes(path)), Guid.NewGuid().ToString(), type);
+                send.SendPost(new MemoryStream(Encoding.UTF8.GetBytes(path)), Guid.NewGuid().ToString());
                 if (send.LastError != "")
                     error = send.LastError;
             }
@@ -169,10 +178,9 @@ namespace snc_bonus_operator.Droid.Implementation
             /// <param name="Adress">Ip адрес</param>
             /// <param name="ResiveTimeOut">Время ожидания получаемых данных</param>
             /// <returns></returns>
-            public bool Open(int port, string Adress, CertificateType type, int ResiveTimeOut = -1)
+            public object Open(int port, string Adress, CertificateType type, bool IsInternal, int ResiveTimeOut = -1)
             {
-                return send.Open(port, Adress, Ssl, type, ResiveTimeOut);
-                //return send.Open(port, Adress, false, type, ResiveTimeOut);
+                return send.Open(port, Adress, type, ResiveTimeOut);
             }
             /// <summary>
             /// Получить ответ на запрос
@@ -194,14 +202,12 @@ namespace snc_bonus_operator.Droid.Implementation
                                 MemoryStream file = val as MemoryStream;
                                 file.Position = 0;
                                 str = new StreamReader(file).ReadToEnd();
-                                Logger.WriteLine("str2 : " + str);
                             }
                             else if (val is string)
                             {
                                 if (!val.ToString().Contains("Guid"))
                                 {
                                     msg += val.ToString();
-                                    Logger.WriteLine("str1 : " + str);
                                 }
                             }
                         }
@@ -221,6 +227,7 @@ namespace snc_bonus_operator.Droid.Implementation
             public void Close()
             {
                 send.Close();
+                Dispose();
             }
             /// <summary>
             /// Очистить
@@ -256,10 +263,10 @@ namespace snc_bonus_operator.Droid.Implementation
 
         }
 
-        internal class MainSender
+        public class MainSender
         {
             public string LastError { get; set; }
-            private bool Ssl { get; set; }
+            private bool Ssl { get; set; } = true;
             public String http_method;
             public String http_url;
             public String http_protocol_versionstring;
@@ -268,16 +275,17 @@ namespace snc_bonus_operator.Droid.Implementation
             public TcpClient tcp = null;
             public Socket sender = null;
             public Stream sendStream = null;
+            private CertificateType CertType;
 
-            public bool Open(int port, string Adress, bool ssl, CertificateType type, int ResiveTimeOut = -1)
+            public bool Open(int port, string Adress, CertificateType type, int ResiveTimeOut = -1)
             {
-                Ssl = ssl;
+                CertType = type;
                 tcp = new TcpClient();
                 sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 tcp.Client = sender;
                 sender.ReceiveBufferSize = 128000;
                 sender.SendBufferSize = 128000;
-                System.Net.IPAddress ipAddr = null;
+                IPAddress ipAddr = null;
                 IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
                 if (!IPAddress.TryParse(Adress, out ipAddr))
                 {
@@ -291,21 +299,18 @@ namespace snc_bonus_operator.Droid.Implementation
                 if (ResiveTimeOut != -1)
                     sender.ReceiveTimeout = ResiveTimeOut;
                 IAsyncResult result = sender.BeginConnect(ipEndPoint, null, null);
-
                 bool success = result.AsyncWaitHandle.WaitOne(5000, true);
 
                 if (!sender.Connected)
                 {
-                    // NOTE, MUST CLOSE THE SOCKET
-
                     sender.Close();
                     return false;
                 }
                 else
                 {
+                    Logger.WriteLine("Certificates tcp : " + tcp.GetHashCode());
                     return true;
                 }
-
             }
 
             public void Close()
@@ -321,7 +326,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 }
             }
 
-            private static byte[] ReadFully(Stream input)
+            private byte[] ReadFully(Stream input)
             {
                 byte[] buffer = new byte[16 * 1024];
                 using (MemoryStream ms = new MemoryStream())
@@ -335,7 +340,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 }
             }
 
-            public static X509CertificateCollection GetX509CertificateCollection()
+            public X509CertificateCollection GetX509CertificateCollection()
             {
                 X509Certificate2 certificate1 = new X509Certificate2();
                 X509CertificateCollection collection1 = new X509CertificateCollection();
@@ -343,7 +348,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 return collection1;
             }
 
-            public void SendPost(MemoryStream Data, string cookie, CertificateType type)
+            public void SendPost(MemoryStream Data, string cookie)
             {
                 LastError = "";
                 try
@@ -353,7 +358,7 @@ namespace snc_bonus_operator.Droid.Implementation
                     "Content-length: " + Data.Length + " \r\n" + "Content-transfer-encoding: text \r\n" + "Connection: open \r\n\r\n";
                     //message = Headers + message;
                     Data.Position = 0;
-                    sendStream = GetStream(type);
+                    sendStream = GetStream();
                     var dataArray = Data.ToArray();
                     var stream = new MemoryStream();
                     var headers = Encoding.ASCII.GetBytes(Headers);
@@ -367,13 +372,18 @@ namespace snc_bonus_operator.Droid.Implementation
                     LastError = ex.Message;
                 }
             }
-            private X509CertificateCollection GetCertificate(CertificateType type)
+            private X509Certificate GetCertificateLocal(object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
             {
-                X509CertificateCollection outCertificate = new X509CertificateCollection();
+                Logger.WriteLine("Certificates GetCertificateLocal : " + targetHost);
+                return GetCertificate();
+            }
+
+            private X509Certificate GetCertificate()
+            {
                 X509Certificate2 x509 = null;
                 AsymmetricCipherKeyPair privateKey = null;
-                x509 = new X509Certificate2(Encoding.ASCII.GetBytes(MobileStaticVariables.ConectSettings.Certificates[(int)type].Certificate));
-                var stringReader = new StringReader(MobileStaticVariables.ConectSettings.Certificates[(int)type].PrivateKey);
+                x509 = new X509Certificate2(Encoding.ASCII.GetBytes(MobileStaticVariables.ConectSettings.Certificates[(int)CertType].Certificate));
+                var stringReader = new StringReader(MobileStaticVariables.ConectSettings.Certificates[(int)CertType].PrivateKey);
                 PemReader reader = new PemReader(stringReader);
                 var key = reader.ReadObject() as AsymmetricCipherKeyPair;
                 if (key != null)
@@ -393,33 +403,43 @@ namespace snc_bonus_operator.Droid.Implementation
                             rsa.Modulus, rsa.PublicExponent, rsa.PrivateExponent, rsa.Prime1, rsa.Prime2, rsa.Exponent1, rsa.Exponent2, rsa.Coefficient);
 
                         x509.PrivateKey = DotNetUtilities.ToRSA(rsaparams);
-                        outCertificate.Add(x509);
+                        Logger.WriteLine("Certificates : " + x509.GetCertHashString() + " hash class : " + this.GetHashCode());
+                        return x509;
                     }
                 }
-                return outCertificate;
+                return null;
             }
-            private Stream GetStream(CertificateType type)
+            private Stream GetStream()
             {
                 Stream outstream = null;
                 if (Ssl)
                 {
-                    outstream = new SslStream(tcp.GetStream(), false, App_CertificateValidation, CertificateSelectionCallback);
-                    ((SslStream)outstream).AuthenticateAsClient((tcp.Client.RemoteEndPoint as IPEndPoint).Address.ToString(), GetCertificate(type), SslProtocols.Tls, false);
+                    Logger.WriteLine("Certificates tcp GetStream : " + tcp.GetHashCode() + " port : " + tcp.Client.LocalEndPoint.AddressFamily + " " + (outstream == null).ToString());
+                    outstream = new SslStream(tcp.GetStream(), false,
+                        delegate (Object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+                        {
+                            return true;
+                        },
+                        new LocalCertificateSelectionCallback(GetCertificateLocal)
+                        );
+                    ((SslStream)outstream).AuthenticateAsClient((tcp.Client.RemoteEndPoint as IPEndPoint).Address.ToString(), GetCollection(), SslProtocols.Tls, false);
                 }
                 else
                     outstream = tcp.GetStream();
                 return outstream;
             }
 
-            private static bool App_CertificateValidation(Object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            private X509CertificateCollection GetCollection()
             {
-                return true;
+                var xcollection = new X509CertificateCollection();
+                xcollection.Add(GetCertificate());
+                return xcollection;
             }
 
-            private static X509Certificate CertificateSelectionCallback(object sender, string targetHost,
+            private X509Certificate CertificateSelectionCallback(object sender, string targetHost,
         X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers)
             {
-                return localCertificates[0];
+                return GetCertificate();
             }
 
             private void ReadHeaders(Stream netStream)
@@ -434,8 +454,6 @@ namespace snc_bonus_operator.Droid.Implementation
                         {
                             parseRequest(netStream);
                             readHeaders(netStream);
-                            //HeaderLeng = Convert.ToInt32(headerstream.Position);
-                            //OneHeader = HeaderLeng;
                         }
                         catch
                         {
@@ -538,13 +556,11 @@ namespace snc_bonus_operator.Droid.Implementation
 
             public void readHeaders(Stream stream)
             {
-                //Console.WriteLine("readHeaders()");
                 String line;
                 while ((line = streamReadLine(stream)) != null)
                 {
                     if (line.Equals(""))
                     {
-                        //Console.WriteLine("got headers");
                         return;
                     }
 
@@ -561,7 +577,6 @@ namespace snc_bonus_operator.Droid.Implementation
                     }
 
                     string value = line.Substring(pos, line.Length - pos);
-                    //Console.WriteLine("header: {0}:{1}", name, value);
                     httpHeaders[name] = value.Trim();
                 }
             }
@@ -595,10 +610,6 @@ namespace snc_bonus_operator.Droid.Implementation
                 return data;
             }
 
-            //static string GetString(byte[] bytes,int leng)
-            //{
-            //    return System.Text.Encoding.UTF8.GetString(bytes,0,leng);
-            //}
             private string GetStringStream(Stream inputStream)
             {
                 inputStream.Position = 0;
@@ -620,7 +631,7 @@ namespace snc_bonus_operator.Droid.Implementation
                 }
                 return data;
             }
-            static string GetString(byte[] bytes, int position, int leng)
+            string GetString(byte[] bytes, int position, int leng)
             {
                 char[] chars = new char[leng];//[bytes.Length / sizeof(char)];
                 System.Buffer.BlockCopy(bytes, position, chars, 0, leng);
@@ -656,6 +667,15 @@ namespace snc_bonus_operator.Droid.Implementation
                 return false;
             }
             return true;
+        }
+
+        public class MobileSslStream : SslStream
+        {
+            public CertificateType Type { get; set; }
+            public MobileSslStream(Stream innerStream, bool leaveInnerStreamOpen, RemoteCertificateValidationCallback userCertificateValidationCallback, LocalCertificateSelectionCallback userCertificateSelectionCallback)
+                : base(innerStream, leaveInnerStreamOpen, userCertificateValidationCallback, userCertificateSelectionCallback)
+            {
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.snc_bonus_operator.android" android:installLocation="auto" android:versionCode="5" android:versionName="0.5">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.snc_bonus_operator.android" android:installLocation="auto" android:versionCode="6" android:versionName="0.51">
 	<uses-sdk android:minSdkVersion="19" />
   <uses-permission android:name="android.permission.FLASHLIGHT" />
   <uses-permission android:name="android.permission.INTERNET" />

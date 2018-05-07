@@ -37,17 +37,37 @@
                                                    Style="{DynamicResource UsualLabelStyle}"/>
                             </StackLayout>
 
-                            <StackLayout x:Name="myProfileLayout" Orientation="Horizontal" HeightRequest="40">
+                            <StackLayout x:Name="notificationLayout" Orientation="Horizontal" HeightRequest="40">
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnMyProfileButtonClicked" NumberOfTapsRequired="1"/>
+                                    <TapGestureRecognizer Tapped="OnNotificationLayoutClicked" NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="ic_myprofile_16.png" 
+                                <Image Source="news_16_png.png" 
                                                    WidthRequest="16" 
                                                    HeightRequest="16"
                                                    Margin="16,0,16,0" 
                                                    VerticalOptions="CenterAndExpand"
                                                    BackgroundColor="Transparent"/>
-                                <Label Text="Мой профиль"
+                                <Label Text="Акцептирование"
+                                                   HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Center"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   BackgroundColor="Transparent"
+                                                   Style="{DynamicResource UsualLabelStyle}"/>
+                            </StackLayout>
+
+
+                            <StackLayout x:Name="allPurchesLayout" Orientation="Horizontal" HeightRequest="40">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAllPurchesLayoutClicked" NumberOfTapsRequired="1"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_wallet_16.png" 
+                                                   WidthRequest="16" 
+                                                   HeightRequest="16"
+                                                   Margin="16,0,16,0" 
+                                                   VerticalOptions="CenterAndExpand"
+                                                   BackgroundColor="Transparent"/>
+                                <Label Text="Список транзакций" 
                                                    HorizontalTextAlignment="Start"
                                                    VerticalTextAlignment="Center"
                                                    HorizontalOptions="Center"
@@ -74,18 +94,18 @@
                                                    BackgroundColor="Transparent"
                                                    Style="{DynamicResource UsualLabelStyle}"/>
                             </StackLayout>
-
-                            <StackLayout x:Name="allPurchesLayout" Orientation="Horizontal" HeightRequest="40">
+                            
+                            <StackLayout x:Name="myProfileLayout" Orientation="Horizontal" HeightRequest="40">
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnAllPurchesLayoutClicked" NumberOfTapsRequired="1"/>
+                                    <TapGestureRecognizer Tapped="OnMyProfileButtonClicked" NumberOfTapsRequired="1"/>
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="ic_wallet_16.png" 
+                                <Image Source="ic_myprofile_16.png" 
                                                    WidthRequest="16" 
                                                    HeightRequest="16"
                                                    Margin="16,0,16,0" 
                                                    VerticalOptions="CenterAndExpand"
                                                    BackgroundColor="Transparent"/>
-                                <Label Text="Список транзакций" 
+                                <Label Text="Мой профиль"
                                                    HorizontalTextAlignment="Start"
                                                    VerticalTextAlignment="Center"
                                                    HorizontalOptions="Center"
@@ -94,24 +114,8 @@
                                                    Style="{DynamicResource UsualLabelStyle}"/>
                             </StackLayout>
 
-                            <StackLayout x:Name="notificationLayout" Orientation="Horizontal" HeightRequest="40">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnNotificationLayoutClicked" NumberOfTapsRequired="1"/>
-                                </StackLayout.GestureRecognizers>
-                                <Image Source="news_16_png.png" 
-                                                   WidthRequest="16" 
-                                                   HeightRequest="16"
-                                                   Margin="16,0,16,0" 
-                                                   VerticalOptions="CenterAndExpand"
-                                                   BackgroundColor="Transparent"/>
-                                <Label Text="Акцептирование"
-                                                   HorizontalTextAlignment="Start"
-                                                   VerticalTextAlignment="Center"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand"
-                                                   BackgroundColor="Transparent"
-                                                   Style="{DynamicResource UsualLabelStyle}"/>
-                            </StackLayout>
+
+
 
                             <StackLayout x:Name="settingsLayout" Orientation="Horizontal" HeightRequest="40">
                                 <StackLayout.GestureRecognizers>

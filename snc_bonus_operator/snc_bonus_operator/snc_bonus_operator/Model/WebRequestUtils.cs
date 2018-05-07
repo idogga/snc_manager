@@ -328,14 +328,8 @@ namespace snc_bonus_operator
         #region Общий запрос
         private string SendRequest(string xml, CertificateType type)
         {
-            if (!DependencyService.Get<INetUtils>().CheckInternetConnection())
-            {
-                Logger.WriteLine("SendRequest : No internet connection");
-                throw new Exception("ErrorCannotConnectToSever");
-            }
-            //timer.Start();
             var res = SendMobileRequest(xml, type);
-            if (res/*.Result*/ != "")
+            if (res != "")
             {
                 try
                 {
@@ -375,9 +369,6 @@ namespace snc_bonus_operator
                 //isNeedException = true;
 
             }
-            //timer.Stop();
-            //if(isNeedException)
-            //    throw new NoInternetException("Отсутсвует подключение к серверу");
             return "";
         }
 
@@ -389,46 +380,24 @@ namespace snc_bonus_operator
             port = MobileStaticVariables.ConectSettings.DebugPort;
 #endif
             var res = "";
-            try
+            var connector = DependencyService.Get<INetUtils>().Open(port, ip, type, 60000);
+            if (connector != null)
             {
-                if (DependencyService.Get<INetUtils>().Open(port, ip, type, 60000))
+                DependencyService.Get<INetUtils>().SendData(connector, xml_ds, type);
+                if (DependencyService.Get<INetUtils>().GetLastError(connector) == "")
                 {
-                    DependencyService.Get<INetUtils>().SendData(xml_ds, type);
-                    if (DependencyService.Get<INetUtils>().GetLastError() == "")
+                    res = DependencyService.Get<INetUtils>().Receive(connector);
+                    if (DependencyService.Get<INetUtils>().GetLastError(connector) == "")
                     {
-                        res = DependencyService.Get<INetUtils>().Receive();
-                        if (DependencyService.Get<INetUtils>().GetLastError() == "")
-                            return res;
-                        else
-                            throw new Exception("ErrorEmptyString");
+                        DependencyService.Get<INetUtils>().Close(connector);
+                        connector = null;
+                        return res;
                     }
+                    else
+                        throw new Exception("ErrorEmptyString");
                 }
-                if (res == "")
-                    throw new Exception("ErrorEmptyString");
-                DependencyService.Get<INetUtils>().Close();
-                return res;
             }
-            catch
-            {
-                ip = "192.168.1.2";
-                if (DependencyService.Get<INetUtils>().Open(port, ip, type, 15000))
-                {
-                    DependencyService.Get<INetUtils>().SendData(xml_ds, type);
-                    if (DependencyService.Get<INetUtils>().GetLastError() == "")
-                    {
-                        res = DependencyService.Get<INetUtils>().Receive();
-                        if (DependencyService.Get<INetUtils>().GetLastError() == "")
-                            return res;
-                        else
-                        {
-                            DependencyService.Get<INetUtils>().Close();
-                            return "";
-                        }
-                    }
-                }
-                DependencyService.Get<INetUtils>().Close();
-                return res;
-            }
+            throw new Exception("Не удалось соединиться");
         }
 #endregion
     }
