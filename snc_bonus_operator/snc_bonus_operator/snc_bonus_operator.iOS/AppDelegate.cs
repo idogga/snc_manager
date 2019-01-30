@@ -1,21 +1,11 @@
-﻿using Foundation;
-using UIKit;
-using snc_bonus_operator;
-using HockeyApp.iOS;
-using FFImageLoading;
-//using Plugin.FirebasePushNotification;
-using System.Collections.ObjectModel;
-//using Plugin.FirebasePushNotification.Abstractions;
-
-using Plugin.Toasts;
+﻿using FFImageLoading;
 using FFImageLoading.Forms.Touch;
-using Xamarin.Forms;
-using UserNotifications;
-using System;
-using ZXing.Client;
-using System.Collections.Generic;
 using Foundation;
+using Plugin.Toasts;
+using System;
 using UIKit;
+using UserNotifications;
+using Xamarin.Forms;
 
 namespace snc_bonus_operator.iOS
 {

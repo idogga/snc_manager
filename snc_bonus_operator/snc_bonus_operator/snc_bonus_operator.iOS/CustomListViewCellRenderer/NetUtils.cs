@@ -19,6 +19,8 @@ using System.Text;
 using System.Threading;
 using Xamarin.Forms;
 using snc_bonus_operator.Settings;
+using snc_bonus_operator.Interfaces;
+using System.Net.NetworkInformation;
 
 [assembly: Dependency(typeof(snc_bonus_operator.Ios.DependencyServices.NetUtils))]
 namespace snc_bonus_operator.Ios.DependencyServices
@@ -673,6 +675,31 @@ namespace snc_bonus_operator.Ios.DependencyServices
                 return false;
             }
             return true;
+        }
+
+        object INetUtils.Open(int port, string Adress, CertificateType type, int ResiveTimeOut)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendData(object connector, string str, CertificateType type, string TimeOut = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Receive(object connector)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Close(object connector)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetLastError(object connector)
+        {
+            throw new NotImplementedException();
         }
     }    
 }

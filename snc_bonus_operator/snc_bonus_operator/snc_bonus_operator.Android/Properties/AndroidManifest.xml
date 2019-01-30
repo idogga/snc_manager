@@ -1,19 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.snc_bonus_operator.android" android:installLocation="auto" android:versionCode="6" android:versionName="0.51">
-	<uses-sdk android:minSdkVersion="19" />
-  <uses-permission android:name="android.permission.FLASHLIGHT" />
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.VIBRATE" />
-  <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-  <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
-  <uses-permission android:name="android.permission.CAMERA" />
-  <uses-feature android:name="android.hardware.wifi" />
-	<application android:label="СНК-Менеджер" android:hardwareAccelerated="true" android:largeHeap="true" android:allowBackup="true">
-    
-  </application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.snc_bonus_operator.android" android:installLocation="auto" android:versionCode="7" android:versionName="0.55">
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="28" />
+	<uses-permission android:name="android.permission.FLASHLIGHT" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.USE_FINGERPRINT" />
+	<uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-feature android:name="android.hardware.wifi" />
+	<application android:label="СНК-Менеджер" android:hardwareAccelerated="true" android:largeHeap="true" android:allowBackup="true"></application>
 </manifest>
