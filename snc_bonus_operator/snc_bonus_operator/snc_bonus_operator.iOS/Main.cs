@@ -10,9 +10,7 @@ namespace snc_bonus_operator.iOS
         {
             try
             {
-                Logger.WriteLine("Main start");
                 UIApplication.Main(args, null, "AppDelegate");
-                Logger.WriteLine("Main start");
             }
             catch (Exception ex)
             {

@@ -373,7 +373,21 @@
   <ItemGroup>
     <BundleResource Include="Resources\news_16_png.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\empty_accept_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_main_rect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_main_rect1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\noInternet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\snc_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
