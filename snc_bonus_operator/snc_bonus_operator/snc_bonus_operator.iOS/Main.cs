@@ -5,7 +5,6 @@ namespace snc_bonus_operator.iOS
 {
     public class Application
     {
-        // This is the main entry point of the application.
         static void Main(string[] args)
         {
             try

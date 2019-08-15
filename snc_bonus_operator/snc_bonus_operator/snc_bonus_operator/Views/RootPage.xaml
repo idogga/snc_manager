@@ -1,218 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<MasterDetailPage
+<Shell
     x:Class="snc_bonus_operator.RootPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    MasterBehavior="Popover">
-    <MasterDetailPage.Master>
-        <ContentPage Title="=">
-            <ContentPage.Content>
-                <StackLayout
-                    x:Name="mainLayout"
-                    BackgroundColor="{DynamicResource ObjectBackgroundColor}"
-                    Style="{DynamicResource MenuBackgroudStyle}">
-                    <StackLayout Orientation="Vertical" Style="{DynamicResource RootStyle}">
-                        <Label
-                            FontAttributes="Bold"
-                            HeightRequest="50"
-                            HorizontalTextAlignment="Center"
-                            Style="{DynamicResource LogoLabelStyle}"
-                            Text="СНК-Менеджер"
-                            VerticalTextAlignment="Center" />
-                    </StackLayout>
-                    <ScrollView>
-                        <StackLayout
-                            HorizontalOptions="FillAndExpand"
-                            Orientation="Vertical"
-                            VerticalOptions="FillAndExpand">
-
-                            <StackLayout
-                                x:Name="notificationLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnNotificationLayoutClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="news_16_png.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="Акцептирование"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-
-                            <StackLayout
-                                x:Name="allPurchesLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnAllPurchesLayoutClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="ic_wallet_16.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="Список транзакций"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-                            <StackLayout
-                                x:Name="myStuffLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnMyStuffButtonClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="ic_perm_identity_black_24dp.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="Администрирование"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-                            <StackLayout
-                                x:Name="myProfileLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnMyProfileButtonClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="ic_myprofile_16.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="Мой профиль"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-
-
-
-                            <StackLayout
-                                x:Name="settingsLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnSettingsLayoutClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="ic_build_black_24dp.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="Настройки"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-                            <StackLayout
-                                x:Name="aboutLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnAboutLayoutnClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="ic_help_black_24dp.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="О приложении"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-                            <StackLayout
-                                x:Name="closeLayout"
-                                HeightRequest="40"
-                                Orientation="Horizontal"
-                                VerticalOptions="EndAndExpand">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnCloseButtonClicked" />
-                                </StackLayout.GestureRecognizers>
-                                <Image
-                                    Margin="16,0,16,0"
-                                    BackgroundColor="Transparent"
-                                    HeightRequest="16"
-                                    Source="ic_logout_16.png"
-                                    VerticalOptions="CenterAndExpand"
-                                    WidthRequest="16" />
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{DynamicResource UsualLabelStyle}"
-                                    Text="Выйти"
-                                    VerticalOptions="CenterAndExpand"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-                        </StackLayout>
-                    </ScrollView>
-                </StackLayout>
-            </ContentPage.Content>
-        </ContentPage>
-    </MasterDetailPage.Master>
-
-    <MasterDetailPage.Detail>
-        <ContentPage Padding="10">
-            <ContentPage.Content>
-                <StackLayout>
-                    <Label Text="Detail" />
-                </StackLayout>
-            </ContentPage.Content>
-        </ContentPage>
-    </MasterDetailPage.Detail>
-</MasterDetailPage>
+    xmlns:local="clr-namespace:snc_bonus_operator"
+    BackgroundColor="{DynamicResource MainColor}"
+    DisabledColor="{DynamicResource BackgroundColors}"
+    ForegroundColor="{DynamicResource BackgroundColors}"
+    TitleColor="White"
+    UnselectedColor="{DynamicResource BackgroundColors}">
+    <TabBar>
+        <Tab Title="Точки" Icon="ic_perm_identity_black_24dp.png">
+            <ShellContent>
+                <local:ShopListPage />
+            </ShellContent>
+        </Tab>
+        <Tab Title="Администрирование" Icon="ic_perm_identity_black_24dp.png">
+            <ShellContent>
+                <local:StuffPage />
+            </ShellContent>
+        </Tab>
+        <Tab Title="Настройки" Icon="ic_build_black_24dp.png">
+            <ShellContent>
+                <local:SettingsPage />
+            </ShellContent>
+        </Tab>
+        <!--<Tab Title="ТРК" Icon="news_16_png.png">
+        -->
+        <!--<ShellContent>
+                <local:CatsPage />
+            </ShellContent>-->
+        <!--
+        </Tab>-->
+        <Tab Title="Профиль" Icon="ic_myprofile_16.png">
+            <ShellContent>
+                <local:MyProfilePage />
+            </ShellContent>
+        </Tab>
+    </TabBar>
+</Shell>

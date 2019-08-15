@@ -52,10 +52,6 @@ namespace snc_bonus_operator.Protocol
         /// </summary>
         public string Phone { get; set; } = string.Empty;
         /// <summary>
-        /// Способы оплаты покупки на АЗС (наличка,карта,мобильное приложение)
-        /// </summary>
-        public string PaymentServices { get; set; } = string.Empty;
-        /// <summary>
         /// Перечень сервисов и их описаний
         /// </summary>
         public Dictionary<string, string> Services = new Dictionary<string, string>();
@@ -63,14 +59,6 @@ namespace snc_bonus_operator.Protocol
         /// Дата и время последнего обновления
         /// </summary>
         public DateTimeOffset LastUpdate { get; set; } = DateTimeOffset.MinValue;
-        ///// <summary>
-        ///// Доступные колонки на АЗС
-        ///// </summary>
-        //public IList<int> Columns { get; set; } = new List<int>();
-        ///// <summary>
-        ///// Типы топлив
-        ///// </summary>
-        //public IList<string> FuelTypes { get; set; } = new List<string>();
 
         public Azs()
         {
@@ -90,8 +78,6 @@ namespace snc_bonus_operator.Protocol
             ShortName = azs.ShortName;
             Address = azs.Address;
             Phone = azs.Phone;
-            PaymentServices = azs.PaymentServices;
-            Services = azs.Services;
             LastUpdate = azs.LastUpdate;
             //Columns = azs.Columns;
             //FuelTypes = azs.FuelTypes;

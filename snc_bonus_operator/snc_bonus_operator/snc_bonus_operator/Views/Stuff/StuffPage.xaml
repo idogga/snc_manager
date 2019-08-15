@@ -1,30 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"        
-             xmlns:customviews="clr-namespace:snc_bonus_operator.DepServices;assembly=snc_bonus_operator"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="snc_bonus_operator.Stuff.StuffPage"
-             Title="Администрирование">
+<ContentPage
+    x:Class="snc_bonus_operator.StuffPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customviews="clr-namespace:snc_bonus_operator.DepServices;assembly=snc_bonus_operator"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:views="clr-namespace:snc_bonus_operator;assembly=snc_bonus_operator"
+    Title="Администрирование">
     <ContentPage.Content>
-        <AbsoluteLayout x:Name="absoluteLayout"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout x:Name="mainLayout" Padding="0,5" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+        <AbsoluteLayout
+            x:Name="absoluteLayout"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <StackLayout
+                x:Name="mainLayout"
+                Padding="0,5"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical"
+                VerticalOptions="FillAndExpand">
                 <ListView
-                            x:Name="listView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                            ItemsSource="{Binding StuffList}" RowHeight="-1" HasUnevenRows="True" SeparatorVisibility="None"
-                            ItemSelected="listView_ItemSelected">
+                    x:Name="listView"
+                    HasUnevenRows="True"
+                    HorizontalOptions="FillAndExpand"
+                    ItemSelected="listView_ItemSelected"
+                    ItemsSource="{Binding StuffList}"
+                    RowHeight="-1"
+                    SeparatorVisibility="None"
+                    VerticalOptions="FillAndExpand">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <Frame BackgroundColor="{DynamicResource ObjectBackgroundHexString}" CornerRadius="10" Margin="10" Padding="5"
-                                                   HorizontalOptions="FillAndExpand" HasShadow="False">
+                                    <Frame
+                                        Margin="10"
+                                        Padding="5"
+                                        BackgroundColor="{DynamicResource ObjectBackgroundHexString}"
+                                        CornerRadius="10"
+                                        HasShadow="False"
+                                        HorizontalOptions="FillAndExpand">
                                         <StackLayout>
-                                            <Label Text="{Binding Name}" Style="{DynamicResource BoldUsualLabelStyle}"/>
-                                            <Label Text="{Binding Posision}" Style="{DynamicResource UsualLabelStyle}" FontSize="Small"
-                                                   TextColor="{DynamicResource SublettersColor}"/>
-                                            <Label Text="{Binding Shop}" HorizontalTextAlignment="End" Style="{DynamicResource UsualLabelStyle}"/>
+                                            <Label Style="{DynamicResource BoldUsualLabelStyle}" Text="{Binding Name}" />
+                                            <Label
+                                                FontSize="Small"
+                                                Style="{DynamicResource UsualLabelStyle}"
+                                                Text="{Binding Posision}"
+                                                TextColor="{DynamicResource SublettersColor}" />
+                                            <Label
+                                                HorizontalTextAlignment="End"
+                                                Style="{DynamicResource UsualLabelStyle}"
+                                                Text="{Binding Shop}" />
                                         </StackLayout>
                                     </Frame>
                                 </ViewCell.View>
@@ -32,23 +58,41 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Frame x:Name="emptyFrame" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="{DynamicResource SublettersColor}"
-                   CornerRadius="10" IsVisible="False" >
-                    <StackLayout Padding="12" >
-                        <ffimageloading:CachedImage Source="empty_accept_list.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        <Label Text = "Список коллег пуст." Style="{DynamicResource SmallLabelStyle}" 
-                               HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
+                <Frame
+                    x:Name="emptyFrame"
+                    BackgroundColor="{DynamicResource SublettersColor}"
+                    CornerRadius="10"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="False"
+                    VerticalOptions="CenterAndExpand">
+                    <StackLayout Padding="12">
+                        <ffimageloading:CachedImage
+                            HorizontalOptions="CenterAndExpand"
+                            Source="empty_accept_list.png"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            FontSize="Medium"
+                            HorizontalOptions="CenterAndExpand"
+                            Style="{DynamicResource SmallLabelStyle}"
+                            Text="Список коллег пуст." />
                     </StackLayout>
                 </Frame>
             </StackLayout>
-            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                         AbsoluteLayout.LayoutFlags="All"
-                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
-            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
-                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
-                <views:Indicator x:Name="IndicatorLayout"/>
+            <StackLayout
+                x:Name="backgroundDark"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="False"
+                VerticalOptions="FillAndExpand" />
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional">
+                <views:Indicator x:Name="IndicatorLayout" />
             </StackLayout>
-            <views:NoConnectionView x:Name="noConnectionLayout"  IsVisible="False" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+            <views:NoConnectionView
+                x:Name="noConnectionLayout"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="False" />
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -14,6 +14,26 @@ namespace snc_bonus_operator
     public class WebRequestUtils
     {
         #region Типизированные запросы к службе
+        public T SendMobileRequest<T>(RequestTagEnum tag, object data)
+        {
+            string str = "";
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    str = SendRequest(Request.GetRequestDSxml(tag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data)))));
+                    return JsonConvert.DeserializeObject<T>(str);
+                }
+                catch
+                {
+                }
+            }
+            //Logger.ProtocolIt(Logging.LogActionEnum.RequestException, _request.mapRequestDSxml);
+            throw new Exception("SendMobileRequest : Can't connect to server");
+        }
+
+
+
         /// <summary>
         /// Запрос на получение новостей RSS
         /// </summary>
@@ -24,7 +44,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetRssRequestDSxml(typeTag, newsInfo), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetRssRequestDSxml(typeTag, newsInfo));
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +64,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetIssuerXml(tag, detailValue), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetIssuerXml(tag, detailValue));
                 }
                 catch (Exception ex)
                 {
@@ -65,7 +85,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.mapRequestDSxml, CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.mapRequestDSxml);
                 }
                 catch (Exception ex)
                 {
@@ -85,7 +105,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetPriceXml(issuerId, azsId, userId), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetPriceXml(issuerId, azsId, userId));
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +125,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetSystemInfoXml(typeTag, detailValue), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetSystemInfoXml(typeTag, detailValue));
                 }
                 catch (Exception ex)
                 {
@@ -128,7 +148,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetMobileInfoXml(typeTag, detailValue), CertificateType.PRIVATE_USER);
+                    return SendRequest(Request.GetMobileInfoXml(typeTag, detailValue));
                 }
                 catch (Exception ex)
                 {
@@ -144,7 +164,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetVerifyTransactionXml(typeTag, detailValue), CertificateType.PRIVATE_USER);
+                    return SendRequest(Request.GetVerifyTransactionXml(typeTag, detailValue));
                 }
                 catch (Exception ex)
                 {
@@ -167,7 +187,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetCardRequestDSxml(typeTag, userId), CertificateType.PRIVATE_USER);
+                    return SendRequest(Request.GetCardRequestDSxml(typeTag, userId));
                 }
                 catch (Exception ex)
                 {
@@ -193,7 +213,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetOrderXml(graphicalNumber, detailsKey, detailValue, issuerId, azsId, requestKey), CertificateType.PRIVATE_USER);
+                    return SendRequest(Request.GetOrderXml(graphicalNumber, detailsKey, detailValue, issuerId, azsId, requestKey));
                 }
                 catch (Exception ex)
                 {
@@ -217,7 +237,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetAuthXml(typeTag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(detailValue)))), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetAuthXml(typeTag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(detailValue)))));
                 }
                 catch (Exception ex)
                 {
@@ -241,7 +261,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetAuthXml(typeTag, detailValue), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetAuthXml(typeTag, detailValue));
                 }
                 catch (Exception ex)
                 {
@@ -265,7 +285,7 @@ namespace snc_bonus_operator
             {
                 try
                 {
-                    return SendRequest(Request.GetAuthXml(typeTag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(detailValue)))), CertificateType.BASE_ISSUER);
+                    return SendRequest(Request.GetAuthXml(typeTag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(detailValue)))));
                 }
                 catch (Exception ex)
                 {
@@ -278,9 +298,9 @@ namespace snc_bonus_operator
         #endregion
 
         #region Общий запрос
-        private string SendRequest(string xml, CertificateType type)
+        private string SendRequest(string xml)
         {
-            var res = SendMobileRequest(xml, type);
+            var res = SendMobileRequest(xml);
             if (res != "")
             {
                 try
@@ -324,7 +344,7 @@ namespace snc_bonus_operator
             return "";
         }
 
-        public string SendMobileRequest(string xml_ds, CertificateType type)
+        public string SendMobileRequest(string xml_ds)
         {
             string ip = MobileStaticVariables.ConectSettings.Certificates[0].IP;
             int port = MobileStaticVariables.ConectSettings.Certificates[0].Port;

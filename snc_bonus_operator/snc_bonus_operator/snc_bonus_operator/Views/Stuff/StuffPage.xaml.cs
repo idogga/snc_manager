@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
+using snc_bonus_operator.Stuff;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace snc_bonus_operator.Stuff
+namespace snc_bonus_operator
 {
     public partial class StuffPage : ContentPage
     {

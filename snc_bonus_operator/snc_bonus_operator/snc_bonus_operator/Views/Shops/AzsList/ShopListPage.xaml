@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="snc_bonus_operator.ShopListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customviews="clr-namespace:snc_bonus_operator.DepServices"
+    xmlns:local="clr-namespace:snc_bonus_operator"
+    Title="Мои ТО">
+    <ContentPage.BindingContext>
+        <local:ShopsVM x:Name="context" />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <AbsoluteLayout
+            x:Name="absoluteLayout"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <StackLayout
+                x:Name="mainLayout"
+                Padding="0"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsEnabled="False"
+                Orientation="Vertical">
+                <ListView
+                    x:Name="listView"
+                    BackgroundColor="{DynamicResource BackgroundColors}"
+                    HasUnevenRows="True"
+                    ItemSelected="ItemSelected"
+                    ItemsSource="{Binding ShopsList, Mode=TwoWay}"
+                    RowHeight="-1"
+                    SelectionMode="Single"
+                    SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <customviews:CustomListViewCell>
+                                <ContentView>
+                                    <Frame
+                                        Margin="8"
+                                        BackgroundColor="{Binding Status}"
+                                        HorizontalOptions="FillAndExpand"
+                                        Style="{DynamicResource UsualFrameStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.3*" />
+                                                <ColumnDefinition Width="0.7*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Label
+                                                Grid.Column="0"
+                                                Style="{DynamicResource BoldUsualLabelStyle}"
+                                                Text="{Binding Key}"
+                                                VerticalOptions="CenterAndExpand" />
+                                            <Label
+                                                Grid.Column="1"
+                                                HorizontalOptions="EndAndExpand"
+                                                Style="{DynamicResource UsualLabelStyle}"
+                                                Text="{Binding AzsName}"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </Grid>
+                                    </Frame>
+                                </ContentView>
+                            </customviews:CustomListViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <StackLayout
+                x:Name="backgroundDark"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="#88000000"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <local:Indicator
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="True"
+                    VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

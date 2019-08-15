@@ -1,4 +1,6 @@
-﻿namespace snc_bonus_operator
+﻿using System;
+
+namespace snc_bonus_operator
 {
     public static class Request
     {
@@ -20,6 +22,27 @@
         #endregion
 
         #region Шаблоны команд (предварительно заполненные запросы)
+
+        private static string requestUserDSxml = @"<RequestDS>
+	<Request>
+		<RequestKey>1</RequestKey>
+		<ShopRequestKey>1</ShopRequestKey>
+		<CommandCode>1</CommandCode>
+		<SelectName>{0}</SelectName>
+		<COD_Q>1</COD_Q>
+		<COD_AZS>1</COD_AZS>
+		<COD_A>1</COD_A>
+	</Request>
+	<Details>
+		<DetailsKey>1</DetailsKey>
+		<DetailsSelectName>{1}</DetailsSelectName>
+		<DetailsValue>{2}</DetailsValue>
+		<RequestKey>0</RequestKey>
+		<ShopRequestKey>0</ShopRequestKey>
+	</Details>
+</RequestDS>";
+
+
         public static string rssRequestDSxml = @"<RequestDS>
 	<Request>
 		<RequestKey>1</RequestKey>
@@ -325,7 +348,176 @@
         {
             return string.Format(verifyTransactionsDSxml, typeTag, detailValue);
         }
-        
+
         #endregion
+
+        internal static string GetRequestDSxml(RequestTagEnum tag, string data)
+        {
+            return string.Format(requestUserDSxml, GetCommandName(tag), GetSubCommandName(tag), data);
+        }
+        private static string GetCommandName(RequestTagEnum tag)
+        {
+            var str = "";
+            switch (tag)
+            {
+                case RequestTagEnum.CheckAzs:
+                case RequestTagEnum.CheckNozzle:
+                case RequestTagEnum.CheckAzsSeller:
+                    str = "MobilePriceRequest";
+                    break;
+                case RequestTagEnum.Limitations:
+                case RequestTagEnum.BonusCount:
+                case RequestTagEnum.CalculateFuelSale:
+                case RequestTagEnum.SetLoggs:
+                case RequestTagEnum.GetAvailableGoods:
+                    str = "MobileSystemRequest";
+                    break;
+                case RequestTagEnum.Sales:
+                case RequestTagEnum.News:
+                    str = "MobileRssRequest";
+                    break;
+                case RequestTagEnum.ReqPhoneEmail:
+                case RequestTagEnum.SetDevice:
+                case RequestTagEnum.Profile:
+                case RequestTagEnum.KeyWord:
+                    str = "MobileInfoRequest";
+                    break;
+                case RequestTagEnum.GetBonusTransaction:
+                case RequestTagEnum.GetBonusBill:
+                case RequestTagEnum.GetMyBonusPrograms:
+                case RequestTagEnum.SetPrograms:
+                case RequestTagEnum.SetOldPrograms:
+                case RequestTagEnum.BonusFilteredTransactions:
+                case RequestTagEnum.BonusApp:
+                case RequestTagEnum.Block:
+                case RequestTagEnum.ChangeRequisites:
+                case RequestTagEnum.AllTransactionsSeller:
+                    str = "MobileCardInfoRequest";
+                    break;
+                case RequestTagEnum.RegNew:
+                case RequestTagEnum.Register:
+                case RequestTagEnum.GetPrograms:
+                case RequestTagEnum.BlockManager:
+                case RequestTagEnum.RegManager:
+                case RequestTagEnum.GetMyCrew:
+                case RequestTagEnum.SellerReloadPassword:
+                    str = "MobileAuthorize";
+                    break;
+                case RequestTagEnum.FilteredShops:
+                case RequestTagEnum.GetAzsInfo:
+                    str = "MobileMapRequest";
+                    break;
+                default:
+                    throw new Exception("Неизвестный тип");
+            }
+            return str;
+        }
+
+        private static string GetSubCommandName(RequestTagEnum tag)
+        {
+            var str = "";
+            switch (tag)
+            {
+                case RequestTagEnum.Block:
+                    str = "Block";
+                    break;
+                case RequestTagEnum.BonusApp:
+                    str = "BonusApp";
+                    break;
+                case RequestTagEnum.BonusCount:
+                    str = "BonusCount";
+                    break;
+                case RequestTagEnum.AllTransactionsSeller:
+                    str = "AllTransactionsSeller";
+                    break;
+                case RequestTagEnum.CalculateFuelSale:
+                    str = "CalculateFuelSale";
+                    break;
+                case RequestTagEnum.SetLoggs:
+                    str = "SetLoggs";
+                    break;
+                case RequestTagEnum.ChangeRequisites:
+                    str = "ChangeRequisites";
+                    break;
+                case RequestTagEnum.CheckAzs:
+                    str = "CheckAzs";
+                    break;
+                case RequestTagEnum.CheckNozzle:
+                    str = "CheckNozzle";
+                    break;
+                case RequestTagEnum.GetBonusBill:
+                    str = "GetBonusBill";
+                    break;
+                case RequestTagEnum.GetBonusTransaction:
+                    str = "GetBonusTransaction";
+                    break;
+                case RequestTagEnum.GetMyBonusPrograms:
+                    str = "GetMyBonusPrograms";
+                    break;
+                case RequestTagEnum.GetPrograms:
+                    str = "GetPrograms";
+                    break;
+                case RequestTagEnum.KeyWord:
+                    str = "KeyWord";
+                    break;
+                case RequestTagEnum.Limitations:
+                    str = "Limitations";
+                    break;
+                case RequestTagEnum.News:
+                    str = "News";
+                    break;
+                case RequestTagEnum.Profile:
+                    str = "Profile";
+                    break;
+                case RequestTagEnum.GetAvailableGoods:
+                    str = "GetAvailableGoods";
+                    break;
+                case RequestTagEnum.Register:
+                    str = "Register";
+                    break;
+                case RequestTagEnum.RegNew:
+                    str = "RegNew";
+                    break;
+                case RequestTagEnum.ReqPhoneEmail:
+                    str = "ReqPhoneEmail";
+                    break;
+                case RequestTagEnum.Sales:
+                    str = "Sales";
+                    break;
+                case RequestTagEnum.SetDevice:
+                    str = "SetDevice";
+                    break;
+                case RequestTagEnum.SetOldPrograms:
+                    str = "SetOldPrograms";
+                    break;
+                case RequestTagEnum.SetPrograms:
+                    str = "SetPrograms";
+                    break;
+                case RequestTagEnum.FilteredShops:
+                    str = "FilteredShops";
+                    break;
+                case RequestTagEnum.BlockManager:
+                    str = "BlockManager";
+                    break;
+                case RequestTagEnum.RegManager:
+                    str = "RegManager";
+                    break;
+                case RequestTagEnum.GetMyCrew:
+                    str = "GetMyCrew";
+                    break;
+                case RequestTagEnum.CheckAzsSeller:
+                    str = "CheckAzsSeller";
+                    break;
+                case RequestTagEnum.SellerReloadPassword:
+                    str = "SellerReloadPassword";
+                    break;
+                case RequestTagEnum.GetAzsInfo:
+                    str = "GetAzsInfo";
+                    break;
+            }
+            return str;
+        }
+
+
     }
 }

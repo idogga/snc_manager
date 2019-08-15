@@ -143,9 +143,29 @@
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shops\ShopListPage.xaml.cs">
+    <Compile Include="Views\Shops\AzsList\AzsConfigItem.cs" />
+    <Compile Include="Views\Shops\AzsList\AzsOnlineStatus.cs" />
+    <Compile Include="Views\Shops\AzsList\AzsTableHashItem.cs" />
+    <Compile Include="Views\Shops\AzsList\CheckAzsSellerRequest.cs" />
+    <Compile Include="Views\Shops\AzsList\CheckAzsSellerResponse.cs" />
+    <Compile Include="Views\Shops\AzsList\GetAzsInfoRequest.cs" />
+    <Compile Include="Views\Shops\AzsList\NozzleConfigInfo.cs" />
+    <Compile Include="Views\Shops\AzsNozzleViewTypes.cs" />
+    <Compile Include="Views\Shops\Column.cs" />
+    <Compile Include="Views\Shops\Nozzle.cs" />
+    <Compile Include="Views\Shops\NozzleConfirmModes.cs" />
+    <Compile Include="Views\Shops\PumpStateEnum.cs" />
+    <Compile Include="Views\Shops\RequestTagEnum.cs" />
+    <Compile Include="Views\Shops\ShopCollection.cs" />
+    <Compile Include="Views\Shops\ShopItemView.cs" />
+    <Compile Include="Views\Shops\AzsList\ShopListPage.xaml.cs">
       <DependentUpon>ShopListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shops\ShopSettingsConverter.cs" />
+    <Compile Include="Views\Shops\ShopSettingsEnum.cs" />
+    <Compile Include="Views\Shops\AzsList\ShopsVM.cs" />
+    <Compile Include="Views\Shops\ShopView.cs" />
+    <Compile Include="Views\Shops\ShopVM.cs" />
     <Compile Include="Views\Stuff\DetailColeguePage.xaml.cs">
       <DependentUpon>DetailColeguePage.xaml</DependentUpon>
     </Compile>
@@ -214,7 +234,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shops\ShopListPage.xaml">
+    <EmbeddedResource Include="Views\Shops\AzsList\ShopListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

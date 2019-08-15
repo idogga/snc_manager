@@ -33,174 +33,149 @@ namespace snc_bonus_operator
 
         async void PageLoad()
         {
-            await Task.Factory.StartNew(async () =>
+            await LoadMainIssuer();
+            await LoadLimitation();
+            if (MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER] != null)
             {
-
-                await LoadMainIssuer();
-                await LoadLimitation();
-            });
-            Device.StartTimer(new TimeSpan(0, 0, 0, 0, 10), LoadAnotherData);
+                await LoadDeviceInfo();
+            }
             LoadRoot();
         }
 
-        bool LoadAnotherData()
+        Task LoadMainIssuer()
         {
-            Task.Factory.StartNew(() =>
-            {
-                if (MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER] != null)
-                {
-                    LoadDeviceInfo();
-                }
-            }, CancellationToken.None);
+            return Task.Factory.StartNew(async () =>
+{
+    try
+    {
+        Logger.WriteLine("LoadIssues : start");
 
-            return false;
+        Device.BeginInvokeOnMainThread(delegate
+        {
+            descriptionLabel.Text = (_isDatabaseLoad) ? "Обновление данных о клубе" : "Загрузка данных о клубе";
+        });
+
+        string issuer = "";
+        try
+        {
+            issuer =
+                MobileStaticVariables.WebUtils.SendIssuerRequest("MainIssuerSeller", "ru");
+        }
+        catch (Exception ex)
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (needDisplayAlert)
+                {
+                    needDisplayAlert = false;
+                    await DisplayAlert("Внимание", "Не удалось загрузить данные о клубе", "Повторить");
+                }
+            });
+            Logger.WriteError(ex);
+            throw ex;
+        }
+        Logger.WriteLine("issuer : " + issuer);
+        if (issuer == "")
+            throw new Exception("Пустая строка");
+        Issuer deserialized = new Issuer();
+        if (issuer != "")
+            deserialized = JsonConvert.DeserializeObject<Issuer>(issuer);
+
+        MobileStaticVariables.MainIssuer = deserialized;
+        MobileStaticVariables.MainIssuer.LoadDictionary();
+
+        needDisplayAlert = true;
+        MobileStaticVariables.UserAppSettings.SaveSetting((int)SettingsEnum.LastUpdate, DateTime.Now.ToString());
+        Logger.WriteLine("LoadIssues : end");
+    }
+    catch (Exception ex)
+    {
+        Logger.WriteError(ex);
+        if (!_isDatabaseLoad)
+        {
+            await LoadMainIssuer();
         }
 
-        async Task LoadMainIssuer()
+    }
+});
+        }
+
+        // TODO Сделать разделение по приложениям
+        Task LoadLimitation()
         {
-            try
+            return Task.Factory.StartNew(async () =>
             {
-                Logger.WriteLine("LoadIssues : start");
-
-                Device.BeginInvokeOnMainThread(delegate
-                {
-                    descriptionLabel.Text = (_isDatabaseLoad) ? "Обновление данных о клубе" : "Загрузка данных о клубе";
-                });
-
-                string issuer = "";
                 try
                 {
-                    issuer =
-                        MobileStaticVariables.WebUtils.SendIssuerRequest("MainIssuerSeller", "ru");
+                    Logger.WriteLine("LoadLimitation : start");
+                    Device.BeginInvokeOnMainThread(delegate
+                    {
+                        descriptionLabel.Text = "Загрузка ограничений";
+                    });
+                    string limit = "";
+
+                    try
+                    {
+                        limit = MobileStaticVariables.WebUtils.SendSystemRequest("Limitations", "");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.WriteError(ex);
+                        throw ex;
+                    }
+                    Logger.WriteLine("limit : " + limit);
+                    if (limit == "")
+                        throw new Exception("Не удалось получить limit");
+
+                    Limitation deserialized = new Limitation();
+                    if (limit != "")
+                        deserialized = JsonConvert.DeserializeObject<Limitation>(limit);
+                    deserialized.LoadLimitation();
+                    isLimitationLoad = true;
+                    Logger.WriteLine("LoadLimitation : end");
                 }
                 catch (Exception ex)
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
+                    Logger.WriteError(ex);
+                    if (!_isDatabaseLoad)
                     {
                         if (needDisplayAlert)
                         {
                             needDisplayAlert = false;
-                            await DisplayAlert("Внимание", "Не удалось загрузить данные о клубе", "Повторить");
+                            await DisplayAlert("Внимание", "Не удалось подключиться", "Продолжить");
                         }
-                    });
-                    Logger.WriteError(ex);
-                    throw ex;
-                }
-                Logger.WriteLine("issuer : " + issuer);
-                if (issuer == "")
-                    throw new Exception("Пустая строка");
-                Issuer deserialized = new Issuer();
-                if (issuer != "")
-                    deserialized = JsonConvert.DeserializeObject<Issuer>(issuer);
-                
-                MobileStaticVariables.MainIssuer = deserialized;
-                MobileStaticVariables.MainIssuer.LoadDictionary();
-
-                needDisplayAlert = true;
-                MobileStaticVariables.UserAppSettings.SaveSetting((int)SettingsEnum.LastUpdate, DateTime.Now.ToString());
-                Logger.WriteLine("LoadIssues : end");
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteError(ex);
-                if (!_isDatabaseLoad)
-                {
-#if DEBUGARTYOM
-                    numberOfConnection++;
-                    switch (numberOfConnection)
-                    {
-                        case 1:
-                            MobileStaticVariables.ConectSettings.DebugPort = 2581;
-                            break;
-                        case 2:
-                            MobileStaticVariables.ConectSettings.DebugPort = 2580;
-                            break;
-                        case 3:
-                            MobileStaticVariables.ConectSettings.DebugPort = 2582;
-                            break;
-                        case 4:
-                            MobileStaticVariables.ConectSettings.DebugPort = 2585;
-                            break;
-                        default:
-                            numberOfConnection = 0;
-                            break;
+                        await LoadLimitation();
                     }
-#endif
-                    await LoadMainIssuer();
                 }
-            }
+            });
         }
 
-        // TODO Сделать разделение по приложениям
-        async Task LoadLimitation()
+        Task LoadDeviceInfo()
         {
-            try
+            return Task.Factory.StartNew(() =>
             {
-                Logger.WriteLine("LoadLimitation : start");
-                Device.BeginInvokeOnMainThread(delegate
-                {
-                    descriptionLabel.Text = "Загрузка ограничений";
-                });
-                string limit = "";
-
+                string deviceInfo = "";
                 try
                 {
-                    limit = MobileStaticVariables.WebUtils.SendSystemRequest("Limitations", "");
+                    DeviceInfo info = new DeviceInfo();
+
+                    info.Imei = DependencyService.Get<IDevice>().GetIdentifier();
+                    info.AppVersion = DependencyService.Get<IDevice>().GetVersion();
+                    info.DeviceKey = MobileStaticVariables.UserInfo.MobileDeviceKey;
+                    info.UserID = MobileStaticVariables.UserInfo.MobileUserKey;
+                    //info.NotificationToken = CrossFirebasePushNotification.Current.Token;
+                    deviceInfo = MobileStaticVariables.WebUtils.SendMobileInfoRequest("SetDevice",
+                        Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(info))));
+                    var deviceInfo1 = new DeviceInfo();
+                    deviceInfo1 = JsonConvert.DeserializeObject<DeviceInfo>(deviceInfo);
+                    deviceInfo1.Parse(deviceInfo);
                 }
                 catch (Exception ex)
                 {
                     Logger.WriteError(ex);
-                    throw ex;
                 }
-                Logger.WriteLine("limit : " + limit);
-                if (limit == "")
-                    throw new Exception("Не удалось получить limit");
-
-                Limitation deserialized = new Limitation();
-                if (limit != "")
-                    deserialized = JsonConvert.DeserializeObject<Limitation>(limit);
-                deserialized.LoadLimitation();
-                isLimitationLoad = true;
-                Logger.WriteLine("LoadLimitation : end");
+            });
             }
-            catch (Exception ex)
-            {
-                Logger.WriteError(ex);
-                if (!_isDatabaseLoad)
-                {
-                    if(needDisplayAlert)
-                    {
-                        needDisplayAlert = false;
-                        await DisplayAlert("Внимание", "Не удалось подключиться", "Продолжить");
-                    }
-                    await LoadLimitation();
-                }
-            }
-        }
-
-        void LoadDeviceInfo()
-        {
-            string deviceInfo = "";
-            try
-            {
-                DeviceInfo info = new DeviceInfo();
-
-                info.Imei = DependencyService.Get<IDevice>().GetIdentifier();
-                info.AppVersion = DependencyService.Get<IDevice>().GetVersion();
-                info.DeviceKey = MobileStaticVariables.UserInfo.MobileDeviceKey;
-                info.UserID = MobileStaticVariables.UserInfo.MobileUserKey;
-                //info.NotificationToken = CrossFirebasePushNotification.Current.Token;
-                deviceInfo = MobileStaticVariables.WebUtils.SendMobileInfoRequest("SetDevice",
-                    Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(info))));
-                var deviceInfo1 = new DeviceInfo();
-                deviceInfo1 = JsonConvert.DeserializeObject<DeviceInfo>(deviceInfo);
-                deviceInfo1.Parse(deviceInfo);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteError(ex);
-            }
-        }
 
         void LoadRoot()
         {

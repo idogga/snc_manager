@@ -145,7 +145,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomListViewCellRenderer\CheckboxRender.cs" />
-    <Compile Include="CustomListViewCellRenderer\CustomListViewCellRenderer.cs" />
     <Compile Include="CustomListViewCellRenderer\IosDevice.cs" />
     <Compile Include="CustomListViewCellRenderer\MyEntryRender.cs" />
     <Compile Include="CustomListViewCellRenderer\SimpleSwitchEffectRender.cs" />
