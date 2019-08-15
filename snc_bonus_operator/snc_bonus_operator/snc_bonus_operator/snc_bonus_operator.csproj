@@ -143,6 +143,12 @@
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shops\AzsFullInfo\AzsCheck.cs" />
+    <Compile Include="Views\Shops\AzsFullInfo\AzsController.cs" />
+    <Compile Include="Views\Shops\AzsFullInfo\AzsPriceBook.cs" />
+    <Compile Include="Views\Shops\AzsFullInfo\ShopConfigurationLayout.xaml.cs" />
+    <Compile Include="Views\Shops\AzsFullInfo\ShopPage.xaml.cs" />
+    <Compile Include="Views\Shops\AzsFullInfo\ShopSettingsConverter.cs" />
     <Compile Include="Views\Shops\AzsList\AzsConfigItem.cs" />
     <Compile Include="Views\Shops\AzsList\AzsOnlineStatus.cs" />
     <Compile Include="Views\Shops\AzsList\AzsTableHashItem.cs" />
@@ -165,7 +171,7 @@
     <Compile Include="Views\Shops\ShopSettingsEnum.cs" />
     <Compile Include="Views\Shops\AzsList\ShopsVM.cs" />
     <Compile Include="Views\Shops\ShopView.cs" />
-    <Compile Include="Views\Shops\ShopVM.cs" />
+    <Compile Include="Views\Shops\AzsFullInfo\ShopVM.cs" />
     <Compile Include="Views\Stuff\DetailColeguePage.xaml.cs">
       <DependentUpon>DetailColeguePage.xaml</DependentUpon>
     </Compile>
@@ -326,6 +332,16 @@
     <PackageReference Include="ZXing.Net.Mobile.Forms">
       <Version>2.4.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shops\AzsFullInfo\ShopConfigurationLayout.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shops\AzsFullInfo\ShopPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

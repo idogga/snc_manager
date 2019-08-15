@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace snc_bonus_operator.Shops
+namespace snc_bonus_operator
 {
     public class ShopVM : INotifyPropertyChanged
     {

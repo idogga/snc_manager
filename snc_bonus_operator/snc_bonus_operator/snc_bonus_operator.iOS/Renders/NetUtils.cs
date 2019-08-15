@@ -168,6 +168,7 @@ namespace snc_bonus_operator.iOS.Implementation
                 try
                 {
                     List<object> values = (List<object>)_sender.ReceivePost();
+
                     foreach (object val in values)
                     {
                         if (val != null)

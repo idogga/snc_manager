@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AbsoluteLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="snc_bonus_operator.ShopConfigurationLayout"
+             xmlns:views="clr-namespace:snc_bonus_operator"
+             HorizontalOptions="FillAndExpand" 
+                        VerticalOptions="FillAndExpand">
+        <StackLayout  x:Name="mainLayout" 
+                      Padding="8"                             
+                        AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1" >
+                    <Label x:Name="warningLbl" 
+                           Text="Внимание!" 
+                           IsVisible="False" 
+                           Style="{DynamicResource SubLabelStyle}"
+                        HorizontalOptions="CenterAndExpand" 
+                           HorizontalTextAlignment="Center"/>
+                    <StackLayout>
+                        <Grid x:Name="gridColumns" 
+                              HorizontalOptions="FillAndExpand" 
+                              VerticalOptions="Fill">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+
+            <Frame x:Name="emptyFrame" 
+                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                   AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" 
+                   BackgroundColor="{DynamicResource ObjectBackgroundColor}"
+                   CornerRadius="10" 
+                   IsVisible="False" >
+                <StackLayout Padding="12" >
+                    <!--<ffimageloading:CachedImage Source="emptyAzs.png" 
+                                                HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="CenterAndExpand"/>-->
+                    <Label Text = "Данные не были получены" 
+                           Style="{DynamicResource SmallLabelStyle}" 
+                           HorizontalOptions="CenterAndExpand" 
+                           FontSize="Medium"/>
+                </StackLayout>
+            </Frame>
+
+            <StackLayout x:Name="backgroundDark" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                         AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional"
+                             AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <views:Indicator x:Name="IndicatorLayout"/>
+            </StackLayout>
+</AbsoluteLayout>

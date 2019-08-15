@@ -353,23 +353,15 @@ namespace snc_bonus_operator
 #endif
             var res = "";
             var util = DependencyService.Get<INetUtils>();
-            //Logger.WriteLine($"\t\t\t создание соединятора {watch.ElapsedMilliseconds} мс");
             if (util.Open(port, ip, 60000))
             {
-                //Logger.WriteLine($"\t\t\t открытии соединения {watch.ElapsedMilliseconds} мс");
-
                 util.SendData(xml_ds);
-                //Logger.WriteLine($"\t\t\t отправка даных {watch.ElapsedMilliseconds} мс");
                 if (util.GetLastError() == "")
                 {
-                    //Logger.WriteLine($"\t\t\t проверка на ошибки при отправке {watch.ElapsedMilliseconds} мс");
                     res = util.Receive();
-                    //Logger.WriteLine($"\t\t\t получение данных в соединении {watch.ElapsedMilliseconds} мс");
                     if (util.GetLastError() == "")
                     {
-                        //Logger.WriteLine($"\t\t\t проверка на ошибки при получении {watch.ElapsedMilliseconds} мс");
                         util.Close();
-                        //Logger.WriteLine($"\t\t\t закрытие соединения {watch.ElapsedMilliseconds} мс");
                         return res;
                     }
                     else

@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:snc_bonus_operator"
+             x:Class="snc_bonus_operator.ShopPage"
+             Title="Конфигурация АЗС">
+    <ContentPage.BindingContext>
+        <local:ShopVM x:Name="context"/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ShopSettingsConverter x:Key="servicesConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+
+            <StackLayout>
+                <Frame Style="{DynamicResource UsualFrameStyle}"
+                   Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO"/>
+                            <RowDefinition Height="AUTO"/>
+                            <RowDefinition Height="AUTO"/>
+                            <RowDefinition Height="AUTO"/>
+                            <RowDefinition Height="AUTO"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.7*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label  Text="Название"
+                            Style="{DynamicResource SubLabelStyle}"
+                            Grid.Column="0"
+                            Grid.Row="0"/>
+                        <Label  Text="{Binding Title}"
+                            BindingContext="{Binding Info}"
+                            Style="{DynamicResource UsualLabelStyle}"
+                            Grid.Column="1"
+                            Grid.Row="0"/>
+                        <!-- Акции-->
+                        <Label  Text="Акции"
+                            Style="{DynamicResource SubLabelStyle}"
+                            Grid.Column="0"
+                            Grid.Row="1"/>
+                        <Label  Text="{Binding Description}"
+                        BindingContext="{Binding Info}"
+                            Style="{DynamicResource UsualLabelStyle}"
+                            Grid.Column="1"
+                            Grid.Row="1"/>
+                        
+                        <!-- Адрес-->
+                        <Label  Text="Адрес"
+                            Style="{DynamicResource SubLabelStyle}"
+                            Grid.Column="0"
+                            Grid.Row="2"/>
+                        <Label  Text="{Binding Address}"
+                        BindingContext="{Binding Info}"
+                            Style="{DynamicResource UsualLabelStyle}"
+                            Grid.Column="1"
+                            Grid.Row="2"/>
+                        
+                        <!-- Телефон-->
+                        <Label  Text="Телефон"
+                            Style="{DynamicResource SubLabelStyle}"
+                            Grid.Column="0"
+                            Grid.Row="3"/>
+                        <Label  Text="{Binding Phone}"
+                            BindingContext="{Binding Info}"
+                            Style="{DynamicResource UsualLabelStyle}"
+                            Grid.Column="1"
+                            Grid.Row="3"/>
+                        
+                        <!-- Сервисы-->
+                        <Label  Text="Сервисы"
+                            Style="{DynamicResource SubLabelStyle}"
+                            Grid.Column="0"
+                            Grid.Row="4"/>
+                        <Label  Text="{Binding ShopSettings, Converter={StaticResource servicesConverter}}"
+                            BindingContext="{Binding Info}"
+                            Style="{DynamicResource UsualLabelStyle}"
+                            Grid.Column="1"
+                            Grid.Row="4"/>
+                    </Grid>
+                </Frame>
+                <local:ShopConfigurationLayout x:Name="configuration"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

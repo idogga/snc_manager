@@ -26,7 +26,7 @@ namespace snc_bonus_operator
                 return;
             var selected = e.SelectedItem as ShopView;
             Logger.WriteLine($"Выбранна АЗС[{selected.ShopModel.ShopKey}] {selected.AzsName}");
-            //Navigation.PushAsync(new ShopPage(selected));
+            Navigation.PushAsync(new ShopPage(selected));
             listView.SelectedItem = null;
         }
 
