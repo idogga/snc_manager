@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Plugin.DeviceInfo;
 using snc_bonus_operator.Interfaces;
 using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
@@ -9,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
+using DeviceInfo = snc_bonus_operator.Protocol.DeviceInfo;
 
 namespace snc_bonus_operator
 {
@@ -183,8 +184,6 @@ namespace snc_bonus_operator
             try
             {
                 DeviceInfo info = new DeviceInfo();
-                info.DeviceName = string.Format("{0} {1} {2}",
-                    CrossDeviceInfo.Current.Model, CrossDeviceInfo.Current.Platform, CrossDeviceInfo.Current.Version);
 
                 info.Imei = DependencyService.Get<IDevice>().GetIdentifier();
                 info.AppVersion = DependencyService.Get<IDevice>().GetVersion();

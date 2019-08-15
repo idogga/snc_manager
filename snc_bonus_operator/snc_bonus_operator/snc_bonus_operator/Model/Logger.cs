@@ -17,7 +17,7 @@ namespace snc_bonus_operator
 #if DEBUG
                 //DependencyService.Get<IToastMessage>()?.LongToastAlert(ex.Message);
 #endif
-                HockeyApp.MetricsManager.TrackEvent(ex.Message);
+                //HockeyApp.MetricsManager.TrackEvent(ex.Message);
             }
             catch
             { }

@@ -1,8 +1,9 @@
-﻿using Plugin.Messaging;
-using snc_bonus_operator.Protocol;
+﻿using snc_bonus_operator.Protocol;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace snc_bonus_operator.Stuff
@@ -71,25 +72,22 @@ namespace snc_bonus_operator.Stuff
             }
         }
 
-        private void sendEmail(object sender, System.EventArgs e)
+        private async void sendEmail(object sender, System.EventArgs e)
         {
             try
             {
-                var emailMessanger = CrossMessaging.Current.EmailMessenger;
-                var builder = new EmailMessageBuilder()
-                    .To(_colegue.Email)
-                    .Subject("Письмо от "+_colegue.Name)
-                    .Body("")
-                    .Build();
-
-                if (emailMessanger.CanSendEmail)
+                var message = new EmailMessage
                 {
-                    emailMessanger.SendEmail(builder);
-                }
+                    Subject = "Письмо от " + _colegue.Name,
+                    Body = "",
+                    To = new List<string>() { _colegue.Email },
+                };
+                await Email.ComposeAsync(message);
             }
             catch (Exception ex)
             {
                 Logger.WriteError(ex);
+                await DisplayAlert("Ошибка!", $"Не удалось отправить электронное сообщение [{ex.Message}]", "Продолжить" );
             }
         }
 

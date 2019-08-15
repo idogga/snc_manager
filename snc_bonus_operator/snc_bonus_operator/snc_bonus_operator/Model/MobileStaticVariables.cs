@@ -1,5 +1,4 @@
-﻿using snc_bonus_operator.Model.QR_code;
-using snc_bonus_operator.Protocol;
+﻿using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
 
 namespace snc_bonus_operator
@@ -33,8 +32,6 @@ namespace snc_bonus_operator
         /// Состояние пользователя
         /// </summary>
         public static UserStatusEnum UserStatus { get; set; } = UserStatusEnum.UnRegister;
-
-        public static ClientQR QRClient { get; set; } = new ClientQR();
 
 
         /// <summary>

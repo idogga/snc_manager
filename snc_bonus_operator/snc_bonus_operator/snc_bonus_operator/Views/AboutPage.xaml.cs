@@ -1,7 +1,7 @@
-﻿using Plugin.Messaging;
-using snc_bonus_operator.Interfaces;
+﻿using snc_bonus_operator.Interfaces;
 using System;
-
+using System.Collections.Generic;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace snc_bonus_operator
@@ -23,21 +23,19 @@ namespace snc_bonus_operator
             }
         }
 
-        private void wrightToDeveloper_Clicked(object sender, EventArgs e)
+        private async void wrightToDeveloper_Clicked(object sender, EventArgs e)
         {
             try
             {
-                var emailMessanger = CrossMessaging.Current.EmailMessenger;
-                var builder = new EmailMessageBuilder()
-                    .To("develop.snc@gmail.com")
-                    .Subject("Письмо разработчикам от пользователя-СНК Менеджер")
-                    .Body("")
-                    .Build();
-
-                if (emailMessanger.CanSendEmail)
+                var message = new EmailMessage
                 {
-                    emailMessanger.SendEmail(builder);
-                }
+                    Subject = "Письмо разработчикам от пользователя-СНК Менеджер",
+                    Body = "",
+                    To = new List<string>() { "develop.snc@gmail.com" },
+                    //Cc = ccRecipients,
+                    //Bcc = bccRecipients
+                };
+                await Email.ComposeAsync(message);
             }
             catch (Exception ex)
             {

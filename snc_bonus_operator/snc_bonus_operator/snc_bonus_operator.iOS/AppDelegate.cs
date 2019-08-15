@@ -1,5 +1,5 @@
 ﻿using FFImageLoading;
-using FFImageLoading.Forms.Touch;
+using FFImageLoading.Forms.Platform;
 using Foundation;
 using Plugin.Toasts;
 using System;
@@ -17,15 +17,6 @@ namespace snc_bonus_operator.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Logger.WriteLine("FinishedLaunching start");
-            //Подписывание HockeyApp
-            //         var manager = BITHockeyManager.SharedHockeyManager;
-            //manager.Configure(HockeyAppId);
-            //manager.DisableMetricsManager = true;
-            //manager.StartManager();
-            //manager.Authenticator.AuthenticateInstallation();
-
-            //Подписывание считыватель пальцев
-            //CrossFingerprint.AllowReuse = false;
             CachedImageRenderer.Init();
             var config = new FFImageLoading.Config.Configuration()
             {
@@ -57,7 +48,7 @@ namespace snc_bonus_operator.iOS
             }
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
 
-            global::Xamarin.Forms.Forms.Init();
+            Forms.Init();
             MobileStaticVariables.UserAppSettings.LoadSettings();
             LoadApplication(new App());
             Logger.WriteLine("FinishedLaunching end");
@@ -118,7 +109,7 @@ namespace snc_bonus_operator.iOS
 
         public override void WillTerminate(UIApplication application)
         {
-            Logger.WriteLine("OnResignActivation");
+            base.WillTerminate(application);
         }
     }
 }

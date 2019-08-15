@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Plugin.DeviceInfo;
 using snc_bonus_operator.Interfaces;
 using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
@@ -201,101 +200,102 @@ namespace snc_bonus_operator.Login
             }
         }
 
-        async Task LoadUserInfo()
+        Task LoadUserInfo()
         {
-            string confirmInfo = "";
-            RegManager userInfo = new RegManager();
-            userInfo.Email = loginEntry.Text.Trim();
-            userInfo.Password = passEntry.Text.Trim();
-            userInfo.DeviceName = string.Format("{0} {1} {2}",
-                    CrossDeviceInfo.Current.Model, CrossDeviceInfo.Current.Platform, CrossDeviceInfo.Current.Version);
-            userInfo.Imei = DependencyService.Get<IDevice>().GetIdentifier();
-            userInfo.AppVersion = DependencyService.Get<IDevice>().GetVersion();
-            userInfo.AppKey = RegisterInfo.AppKeys.BonusSeller;
-            try
+            return Task.Factory.StartNew(() =>
             {
-                confirmInfo = MobileStaticVariables.WebUtils.SendAuthRequest("AuthManager", userInfo);
-                if (confirmInfo == "")
-                    throw new Exception("Пустая строка");
-                userInfo = JsonConvert.DeserializeObject<RegManager>(confirmInfo);
-                Logger.WriteLine("confirmInfo : " + confirmInfo);
-
-                if (userInfo.ResultState == RequestResult.Results.Success)
+                string confirmInfo = "";
+                RegManager userInfo = new RegManager();
+                userInfo.Email = loginEntry.Text.Trim();
+                userInfo.Password = passEntry.Text.Trim();
+                userInfo.Imei = DependencyService.Get<IDevice>().GetIdentifier();
+                userInfo.AppVersion = DependencyService.Get<IDevice>().GetVersion();
+                userInfo.AppKey = RegisterInfo.AppKeys.BonusSeller;
+                try
                 {
-                    _isUserRegister = true;
-                    MobileStaticVariables.UserInfo.MobileDeviceKey = userInfo.MobileDeviceKey;
-                    MobileStaticVariables.UserInfo.MobileUserKey = userInfo.MobileUserKey;
-                    MobileStaticVariables.UserInfo.UserNickName = userInfo.UserNickName;
-                    MobileStaticVariables.UserInfo.NotificationUserTopic = userInfo.NotificationTopic;
-                    MobileStaticVariables.UserInfo.UserType = userInfo.UserType;
-                    MobileStaticVariables.UserInfo.ShopList = userInfo.ShopList;
-                    MobileStaticVariables.UserInfo.Stuff = userInfo.Stuff;
-                    MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER] = new CertificateKey()
+                    confirmInfo = MobileStaticVariables.WebUtils.SendAuthRequest("AuthManager", userInfo);
+                    if (confirmInfo == "")
+                        throw new Exception("Пустая строка");
+                    userInfo = JsonConvert.DeserializeObject<RegManager>(confirmInfo);
+                    Logger.WriteLine("confirmInfo : " + confirmInfo);
+
+                    if (userInfo.ResultState == RequestResult.Results.Success)
                     {
-                        Certificate = userInfo.PublicKey,
-                        PrivateKey = userInfo.PrivateKey,
-                        Port = MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.BASE_ISSUER].Port,
-                        IP = MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.BASE_ISSUER].IP
-                    };
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.Email, MobileStaticVariables.UserInfo.Email);
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.MobileDeviceKey, MobileStaticVariables.UserInfo.MobileDeviceKey.ToString());
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.MobileUserKey, MobileStaticVariables.UserInfo.MobileUserKey.ToString());
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.UserNickName, MobileStaticVariables.UserInfo.UserNickName);
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.UserType, ((int)MobileStaticVariables.UserInfo.UserType).ToString());
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_PRIVATE_CERTIFICATE, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].PrivateKey);
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_CERTIFICATE, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].Certificate);
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_PRIVATE_IP, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].IP);
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_PRIVATE_PORT, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].Port.ToString());
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.ShopList, JsonConvert.SerializeObject(MobileStaticVariables.UserInfo.ShopList));
-                    MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.Stuff, JsonConvert.SerializeObject(MobileStaticVariables.UserInfo.Stuff));
-                }
+                        _isUserRegister = true;
+                        MobileStaticVariables.UserInfo.MobileDeviceKey = userInfo.MobileDeviceKey;
+                        MobileStaticVariables.UserInfo.MobileUserKey = userInfo.MobileUserKey;
+                        MobileStaticVariables.UserInfo.UserNickName = userInfo.UserNickName;
+                        MobileStaticVariables.UserInfo.NotificationUserTopic = userInfo.NotificationTopic;
+                        MobileStaticVariables.UserInfo.UserType = userInfo.UserType;
+                        MobileStaticVariables.UserInfo.ShopList = userInfo.ShopList;
+                        MobileStaticVariables.UserInfo.Stuff = userInfo.Stuff;
+                        MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER] = new CertificateKey()
+                        {
+                            Certificate = userInfo.PublicKey,
+                            PrivateKey = userInfo.PrivateKey,
+                            Port = MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.BASE_ISSUER].Port,
+                            IP = MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.BASE_ISSUER].IP
+                        };
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.Email, MobileStaticVariables.UserInfo.Email);
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.MobileDeviceKey, MobileStaticVariables.UserInfo.MobileDeviceKey.ToString());
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.MobileUserKey, MobileStaticVariables.UserInfo.MobileUserKey.ToString());
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.UserNickName, MobileStaticVariables.UserInfo.UserNickName);
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.UserType, ((int)MobileStaticVariables.UserInfo.UserType).ToString());
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_PRIVATE_CERTIFICATE, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].PrivateKey);
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_CERTIFICATE, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].Certificate);
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_PRIVATE_IP, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].IP);
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.PRIVATE_USER_PRIVATE_PORT, MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER].Port.ToString());
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.ShopList, JsonConvert.SerializeObject(MobileStaticVariables.UserInfo.ShopList));
+                        MobileStaticVariables.UserInfo.SaveSetting((int)SettingsEnum.Stuff, JsonConvert.SerializeObject(MobileStaticVariables.UserInfo.Stuff));
+                    }
 
-                else
+                    else
+                    {
+                        _isUserRegister = false;
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            if (IsVisible)
+                            {
+                                await DisplayAlert("Внимание", userInfo.TranslateResult(userInfo.ResultState),
+                                      "Хорошо");
+                                EndLoading();
+                            }
+                        });
+                    }
+                }
+                catch (Exception ex)
                 {
+                    Logger.WriteError(ex);
                     _isUserRegister = false;
                     Device.BeginInvokeOnMainThread(async () =>
                     {
                         if (IsVisible)
                         {
-                            await DisplayAlert("Внимание", userInfo.TranslateResult(userInfo.ResultState),
-                                  "Хорошо");
-                            EndLoading();
+                            var result = await DisplayAlert("Внимание", "Неудалось загрузить необходимые данные", "Повторить регистрацию", "Отмена");
+                            if (result)
+                            {
+                                LoadData();
+                            }
+                            else
+                            {
+                                EndLoading();
+                            }
                         }
                     });
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteError(ex);
-                _isUserRegister = false;
-                Device.BeginInvokeOnMainThread(async () =>
+                finally
                 {
-                    if (IsVisible)
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        var result = await DisplayAlert("Внимание", "Неудалось загрузить необходимые данные", "Повторить регистрацию", "Отмена");
-                        if (result)
+                        if (_isUserRegister)
                         {
-                            LoadData();
+                            settingsDB.AddLoggedPerson(loginEntry.Text);
+                            App.Current.MainPage = new RootPage();
                         }
-                        else
-                        {
-                            EndLoading();
-                        }
-                    }
-                });
-            }
-            finally
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    if (_isUserRegister)
-                    {
-                        settingsDB.AddLoggedPerson(loginEntry.Text);
-                        App.Current.MainPage = new RootPage();
-                    }
-                    EndLoading();
-                });
-            }
+                        EndLoading();
+                    });
+                }
+            });
         }
         #endregion
     }

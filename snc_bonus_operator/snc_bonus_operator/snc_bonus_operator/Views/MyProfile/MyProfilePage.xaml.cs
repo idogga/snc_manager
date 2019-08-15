@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Plugin.Vibrate;
 using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace snc_bonus_operator
@@ -48,8 +48,7 @@ namespace snc_bonus_operator
                 {
                     if (MobileStaticVariables.UserAppSettings.UseVibration)
                     {
-                        var v = CrossVibrate.Current;
-                        v.Vibration(TimeSpan.FromMilliseconds(50));
+                        Vibration.Vibrate();
                     }
                 }
                 catch { }
@@ -75,8 +74,7 @@ namespace snc_bonus_operator
                 {
                     if (MobileStaticVariables.UserAppSettings.UseVibration)
                     {
-                        var v = CrossVibrate.Current;
-                        v.Vibration(TimeSpan.FromMilliseconds(50));
+                        Vibration.Vibrate();
                     }
                 }
                 catch { }

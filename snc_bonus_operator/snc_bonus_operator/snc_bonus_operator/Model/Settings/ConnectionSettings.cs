@@ -53,7 +53,7 @@ namespace snc_bonus_operator.Settings
         /// </summary>
         public CertificateKey[] Certificates = new CertificateKey[(int)CertificateType.MAX];
 
-#if DEBUGARTYOM
+#if DEBUG
         public int DebugPort { get; set; } = 2582;
 #endif
 

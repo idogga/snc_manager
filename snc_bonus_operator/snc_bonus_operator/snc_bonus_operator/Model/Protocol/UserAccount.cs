@@ -1,27 +1,11 @@
-﻿using Org.BouncyCastle.Crypto.Digests;
-using Org.BouncyCastle.Crypto.Macs;
-using Org.BouncyCastle.Crypto.Parameters;
-using snc_bonus_operator.Settings;
+﻿using snc_bonus_operator.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 //using Plugin.FirebasePushNotification;
 
 namespace snc_bonus_operator.Protocol
 {
-    public enum InterestsEnum
-    {
-        Sport = 0,
-        Car,
-        Baby,
-        IT,
-        Book,
-        Education,
-
-        MAX
-    }
-
     public delegate void RootPageDelegate();
     public class UserAccount : MobileSeller
     {
@@ -195,47 +179,5 @@ namespace snc_bonus_operator.Protocol
             var db = new SettingsDB();
             db.SaveSetting(index, v);
         }
-
-        private Dictionary<int, string> ImageInterestDictionary = new Dictionary<int, string>();
-        private Dictionary<int, string> DescriptionInterestDictionary = new Dictionary<int, string>();
-
-        public UserAccount()
-        {
-            DescriptionInterestDictionary.Add((int)InterestsEnum.Sport, "Спорт");
-            DescriptionInterestDictionary.Add((int)InterestsEnum.Baby, "Дети");
-            DescriptionInterestDictionary.Add((int)InterestsEnum.Book, "Книги");
-            DescriptionInterestDictionary.Add((int)InterestsEnum.Car, "Машины");
-            DescriptionInterestDictionary.Add((int)InterestsEnum.Education, "Образование");
-            DescriptionInterestDictionary.Add((int)InterestsEnum.IT, "Технологии");
-
-            ImageInterestDictionary.Add((int)InterestsEnum.Sport, "ic_sport.png");
-            ImageInterestDictionary.Add((int)InterestsEnum.Baby, "ic_child.png");
-            ImageInterestDictionary.Add((int)InterestsEnum.Book, "ic_book.png");
-            ImageInterestDictionary.Add((int)InterestsEnum.Car, "ic_car.png");
-            ImageInterestDictionary.Add((int)InterestsEnum.Education, "ic_education.png");
-            ImageInterestDictionary.Add((int)InterestsEnum.IT, "ic_it.png");
-        }
-
-        public KeyValuePair<string,string> DescriptionInterest(int interestNumber)
-        {
-            return new KeyValuePair<string, string>(ImageInterestDictionary[interestNumber], DescriptionInterestDictionary[interestNumber]);
-        }
-
-        public InterestsEnum GetInterestFromString(string titleInterest)
-        {
-            var result = InterestsEnum.MAX;
-            try
-            {
-                var interest = DescriptionInterestDictionary.FirstOrDefault(x => x.Value == titleInterest).Key;
-                result = (InterestsEnum)interest;
-            }
-            catch
-            {
-                result = InterestsEnum.MAX;
-            }
-            return result;
-        }
-
-
     }
 }

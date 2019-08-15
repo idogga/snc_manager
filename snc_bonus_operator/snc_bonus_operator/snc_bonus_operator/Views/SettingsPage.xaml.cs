@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Plugin.DeviceInfo;
 using snc_bonus_operator.Interfaces;
 using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
 using System;
 using System.Text;
-
 using Xamarin.Forms;
 
 namespace snc_bonus_operator
@@ -22,7 +20,7 @@ namespace snc_bonus_operator
                 "\nзагружена ли БД : " + MobileStaticVariables.UserAppSettings.IsDataBaseLoad);
             
             useVibrationSwitch.IsToggled = MobileStaticVariables.UserAppSettings.UseVibration;
-#if DEBUGARTYOM
+#if DEBUG
             var connectionButton = new Button() { HorizontalOptions = LayoutOptions.FillAndExpand };
             connectionButton.Text = "Выберите подключение (" + MobileStaticVariables.ConectSettings.DebugPort + ")";
             connectionButton.Clicked += async (s, e) =>
@@ -160,10 +158,6 @@ namespace snc_bonus_operator
                 string deviceInfo = "";
                 try
                 {
-
-                    info.DeviceName = string.Format("{0} {1} {2}",
-                        CrossDeviceInfo.Current.Model, CrossDeviceInfo.Current.Platform, CrossDeviceInfo.Current.Version);
-
                     info.Imei = DependencyService.Get<IDevice>().GetIdentifier();
                     info.AppVersion = DependencyService.Get<IDevice>().GetVersion();
                     info.DeviceKey = MobileStaticVariables.UserInfo.MobileDeviceKey;

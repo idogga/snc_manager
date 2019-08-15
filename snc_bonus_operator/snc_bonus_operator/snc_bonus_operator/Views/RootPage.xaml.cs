@@ -1,11 +1,11 @@
-﻿using Plugin.Vibrate;
-using snc_bonus_operator.Accounting;
+﻿using snc_bonus_operator.Accounting;
 using snc_bonus_operator.Cash;
 using snc_bonus_operator.Confirmation;
 using snc_bonus_operator.Interfaces;
 using snc_bonus_operator.Shops;
 using System;
 using System.Diagnostics;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace snc_bonus_operator
@@ -19,55 +19,14 @@ namespace snc_bonus_operator
         {
             InitializeComponent();
             IsPresented = false;
-            Detail = new NavigationPage(new CashbackPage());
-            newOrderLayout.BackgroundColor = (Color)Application.Current.Resources["SelectionColor"];
+            Detail = new NavigationPage(new Stuff.StuffPage());
+            myStuffLayout.BackgroundColor = (Color)Application.Current.Resources["SelectionColor"];
             notificationLayout.IsVisible = MobileStaticVariables.UserInfo.UserType == Protocol.UserTypes.Admin;
         }
 
         #endregion
 
         #region 
-        private void OnNewOrderLayoutClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                mainLayout.IsEnabled = false;
-                RefreshMenuItem();
-                newOrderLayout.BackgroundColor = (Color)App.Current.Resources["SelectionColor"];
-                Logger.WriteLine("Переход на ListSellersPage");
-                Detail = new NavigationPage(new CashbackPage());
-                IsPresented = false;
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteError(ex);
-            }
-            finally
-            {
-                mainLayout.IsEnabled = true;
-            }
-        }
-
-        //private void OnShopsLayoutClicked(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        mainLayout.IsEnabled = false;
-        //        RefreshMenuItem();
-        //        shopsLayout.BackgroundColor = (Color)App.Current.Resources["SelectionColor"];
-        //        Logger.WriteLine("Переход на ShopsPage");
-        //        Detail = new NavigationPage(new ShopListPage());
-        //        IsPresented = false;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.WriteError(ex);
-        //    }
-        //    finally
-        //    {
-        //        mainLayout.IsEnabled = true;
-        //    }
-        //}
 
         private void OnMyProfileButtonClicked(object sender, EventArgs e)
         {
@@ -208,8 +167,7 @@ namespace snc_bonus_operator
 
                     if (MobileStaticVariables.UserAppSettings.UseVibration)
                     {
-                        var v = CrossVibrate.Current;
-                        v.Vibration(TimeSpan.FromMilliseconds(50));
+                        Vibration.Vibrate();
                     }
                     IsPresented = false;
                 }
@@ -242,7 +200,7 @@ namespace snc_bonus_operator
                 }
 
                 var page = (Detail as NavigationPage).CurrentPage;
-                if (page is CashbackPage)
+                if (page is Stuff.StuffPage)
                 {
                     if (_exit_app)
                     {
@@ -261,13 +219,12 @@ namespace snc_bonus_operator
                          page is TransactionPage ||
                          page is AboutPage ||
                          page is MyProfilePage ||
-                         page is Stuff.StuffPage ||
                          page is SettingsPage)
                 {
-                    Detail = new NavigationPage(new CashbackPage());
+                    Detail = new NavigationPage(new Stuff.StuffPage());
                     IsPresented = false;
                     RefreshMenuItem();
-                    newOrderLayout.BackgroundColor = (Color)App.Current.Resources["SelectionColor"];
+                    myStuffLayout.BackgroundColor = (Color)App.Current.Resources["SelectionColor"];
                 }
                 else
                 {
@@ -289,7 +246,6 @@ namespace snc_bonus_operator
         /// </summary>
         private void RefreshMenuItem()
         {
-            newOrderLayout.BackgroundColor = Color.Transparent;
             allPurchesLayout.BackgroundColor = Color.Transparent;
             notificationLayout.BackgroundColor = Color.Transparent;
             settingsLayout.BackgroundColor = Color.Transparent;

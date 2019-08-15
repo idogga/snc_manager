@@ -2,9 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using FFImageLoading;
-using FFImageLoading.Forms.Droid;
-using HockeyApp.Android;
-using HockeyApp.Android.Metrics;
+using FFImageLoading.Forms.Platform;
 using System;
 
 
@@ -20,20 +18,13 @@ namespace snc_bonus_operator.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            //CrossCurrentActivity.Current.Init(this);
             base.OnCreate(bundle);
             
-            try
-            {
-                CrashManager.Register(this, HockeyAppId);
-                MetricsManager.Register(Application, HockeyAppId);
-                FeedbackManager.Register(this, HockeyAppId, null);
-            }
-            catch { }
             global::Xamarin.Forms.Forms.Init(this, bundle);
             MobileStaticVariables.UserAppSettings.LoadSettings();
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
-            CachedImageRenderer.Init();
+            CachedImageRenderer.Init(false);
             var config = new FFImageLoading.Config.Configuration()
             {
                 VerboseLogging = false,

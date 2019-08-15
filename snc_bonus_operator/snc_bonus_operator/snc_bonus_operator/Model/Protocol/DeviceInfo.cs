@@ -49,7 +49,8 @@ namespace snc_bonus_operator.Protocol
         /// Название устройства
         /// </summary>
         [JsonProperty("DN")]
-        public string DeviceName { get; set; } = "";
+        public string DeviceName { get=> $"{Xamarin.Essentials.DeviceInfo.Model} {Xamarin.Essentials.DeviceInfo.Platform} {Xamarin.Essentials.DeviceInfo.VersionString}"; set { } }
+
         /// <summary>
         /// Версия мобильного приложения на устройстве
         /// </summary>
