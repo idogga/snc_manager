@@ -11,6 +11,18 @@ namespace snc_bonus_operator
             context.PropertyChanged += ContextPropertyChanged;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            context.StartUpdate();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            context.StopUpdate();
+        }
+
         private void ContextPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(context.IsLoadVisible))

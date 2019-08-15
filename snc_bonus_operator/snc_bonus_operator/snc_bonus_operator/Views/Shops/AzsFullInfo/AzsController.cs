@@ -58,7 +58,7 @@ namespace ssnc_bonus_operator
         {
             Task.Factory.StartNew(() =>
             {
-                var check = new AzsCheck() { CodAzs = _azs.ShopModel.ShopKey, MobileDeviceKey = MobileStaticVariables.UserInfo.MobileDeviceKey };
+                var check = new AzsCheck() { CodAzs = _azs.ShopModel.ShopKey, MobileDeviceKey = MobileStaticVariables.UserInfo.MobileDeviceKey, IssuerKey = 1 };
                 _azsPriceBook = MobileStaticVariables.WebUtils.SendMobileRequest<AzsPriceBook>(RequestTagEnum.CheckAzs, check);
                 Update();
             });

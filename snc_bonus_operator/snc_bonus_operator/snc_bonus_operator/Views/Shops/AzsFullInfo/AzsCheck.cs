@@ -15,5 +15,11 @@ namespace snc_bonus_operator
         /// </summary>
         [JsonProperty("AZS")]
         public int CodAzs { get; set; } = 0;
+
+        /// <summary>
+        /// Номер эмитента
+        /// </summary>
+        [JsonProperty("IK")]
+        public int IssuerKey { get; set; } = 0;
     }
 }

@@ -31,10 +31,10 @@ namespace snc_bonus_operator
         Timer _timer;
         private const int _timerDelay = 2000;
         #endregion
-        public void SetContext(ShopView selected)
+        public async void SetContext(ShopView selected)
         {
             shop = selected;
-            Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 var request = new GetAzsInfoRequest(selected.ShopModel.ShopKey, MobileStaticVariables.UserInfo.MobileUserKey);
                 var response = MobileStaticVariables.WebUtils.SendMobileRequest<AzsInfo>(RequestTagEnum.GetAzsInfo, request);

@@ -52,13 +52,22 @@ namespace snc_bonus_operator
         {
             _shopCollection = new ShopCollection();
             IsLoadVisible = true;
-            _timer = new Timer(LoadStauts, null, 0, 2000);
             
             foreach (var azs in MobileStaticVariables.UserInfo.ShopList)
             {
                 var a = new ShopView(azs);
                 ShopsList.Add(a);
             }
+        }
+
+        public void StartUpdate()
+        {
+            _timer = new Timer(LoadStauts, null, 0, 2000);
+        }
+
+        public void StopUpdate()
+        {
+            _timer.Dispose();
         }
 
         private void LoadStauts(object obj)

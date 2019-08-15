@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Realms;
-using snc_bonus_operator.Settings;
+﻿using snc_bonus_operator.Settings;
+using System;
 using Xamarin.Forms;
 
 namespace snc_bonus_operator.Protocol
@@ -14,7 +9,7 @@ namespace snc_bonus_operator.Protocol
         /// <summary>
         /// Уникальный номер эмитента
         /// </summary>
-        public int IssuerId { get; set; } = 0;
+        public int IssuerId { get; set; } = 1;
 
         /// <summary>
         /// Название эмитента
