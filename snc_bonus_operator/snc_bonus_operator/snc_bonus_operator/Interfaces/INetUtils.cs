@@ -11,31 +11,31 @@ namespace snc_bonus_operator.Interfaces
         /// <param name="ip">адрес службы</param>
         /// <param name="resiveTimeOut">Время ожидания в мс (по умолчанию должно быть 10 минут)</param>
         /// <returns></returns>
-        object Open(int port, string Adress, CertificateType type, int ResiveTimeOut = -1);
+        bool Open(int port, string Adress, int ResiveTimeOut = -1);
 
         /// <summary>
         /// Отправить данные на службу
         /// </summary>
         /// <param name="str">Строка содержащая xml</param>
         /// <param name="timeOut">Время ожидания в мс (по умолчанию должно быть 10 минут)</param>
-        void SendData(object connector, string str, CertificateType type, string TimeOut = null);
+        void SendData(string str);
 
         /// <summary>
         /// Получение ответа от службы в xml
         /// </summary>
         /// <returns></returns>
-        string Receive(object connector);
+        string Receive();
 
         /// <summary>
         /// Закрыть соединение
         /// </summary>
-        void Close(object connector);
+        void Close();
 
         /// <summary>
         /// Получение последней ошибки
         /// </summary>
         /// <returns></returns>
-        string GetLastError(object connector);
+        string GetLastError();
 
         /// <summary>
         /// Опрос интернета

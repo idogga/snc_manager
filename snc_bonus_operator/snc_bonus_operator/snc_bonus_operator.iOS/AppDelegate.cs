@@ -1,5 +1,4 @@
 ﻿using FFImageLoading;
-using FFImageLoading.Forms.Platform;
 using Foundation;
 using Plugin.Toasts;
 using System;
@@ -10,14 +9,15 @@ using Xamarin.Forms;
 namespace snc_bonus_operator.iOS
 {
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IUNUserNotificationCenterDelegate
     {
         private const string HockeyAppId = "8f30ffee2d6b4708a1bdf9dee57d3414";
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Logger.WriteLine("FinishedLaunching start");
-            CachedImageRenderer.Init();
+            global::Xamarin.Forms.Forms.Init();
+            //Xamarin.FormsGoogleMaps.Init("AIzaSyC0lIZYXAdCsDvdb7c4SSCetdM6SDFoJlY");
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             var config = new FFImageLoading.Config.Configuration()
             {
                 VerboseLogging = false,
@@ -29,6 +29,41 @@ namespace snc_bonus_operator.iOS
             ImageService.Instance.Initialize(config);
             // Загрузка уведомлений
             DependencyService.Register<ToastNotification>(); // Register your dependency
+
+        //    FirebasePushNotificationManager.Initialize(options, new NotificationUserCategory[]
+        //{
+        //        new NotificationUserCategory("message",new List<NotificationUserAction> {
+        //            new NotificationUserAction("Reply","Reply",NotificationActionType.Foreground)
+        //        }),
+        //        new NotificationUserCategory("request",new List<NotificationUserAction> {
+        //            new NotificationUserAction("Accept","Accept"),
+        //            new NotificationUserAction("Reject","Reject",NotificationActionType.Destructive)
+        //        })
+
+        //});
+
+            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
+            {
+                // iOS 10
+                var authOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound;
+                UNUserNotificationCenter.Current.RequestAuthorization(authOptions, (granted, error) =>
+                {
+                    Logger.WriteLine(granted.ToString());
+                });
+                UNUserNotificationCenter.Current.Delegate = this;
+                UIRemoteNotificationType notificationTypes = UIRemoteNotificationType.Alert | UIRemoteNotificationType.Badge;
+                // register for remote notifications
+                UIApplication.SharedApplication.RegisterForRemoteNotificationTypes(notificationTypes);
+            }
+            else
+            {
+                // iOS 9 <=
+                var allNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound;
+                var settings = UIUserNotificationSettings.GetSettingsForTypes(allNotificationTypes, null);
+                UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
+            }
+
+            UIApplication.SharedApplication.RegisterForRemoteNotifications();
             ToastNotification.Init();
             if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
             {
@@ -51,7 +86,6 @@ namespace snc_bonus_operator.iOS
             Forms.Init();
             MobileStaticVariables.UserAppSettings.LoadSettings();
             LoadApplication(new App());
-            Logger.WriteLine("FinishedLaunching end");
             return base.FinishedLaunching(app, options);
         }
 

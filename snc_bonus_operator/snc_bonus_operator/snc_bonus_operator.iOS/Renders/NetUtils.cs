@@ -5,14 +5,12 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
-using snc_bonus_operator;
 using snc_bonus_operator.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
@@ -21,8 +19,8 @@ using System.Text;
 using System.Threading;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(snc_bonus_operator.Droid.Implementation.NetUtils))]
-namespace snc_bonus_operator.Droid.Implementation
+[assembly: Dependency(typeof(snc_bonus_operator.iOS.Implementation.NetUtils))]
+namespace snc_bonus_operator.iOS.Implementation
 {
     public class NetUtils : Interfaces.INetUtils
     {
@@ -73,7 +71,7 @@ namespace snc_bonus_operator.Droid.Implementation
 
         public InternetStatus IsServerPing(string Adress)
         {
-            throw new NotImplementedException();
+            return InternetStatus.Online;
         }
 
         /// <summary>

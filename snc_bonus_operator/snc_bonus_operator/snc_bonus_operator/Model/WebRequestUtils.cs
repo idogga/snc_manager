@@ -275,54 +275,6 @@ namespace snc_bonus_operator
             Logger.WriteLine("SendAuthRequest : Can't connect to server");
             throw new Exception("ErrorCannotConnectToSever");
         }
-
-        /// <summary>
-        /// Запрос для регистрации пользователя в системе
-        /// </summary>
-        /// <param name="typeTag">Register - Регистрация пользователя
-        /// RegisterInfo - Запрос информации для регистрации пользователя по Email</param>
-        /// <param name="detailValue">Регистрационные данные</param>
-        /// <returns></returns>
-        //public string SendAuthRequest(string typeTag, GetPrograms detailValue)
-        //{
-        //    for (int i = 0; i < MobileStaticVariables.ConectSettings.OrderTries; i++) // TODO добавить количество попыток запроса авторизации
-        //    {
-        //        try
-        //        {
-        //            return SendRequest(Request.GetAuthXml(typeTag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(detailValue)))), CertificateType.BASE_ISSUER);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Logger.WriteError(ex);
-        //        }
-        //    }
-        //    Logger.WriteLine("SendAuthRequest : Can't connect to server");
-        //    throw new Exception("ErrorCannotConnectToSever");
-        //}
-
-        /// <summary>
-        /// Запрос для регистрации нового пользователя в системе
-        /// </summary>
-        /// <param name="typeTag">Register - Регистрация пользователя
-        /// RegisterInfo - Запрос информации для регистрации пользователя по Email</param>
-        /// <param name="detailValue">Регистрационные данные</param>
-        /// <returns></returns>
-        //public string SendRegistrationRequest(string typeTag, UserRequisites detailValue)
-        //{
-        //    for (int i = 0; i < MobileStaticVariables.ConectSettings.OrderTries; i++) // TODO добавить количество попыток запроса авторизации
-        //    {
-        //        try
-        //        {
-        //            return SendRequest(Request.GetAuthXml(typeTag, Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(detailValue)))), CertificateType.BASE_ISSUER);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Logger.WriteError(ex);
-        //        }
-        //    }
-        //    Logger.WriteLine("SendAuthRequest : Can't connect to server");
-        //    throw new Exception("ErrorCannotConnectToSever");
-        //}
         #endregion
 
         #region Общий запрос
@@ -374,30 +326,37 @@ namespace snc_bonus_operator
 
         public string SendMobileRequest(string xml_ds, CertificateType type)
         {
-            string ip = MobileStaticVariables.ConectSettings.Certificates[(int)type].IP;
-            int port = MobileStaticVariables.ConectSettings.Certificates[(int)type].Port;
-#if DEBUGARTYOM
+            string ip = MobileStaticVariables.ConectSettings.Certificates[0].IP;
+            int port = MobileStaticVariables.ConectSettings.Certificates[0].Port;
+#if DEBUG
             port = MobileStaticVariables.ConectSettings.DebugPort;
 #endif
             var res = "";
-            var connector = DependencyService.Get<INetUtils>().Open(port, ip, type, 60000);
-            if (connector != null)
+            var util = DependencyService.Get<INetUtils>();
+            //Logger.WriteLine($"\t\t\t создание соединятора {watch.ElapsedMilliseconds} мс");
+            if (util.Open(port, ip, 60000))
             {
-                DependencyService.Get<INetUtils>().SendData(connector, xml_ds, type);
-                if (DependencyService.Get<INetUtils>().GetLastError(connector) == "")
+                //Logger.WriteLine($"\t\t\t открытии соединения {watch.ElapsedMilliseconds} мс");
+
+                util.SendData(xml_ds);
+                //Logger.WriteLine($"\t\t\t отправка даных {watch.ElapsedMilliseconds} мс");
+                if (util.GetLastError() == "")
                 {
-                    res = DependencyService.Get<INetUtils>().Receive(connector);
-                    if (DependencyService.Get<INetUtils>().GetLastError(connector) == "")
+                    //Logger.WriteLine($"\t\t\t проверка на ошибки при отправке {watch.ElapsedMilliseconds} мс");
+                    res = util.Receive();
+                    //Logger.WriteLine($"\t\t\t получение данных в соединении {watch.ElapsedMilliseconds} мс");
+                    if (util.GetLastError() == "")
                     {
-                        DependencyService.Get<INetUtils>().Close(connector);
-                        connector = null;
+                        //Logger.WriteLine($"\t\t\t проверка на ошибки при получении {watch.ElapsedMilliseconds} мс");
+                        util.Close();
+                        //Logger.WriteLine($"\t\t\t закрытие соединения {watch.ElapsedMilliseconds} мс");
                         return res;
                     }
                     else
-                        throw new Exception("ErrorEmptyString");
+                        throw new Exception($"Ошибка при приеме данных с {ip} : {port}. Причина : {util.GetLastError()}");
                 }
             }
-            throw new Exception("Не удалось соединиться");
+            throw new Exception($"Не удалось соединиться с {ip} : {port}. Причина : {util?.GetLastError()}");
         }
 #endregion
     }

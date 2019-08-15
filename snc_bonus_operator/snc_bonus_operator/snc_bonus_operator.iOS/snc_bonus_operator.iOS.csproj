@@ -148,10 +148,10 @@
     <Compile Include="CustomListViewCellRenderer\CustomListViewCellRenderer.cs" />
     <Compile Include="CustomListViewCellRenderer\IosDevice.cs" />
     <Compile Include="CustomListViewCellRenderer\MyEntryRender.cs" />
-    <Compile Include="CustomListViewCellRenderer\NetUtils.cs" />
     <Compile Include="CustomListViewCellRenderer\SimpleSwitchEffectRender.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renders\NetUtils.cs" />
     <None Include="app.config" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
@@ -373,6 +373,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\news_16_png.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
