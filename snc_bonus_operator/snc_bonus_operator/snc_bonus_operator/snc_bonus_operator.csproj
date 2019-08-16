@@ -122,6 +122,7 @@
     <Compile Include="Views\CommonViews\NoConnectionView.xaml.cs">
       <DependentUpon>NoConnectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CommonVM.cs" />
     <Compile Include="Views\Confirmation\ConfirmPage.xaml.cs">
       <DependentUpon>ConfirmPage.xaml</DependentUpon>
     </Compile>
@@ -134,6 +135,10 @@
     <Compile Include="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MobileTransaction\MobileTansactionsPage.xaml.cs">
+      <DependentUpon>MobileTansactionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MobileTransaction\MobileTransactionVM.cs" />
     <Compile Include="Views\MyProfile\MyProfilePage.xaml.cs">
       <DependentUpon>MyProfilePage.xaml</DependentUpon>
     </Compile>
@@ -339,6 +344,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Shops\AzsFullInfo\ShopPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MobileTransaction\MobileTansactionsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

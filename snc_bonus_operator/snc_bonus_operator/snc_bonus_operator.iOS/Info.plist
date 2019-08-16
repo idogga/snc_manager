@@ -54,5 +54,10 @@
 	<string>Media.xcassets/AppIcons.appiconset</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Media.xcassets/LaunchImages.launchimage</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pacifico-Regular.ttf</string>
+		<string>PressStart2P-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

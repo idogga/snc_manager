@@ -7,24 +7,9 @@ using Xamarin.Forms;
 
 namespace snc_bonus_operator
 {
-    public class ShopsVM : INotifyPropertyChanged
+    public class ShopsVM : CommonVM
     {
         #region Properties
-        #region Load Visibility
-        private bool _isLoadVisible = false;
-        public bool IsLoadVisible
-        {
-            get
-            {
-                return _isLoadVisible;
-            }
-            set
-            {
-                _isLoadVisible = value;
-                OnPropertyChanged("IsLoadVisible");
-            }
-        }
-        #endregion
 
         #region Shop List
         private ObservableCollection<ShopView> _shops = new ObservableCollection<ShopView>();
@@ -41,12 +26,6 @@ namespace snc_bonus_operator
         ShopCollection _shopCollection;
         Timer _timer;
         bool _isFirstLoad = true;
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string obj)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(obj));
-        }
 
         public ShopsVM()
         {
