@@ -13,18 +13,26 @@
                         <viewControllerLayoutGuide type="bottom" id="9ZL-r4-8FZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yd7-JS-zBw">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="1" green="0.047058823529411764" blue="0.047058823529411764" alpha="1"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="Icon-60.png" translatesAutoresizingMaskIntoConstraints="NO" id="23">
-                                <rect key="frame" x="270" y="270" width="60" height="60"/>
-                                <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="269" translatesAutoresizingMaskIntoConstraints="NO" text="СНК-Оператор" insetsLayoutMarginsFromSafeArea="NO">
+                                <rect key="frame" x="0.0" y="376" width="414" height="360"/>
+                                <color key="textColor" colorSpace="calibratedRGB" red="1" green="1" blue="1" alpha="1"/>
+                                <nil key="highlightedColor"/>
+                                <fontDescription key="fontDescription" name="HoeflerText-Black" family="Hoefler Text" pointSize="27"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
+                                </accessibility>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.20392156862745098" green="0.59607843137254901" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="23" firstAttribute="centerY" secondItem="yd7-JS-zBw" secondAttribute="centerY" priority="1" id="39"/>
-                            <constraint firstItem="23" firstAttribute="centerX" secondItem="yd7-JS-zBw" secondAttribute="centerX" priority="1" id="41"/>
+                            <constraint id="933" firstItem="269" firstAttribute="trailing" secondItem="yd7-JS-zBw" secondAttribute="trailingMargin" constant="20"/>
+                            <constraint id="934" firstAttribute="leadingMargin" secondItem="269" secondAttribute="leading" constant="20"/>
+                            <constraint id="935" firstItem="269" firstAttribute="width" secondItem="yd7-JS-zBw" secondAttribute="width"/>
+                            <constraint id="1163" firstItem="269" firstAttribute="top" secondItem="Y8P-hJ-Z43" secondAttribute="bottom" constant="356"/>
+                            <constraint id="1164" firstItem="269" firstAttribute="bottom" secondItem="9ZL-r4-8FZ" secondAttribute="top"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -33,7 +41,4 @@
             <point key="canvasLocation" x="349" y="339"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Icon-60.png" width="180" height="180"/>
-    </resources>
 </document>
