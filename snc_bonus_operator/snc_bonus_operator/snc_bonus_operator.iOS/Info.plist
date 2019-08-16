@@ -18,8 +18,6 @@
 	<string>12.2</string>
 	<key>CFBundleDisplayName</key>
 	<string>СНК Оператор</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.snc_bonus_operator.ios</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x</string>
@@ -44,5 +42,13 @@
 	<string>0.2</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.snc.bonusoperator</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 </dict>
 </plist>

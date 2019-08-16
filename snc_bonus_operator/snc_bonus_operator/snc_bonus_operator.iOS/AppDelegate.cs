@@ -1,7 +1,10 @@
 ﻿using FFImageLoading;
 using Foundation;
+using Plugin.FirebasePushNotification;
+using Plugin.FirebasePushNotification.Abstractions;
 using Plugin.Toasts;
 using System;
+using System.Collections.Generic;
 using UIKit;
 using UserNotifications;
 using Xamarin.Forms;
@@ -30,17 +33,17 @@ namespace snc_bonus_operator.iOS
             // Загрузка уведомлений
             DependencyService.Register<ToastNotification>(); // Register your dependency
 
-        //    FirebasePushNotificationManager.Initialize(options, new NotificationUserCategory[]
-        //{
-        //        new NotificationUserCategory("message",new List<NotificationUserAction> {
-        //            new NotificationUserAction("Reply","Reply",NotificationActionType.Foreground)
-        //        }),
-        //        new NotificationUserCategory("request",new List<NotificationUserAction> {
-        //            new NotificationUserAction("Accept","Accept"),
-        //            new NotificationUserAction("Reject","Reject",NotificationActionType.Destructive)
-        //        })
+            FirebasePushNotificationManager.Initialize(options, new NotificationUserCategory[]
+        {
+                new NotificationUserCategory("message",new List<NotificationUserAction> {
+                    new NotificationUserAction("Reply","Reply",NotificationActionType.Foreground)
+                }),
+                new NotificationUserCategory("request",new List<NotificationUserAction> {
+                    new NotificationUserAction("Accept","Accept"),
+                    new NotificationUserAction("Reject","Reject",NotificationActionType.Destructive)
+                })
 
-        //});
+        });
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
             {
@@ -89,6 +92,35 @@ namespace snc_bonus_operator.iOS
             return base.FinishedLaunching(app, options);
         }
 
+        #region notification
+        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            FirebasePushNotificationManager.DidRegisterRemoteNotifications(deviceToken);
+        }
+        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+        {
+            FirebasePushNotificationManager.RemoteNotificationRegistrationFailed(error);
+            Logger.WriteLine($"ошибка при получение уведомления: {error.DebugDescription}");
+        }
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            // If you are receiving a notification message while your app is in the background,
+            // this callback will not be fired 'till the user taps on the notification launching the application.
+
+            // If you disable method swizzling, you'll need to call this method. 
+            // This lets FCM track message delivery and analytics, which is performed
+            // automatically with method swizzling enabled.
+            FirebasePushNotificationManager.DidReceiveMessage(userInfo);
+            // Do your magic to handle the notification data
+            System.Console.WriteLine(userInfo);
+            Logger.WriteLine("Колличество : " + userInfo["gcm.message_id"]);
+            Logger.WriteLine("Перечисление : " + userInfo["aps"]);
+            Logger.WriteLine("Значения : " + userInfo["alert"]);
+            Logger.WriteLine("Тело : " + NSDictionary.FromObjectAndKey(NSObject.FromObject("фыв"), NSObject.FromObject("ФЫВ")));
+            completionHandler(UIBackgroundFetchResult.NewData);
+        }
+        #endregion
+
         public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
         {
 
@@ -112,12 +144,6 @@ namespace snc_bonus_operator.iOS
                 Error(errorMessage + System.Environment.NewLine + ex.ToString());
             }
         }
-
-        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
-        {
-            //FirebasePushNotificationManager.RemoteNotificationRegistrationFailed(error);
-        }
-
 
         public override void OnResignActivation(UIApplication application)
         {
