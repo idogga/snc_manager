@@ -1,4 +1,5 @@
-﻿using snc_bonus_operator.Settings;
+﻿using Plugin.FirebasePushNotification;
+using snc_bonus_operator.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,7 +142,7 @@ namespace snc_bonus_operator.Protocol
                 MobileStaticVariables.ConectSettings.Certificates[(int)CertificateType.PRIVATE_USER] = null;
                 MobileStaticVariables.UserInfo.ShopList = new List<ShopModel>();
                 //DeviceSettings.UserStatus = UserStatusEnum.Unregister;
-                //CrossFirebasePushNotification.Current.Unsubscribe(MobileStaticVariable.UserInfo.NotificationUserTopic);
+                CrossFirebasePushNotification.Current.Unsubscribe(MobileStaticVariables.UserInfo.NotificationUserTopic);
                 MobileStaticVariables.UserInfo.NotificationUserTopic = "";
                 var db = new SettingsDB();
                 db.DeleteUserInfo();

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.FirebasePushNotification;
 using snc_bonus_operator.Interfaces;
 using snc_bonus_operator.Protocol;
 using snc_bonus_operator.Settings;
@@ -226,6 +227,8 @@ namespace snc_bonus_operator.Login
                         MobileStaticVariables.UserInfo.MobileUserKey = userInfo.MobileUserKey;
                         MobileStaticVariables.UserInfo.UserNickName = userInfo.UserNickName;
                         MobileStaticVariables.UserInfo.NotificationUserTopic = userInfo.NotificationTopic;
+                        CrossFirebasePushNotification.Current.Subscribe(MobileStaticVariables.UserInfo.NotificationUserTopic);
+
                         MobileStaticVariables.UserInfo.UserType = userInfo.UserType;
                         MobileStaticVariables.UserInfo.ShopList = userInfo.ShopList;
                         MobileStaticVariables.UserInfo.Stuff = userInfo.Stuff;

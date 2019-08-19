@@ -221,8 +221,6 @@ namespace snc_bonus_operator.Settings
                                 break;
                             case (int)SettingsEnum.UserTopicName:
                                 MobileStaticVariables.UserInfo.NotificationUserTopic = item.Value;
-                                //if (MobileStaticVariables.UserAppSettings.ShowNotifications)
-                                //    CrossFirebasePushNotification.Current.Subscribe(MobileStaticVariable.UserInfo.NotificationUserTopic);
                                 break;
                             case (int)SettingsEnum.UserCardNumber:
                                 MobileStaticVariables.UserInfo.CardNumber = int.Parse(item.Value);
