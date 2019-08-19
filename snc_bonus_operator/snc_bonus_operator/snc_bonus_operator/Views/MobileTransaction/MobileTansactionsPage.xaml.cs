@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace snc_bonus_operator.Views.MobileTransaction
+namespace snc_bonus_operator
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MobileTansactionsPage : ContentPage
@@ -15,6 +10,17 @@ namespace snc_bonus_operator.Views.MobileTransaction
         public MobileTansactionsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            context.LoadTransactions(0);
+        }
+
+        private void listTransaction_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -36,7 +36,7 @@ namespace snc_bonus_operator.Protocol
         /// Количество транзакций для загрузки
         /// </summary>
         [JsonProperty("AM")]
-        public int Amount { get; set; } = 0;
+        public int Amount { get; set; } = 10;
         /// <summary>
         /// Количество загруженных транзакций (сдвиг)
         /// </summary>

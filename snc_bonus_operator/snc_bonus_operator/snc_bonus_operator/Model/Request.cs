@@ -392,6 +392,7 @@ namespace snc_bonus_operator
                 case RequestTagEnum.Block:
                 case RequestTagEnum.ChangeRequisites:
                 case RequestTagEnum.AllTransactionsSeller:
+                case RequestTagEnum.AllMobileTransactions:
                     str = "MobileCardInfoRequest";
                     break;
                 case RequestTagEnum.RegNew:
@@ -426,6 +427,9 @@ namespace snc_bonus_operator
                     break;
                 case RequestTagEnum.BonusCount:
                     str = "BonusCount";
+                    break;
+                case RequestTagEnum.AllMobileTransactions:
+                    str = "AllMobileTransactions";
                     break;
                 case RequestTagEnum.AllTransactionsSeller:
                     str = "AllTransactionsSeller";

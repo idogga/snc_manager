@@ -133,9 +133,33 @@ namespace snc_bonus_operator.Accounting
                 {
                     if (offset == 0 && transactions.Transactions.Count == 0)
                     {
+                        Device.BeginInvokeOnMainThread(() => HideList());
+                    }
+                    else
+                    {
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            HideList();
+                            foreach (var item in transactions.Transactions)
+                            {
+                                var transactionView = new AllTransactionView(item);
+                                var group = Transactions.FirstOrDefault(x => (x.ComleteDate.Year == item.CompleteDatetime.Year) && (x.ComleteDate.DayOfYear == item.CompleteDatetime.DayOfYear));
+                                if (group != null)
+                                {
+                                    group.Add(transactionView);
+                                }
+                                else
+                                {
+                                    group = new DateGroupTransaction(item.CompleteDatetime);
+                                    group.Add(transactionView);
+                                    Transactions.Add(group);
+                                }
+                                needToLoad = transactions.Transactions.Count == _amount;
+                                if (IsVisible)
+                                {
+                                    listTransaction.ItemsSource = null;
+                                    listTransaction.ItemsSource = Transactions;
+                                }
+                            }
                         });
                     }
                 }
@@ -150,31 +174,7 @@ namespace snc_bonus_operator.Accounting
                         }
                     });
                 }
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    foreach (var item in transactions.Transactions)
-                    {
-                        var transactionView = new AllTransactionView(item);
-                        var group = Transactions.FirstOrDefault(x => (x.ComleteDate.Year == item.CompleteDatetime.Year) && (x.ComleteDate.DayOfYear == item.CompleteDatetime.DayOfYear));
-                        if (group != null)
-                        {
-                            group.Add(transactionView);
-                        }
-                        else
-                        {
-                            var isFirstGroup = Transactions.Count == 0;
-                            group = new DateGroupTransaction(item.CompleteDatetime, _upFrame, isFirstGroup);
-                            group.Add(transactionView);
-                            Transactions.Add(group);
-                        }
-                        needToLoad = transactions.Transactions.Count == _amount;
-                        if (IsVisible)
-                        {
-                            listTransaction.ItemsSource = null;
-                            listTransaction.ItemsSource = Transactions;
-                        }
-                    }
-                });
+                
             }
             catch (Exception ex)
             {

@@ -153,6 +153,11 @@
         /// <summary>
         /// Запрос всех транзакций
         /// </summary>
-        AllTransactionsSeller
+        AllTransactionsSeller,
+
+        /// <summary>
+        /// Запрос всех мобильных покупок на выбранных ТО
+        /// </summary>
+        AllMobileTransactions
     }
 }

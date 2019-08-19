@@ -129,12 +129,14 @@
     <Compile Include="Views\Confirmation\ConflictTransactionPage.xaml.cs">
       <DependentUpon>ConflictTransactionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DateGroupTransaction.cs" />
     <Compile Include="Views\LoadPage.xaml.cs">
       <DependentUpon>LoadPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MobileTransaction\CountConverter.cs" />
     <Compile Include="Views\MobileTransaction\MobileTansactionsPage.xaml.cs">
       <DependentUpon>MobileTansactionsPage.xaml</DependentUpon>
     </Compile>

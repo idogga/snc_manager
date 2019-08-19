@@ -1,12 +1,195 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="snc_bonus_operator.Views.MobileTransaction.MobileTansactionsPage">
+<ContentPage
+    x:Class="snc_bonus_operator.MobileTansactionsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:local="clr-namespace:snc_bonus_operator">
+
+    <Shell.TitleView>
+        <Label Style="{DynamicResource ShellLabelStyle}" Text="Мобильные покупки" />
+    </Shell.TitleView>
+    <ContentPage.BindingContext>
+        <local:MobileTransactionVM x:Name="context" />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local:CountConverter x:Key="countConverter" />
+        <local:NegativeCountConverter x:Key="negativecountConverter" />
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <ListView
+                    x:Name="listTransaction"
+                    Margin="0"
+                    HasUnevenRows="True"
+                    IsGroupingEnabled="true"
+                    IsVisible="{Binding Transactions, Converter={StaticResource negativecountConverter}}"
+                    ItemSelected="listTransaction_ItemSelected"
+                    ItemsSource="{Binding Transactions}"
+                    SeparatorVisibility="None">
+                    <ListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label
+                                    Margin="{Binding Frame}"
+                                    FontAttributes="None"
+                                    Style="{DynamicResource SmallLabelStyle}"
+                                    Text="{Binding Heading}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.GroupHeaderTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <ContentView>
+                                        <StackLayout
+                                            Margin="5"
+                                            HorizontalOptions="FillAndExpand"
+                                            Spacing="0">
+                                            <Label
+                                                Margin="2"
+                                                HorizontalOptions="StartAndExpand"
+                                                HorizontalTextAlignment="Start"
+                                                Style="{DynamicResource SmallLabelStyle}"
+                                                Text="{Binding Time}" />
+                                            <Frame
+                                                Margin="0"
+                                                Padding="5"
+                                                HasShadow="False"
+                                                Style="{DynamicResource UsualFrameStyle}">
+                                                <Grid HorizontalOptions="FillAndExpand">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="AUTO" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="AUTO" />
+                                                        <RowDefinition Height="AUTO" />
+                                                        <RowDefinition Height="AUTO" />
+                                                        <RowDefinition Height="AUTO" />
+                                                        <RowDefinition Height="AUTO" />
+                                                    </Grid.RowDefinitions>
+                                                    <Label
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        FontSize="Small"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="Начальная стоимость" />
+                                                    <Label
+                                                        Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="End"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="{Binding BaseCost}" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        FontSize="Small"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="Скидка" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="End"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="{Binding Discount}" />
+                                                    <Label
+                                                        Grid.Row="2"
+                                                        Grid.Column="0"
+                                                        FontSize="Small"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="Бонусов списано" />
+                                                    <Label
+                                                        Grid.Row="2"
+                                                        Grid.Column="1"
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="End"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="{Binding BonusOut}" />
+                                                    <Label
+                                                        Grid.Row="3"
+                                                        Grid.Column="0"
+                                                        Style="{DynamicResource BoldUsualLabelStyle}"
+                                                        Text="ИТОГО" />
+                                                    <Label
+                                                        Grid.Row="3"
+                                                        Grid.Column="1"
+                                                        HorizontalTextAlignment="End"
+                                                        Style="{DynamicResource BoldUsualLabelStyle}"
+                                                        Text="{Binding Cost}" />
+                                                    <Label
+                                                        Grid.Row="4"
+                                                        Grid.Column="0"
+                                                        FontSize="Small"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="Бонусов начислено" />
+                                                    <Label
+                                                        Grid.Row="4"
+                                                        Grid.Column="1"
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="End"
+                                                        Style="{DynamicResource UsualLabelStyle}"
+                                                        Text="{Binding BonusIn}" />
+                                                </Grid>
+                                            </Frame>
+                                        </StackLayout>
+                                    </ContentView>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Frame
+                    x:Name="emptyFrame"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding Transactions, Converter={StaticResource countConverter}}"
+                    Style="{DynamicResource UsualFrameStyle}"
+                    VerticalOptions="CenterAndExpand">
+                    <StackLayout Padding="12">
+                        <ffimageloading:CachedImage
+                            HorizontalOptions="CenterAndExpand"
+                            Source="empty_accept_list.png"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            FontSize="Medium"
+                            HorizontalOptions="CenterAndExpand"
+                            Style="{DynamicResource SmallLabelStyle}"
+                            Text="Покупок еще не было" />
+                    </StackLayout>
+                </Frame>
+                <Label
+                    x:Name="statusTransaction"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="False"
+                    Style="{DynamicResource SmallLabelStyle}" />
+
+            </StackLayout>
+
+            <StackLayout
+                x:Name="backgroundDark"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="FillAndExpand"
+                IsEnabled="False"
+                IsVisible="False"
+                VerticalOptions="FillAndExpand" />
+            <StackLayout AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional">
+                <local:Indicator IsVisible="{Binding IsLoadVisible}" />
+            </StackLayout>
+            <local:NoConnectionView
+                x:Name="noConnectionLayout"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="False" />
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

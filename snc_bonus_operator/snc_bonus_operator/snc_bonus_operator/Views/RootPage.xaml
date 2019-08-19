@@ -15,26 +15,28 @@
                 <local:ShopListPage />
             </ShellContent>
         </Tab>
+
         <Tab Title="Администрирование" Icon="ic_perm_identity_black_24dp.png">
             <ShellContent>
                 <local:StuffPage />
             </ShellContent>
         </Tab>
-        <Tab Title="Настройки" Icon="ic_build_black_24dp.png">
+
+        <Tab Title="Моб.покупки" Icon="news_16_png.png">
             <ShellContent>
-                <local:SettingsPage />
+                <local:MobileTansactionsPage />
             </ShellContent>
         </Tab>
-        <!--<Tab Title="ТРК" Icon="news_16_png.png">
-        -->
-        <!--<ShellContent>
-                <local:CatsPage />
-            </ShellContent>-->
-        <!--
-        </Tab>-->
+
         <Tab Title="Профиль" Icon="ic_myprofile_16.png">
             <ShellContent>
                 <local:MyProfilePage />
+            </ShellContent>
+        </Tab>
+
+        <Tab Title="Настройки" Icon="ic_build_black_24dp.png">
+            <ShellContent>
+                <local:SettingsPage />
             </ShellContent>
         </Tab>
     </TabBar>
