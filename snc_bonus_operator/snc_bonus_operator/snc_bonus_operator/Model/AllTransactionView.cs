@@ -42,6 +42,11 @@ namespace snc_bonus_operator
                     break;
             }
         }
+
+        public override string ToString()
+        {
+            return $"#{Transaction.TransactionKey} СУММ [{BaseCost}] СКИДКА [{Discount}] Б.Начислено[{BonusIn}] Б.Списано[{BonusOut}]";
+        }
     }
     
 }

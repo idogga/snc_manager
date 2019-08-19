@@ -50,5 +50,10 @@ namespace snc_bonus_operator
             }
             return result;
         }
+
+        public override string ToString()
+        {
+            return $"Ячейка {Heading}. Колличество внутри : {ListCell.Count}";
+        }
     }
 }

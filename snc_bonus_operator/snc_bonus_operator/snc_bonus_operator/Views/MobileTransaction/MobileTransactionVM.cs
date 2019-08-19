@@ -29,6 +29,7 @@ namespace snc_bonus_operator
         transactions.Amount = 10;
         transactions.DeviceKey = MobileStaticVariables.UserInfo.MobileDeviceKey;
         transactions.Offset = offset;
+        Logger.WriteLine($"Загрузка мобильных покупок в колличестве {transactions.Amount}, задержка {transactions.Offset}");
         transactions = MobileStaticVariables.WebUtils.SendMobileRequest<SellerTransactionInfo>(RequestTagEnum.AllMobileTransactions, transactions);
         if (transactions.ResultState == RequestResult.Results.Success)
         {
@@ -58,6 +59,7 @@ namespace snc_bonus_operator
                     Transactions.Add(group);
                 }
             }
+            Logger.WriteLine($"Загружено {transactions.SellerList.Count} покупок. Итого {Transactions.Sum(x=>x.Count)} покупок");
             OnPropertyChanged("Transactions");
         });
     }
